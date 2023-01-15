@@ -10,3 +10,7 @@ tasks:
     cmds:
       - echo "{{.GREETING}}"
     silent: true
+  
+  migrate:
+    cmds:
+      - npx prisma migrate dev --name init
