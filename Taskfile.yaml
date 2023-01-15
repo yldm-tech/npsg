@@ -11,6 +11,27 @@ tasks:
       - echo "{{.GREETING}}"
     silent: true
   
-  migrate:
+  prisma:migrate:
     cmds:
       - npx prisma migrate dev --name init
+  
+  prisma:generate:
+    cmds:
+      - npx prisma generate
+  
+  prisma:studio:
+    cmds:
+      - npx prisma studio
+      - open http://127.0.0.1:5555
+  
+  prisma:pull:
+    cmds:
+      - npx prisma db pull
+  
+  prisma:push:
+    cmds:
+      - npx prisma db push
+  
+  prisma:format: npx prisma format
+  
+
