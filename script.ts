@@ -12,12 +12,14 @@ async function main() {
   // const result = await prisma.article.findMany();
 
   // 修改
-  const result = await prisma.article.update({
-    where: { id: 1 },
-    data: {
-      description: 'prisma1',
-    },
-  });
+  // const result = await prisma.article.update({
+  //   where: { id: 1 },
+  //   data: {
+  //     description: 'prisma1',
+  //   },
+  // });
+
+  const result = await prisma.article.findFirst();
 
   console.log(result);
 }
