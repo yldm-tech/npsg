@@ -3,7 +3,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { PrismaModule } from '../prisma/prisma.module';
 import { PostsModule } from '../posts/posts.module';
-import { LoggerMiddleware } from '../../middlewares/logger_middleware';
+import { LoggerMiddleware } from '../common/logger.middleware';
 
 @Module({
   imports: [PrismaModule, PostsModule],

@@ -36,7 +36,7 @@ export class PostsController {
   }
 
   @Get()
-  // @UseFilters(new PrismaClientExceptionFilter())
+  // @UseFilters(new Prisma_client_exceptionFilter())
   @ApiOkResponse({ type: PostEntity, isArray: true })
   findAll() {
     return this.postsService.findAll();
