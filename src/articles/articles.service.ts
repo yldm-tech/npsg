@@ -1,8 +1,8 @@
 // business logic for handling each request
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { CreateArticleDto } from './dto/create-article.dto';
-import { UpdateArticleDto } from './dto/update-article.dto';
+import { CreateArticleDto } from './create_article.dto';
+import { UpdateArticleDto } from './update_article.dto';
 
 @Injectable()
 export class ArticlesService {

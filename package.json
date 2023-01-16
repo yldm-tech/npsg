@@ -22,12 +22,14 @@
     "service": "npx nest generate service",
     "resource": "npx nest generate resource",
     "filter": "npx nest generate filter",
-    "script":"ts-node ./script.ts"
+    "script": "ts-node ./script.ts"
   },
   "dependencies": {
+    "@fastify/static": "^6.6.1",
     "@nestjs/common": "^9.0.0",
     "@nestjs/core": "^9.0.0",
     "@nestjs/platform-express": "^9.0.0",
+    "@nestjs/platform-fastify": "^9.2.1",
     "@nestjs/swagger": "^6.1.4",
     "@prisma/client": "^4.8.1",
     "class-transformer": "^0.5.1",

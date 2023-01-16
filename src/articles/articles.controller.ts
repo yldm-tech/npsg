@@ -14,9 +14,9 @@ import {
 } from '@nestjs/common';
 import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { ArticlesService } from './articles.service';
-import { CreateArticleDto } from './dto/create-article.dto';
-import { UpdateArticleDto } from './dto/update-article.dto';
-import { ArticleEntity } from './entities/article.entity';
+import { CreateArticleDto } from './create_article.dto';
+import { UpdateArticleDto } from './update_article.dto';
+import { ArticleEntity } from './article.entity';
 
 @Controller('articles')
 @ApiTags('article')
