@@ -21,11 +21,12 @@ async function bootstrap() {
   const config = new DocumentBuilder()
     .setTitle('nest-api')
     .setDescription('The nest API description')
+    .addBasicAuth()
     .setVersion('0.1')
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, document);
+  SwaggerModule.setup('docs', app, document);
 
   // apply the exception filter to the entire application
   const { httpAdapter } = app.get(HttpAdapterHost);
