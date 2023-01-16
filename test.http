@@ -1,41 +1,33 @@
-### Send POST request with json body
-POST https://httpbin.org/post
-Content-Type: application/json
-
-{
-  "id": 999,
-  "value": "content"
-}
-
-### Send POST request with body as parameters
-POST https://httpbin.org/post
+### 新增文章
+POST http://localhost:3000/posts
 Content-Type: application/x-www-form-urlencoded
 
-id=999&value=content
+{
+  "title": "post title",
+  "body": "post a new post from the test.http",
+  "description": "description",
+  "published": true
+}
 
-### Send a form with the text and file fields
-POST https://httpbin.org/post
-Content-Type: multipart/form-data; boundary=WebAppBoundary
 
---WebAppBoundary
-Content-Disposition: form-data; name="element-name"
-Content-Type: text/plain
-
-Name
---WebAppBoundary
-Content-Disposition: form-data; name="data"; filename="data.json"
+### 获取所有文章
+GET http://localhost:3000/posts
 Content-Type: application/json
 
-< ./request-form-data.json
---WebAppBoundary--
 
-### Send request with dynamic variables in request's body
-POST https://httpbin.org/post
+### 删除文章
+DELETE http://localhost:3000/posts/2
 Content-Type: application/json
 
 {
-  "id": {{$uuid}},
-  "price": {{$randomInt}},
-  "ts": {{$timestamp}},
-  "value": "content"
+    "id":"1"
+}
+
+
+### 修改文章
+PATCH http://localhost:3000/posts/1
+Content-Type: application/json
+
+{
+    "published": false
 }

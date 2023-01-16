@@ -2,13 +2,14 @@ import { ApiProperty } from '@nestjs/swagger';
 import {
   IsBoolean,
   IsNotEmpty,
+  IsNumber,
   IsOptional,
   IsString,
   MaxLength,
   MinLength,
 } from 'class-validator';
 
-export class CreateArticleDto {
+export class CreatePostDto {
   @IsString()
   @IsNotEmpty()
   @MinLength(5)
@@ -26,6 +27,14 @@ export class CreateArticleDto {
   @IsNotEmpty()
   @ApiProperty()
   body: string;
+
+  @IsNumber()
+  @ApiProperty()
+  authorId: number;
+
+  @IsString()
+  @ApiProperty()
+  content: string | null;
 
   @IsBoolean()
   @IsOptional()

@@ -4,7 +4,7 @@
   "description": "",
   "author": "",
   "private": true,
-  "license": "UNLICENSED",
+  "license": "MIT",
   "scripts": {
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\"",
@@ -22,7 +22,7 @@
     "service": "npx nest generate service",
     "resource": "npx nest generate resource",
     "filter": "npx nest generate filter",
-    "script": "ts-node ./script.ts"
+    "playground": "ts-node playground.ts"
   },
   "dependencies": {
     "@fastify/static": "^6.6.1",

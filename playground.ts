@@ -4,22 +4,22 @@ const prisma = new PrismaClient();
 
 async function main() {
   // 增加
-  // const result = await prisma.article.create({
+  // const result = await prisma.post.create({
   //   data: { title: '2', body: 'test2', description: 'prisma2' },
   // });
 
   // 查
-  // const result = await prisma.article.findMany();
+  // const result = await prisma.post.findMany();
 
   // 修改
-  // const result = await prisma.article.update({
+  // const result = await prisma.post.update({
   //   where: { id: 1 },
   //   data: {
   //     description: 'prisma1',
   //   },
   // });
 
-  const result = await prisma.article.findFirst();
+  const result = await prisma.post.findFirst();
 
   console.log(result);
 }

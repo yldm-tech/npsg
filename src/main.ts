@@ -14,7 +14,6 @@ async function bootstrap() {
     new FastifyAdapter(),
   );
 
-  // With whitelist set to true validator will strip validated object of any properties that do not have any decorators.
   app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
 
   // swagger configuration
@@ -34,4 +33,5 @@ async function bootstrap() {
 
   await app.listen(3000);
 }
+
 bootstrap();
