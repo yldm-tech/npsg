@@ -39,5 +39,3 @@ Content-Type: application/json
   "ts": {{$timestamp}},
   "value": "content"
 }
-
-###
