@@ -1,20 +1,19 @@
 import { ValidationPipe } from '@nestjs/common';
 import { HttpAdapterHost, NestFactory } from '@nestjs/core';
-import {
-  FastifyAdapter,
-  NestFastifyApplication,
-} from '@nestjs/platform-fastify';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { AppModule } from './app/app.module';
-import { PrismaClientExceptionFilter } from './filter/prisma-client-exception.filter';
+import { AppModule } from './modules/app/app.module';
+import { PrismaClientExceptionFilter } from './filters/prisma-client-exception.filter';
+import { NestFastifyApplication } from '@nestjs/platform-fastify';
 
 async function bootstrap() {
-  const app = await NestFactory.create<NestFastifyApplication>(
-    AppModule,
-    new FastifyAdapter(),
-  );
+  const app = await NestFactory.create<NestFastifyApplication>(AppModule);
 
+  // global pipes
   app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
+
+  // apply the exception filters to the entire application
+  const { httpAdapter } = app.get(HttpAdapterHost);
+  app.useGlobalFilters(new PrismaClientExceptionFilter(httpAdapter));
 
   // swagger configuration
   const config = new DocumentBuilder()
@@ -23,13 +22,8 @@ async function bootstrap() {
     .addBasicAuth()
     .setVersion('0.1')
     .build();
-
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('docs', app, document);
-
-  // apply the exception filter to the entire application
-  const { httpAdapter } = app.get(HttpAdapterHost);
-  app.useGlobalFilters(new PrismaClientExceptionFilter(httpAdapter));
 
   await app.listen(3000);
 }

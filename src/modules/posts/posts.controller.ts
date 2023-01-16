@@ -19,7 +19,7 @@ import { UpdatePostDto } from './update_post.dto';
 import { PostEntity } from './post.entity';
 
 @Controller('posts')
-@ApiTags('post')
+@ApiTags('posts')
 export class PostsController {
   constructor(private readonly postsService: PostsService) {}
 
@@ -36,6 +36,7 @@ export class PostsController {
   }
 
   @Get()
+  // @UseFilters(new PrismaClientExceptionFilter())
   @ApiOkResponse({ type: PostEntity, isArray: true })
   findAll() {
     return this.postsService.findAll();

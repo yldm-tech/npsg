@@ -11,7 +11,9 @@ export class PrismaClientExceptionFilter extends BaseExceptionFilter {
     // This allows the code to access the request and response objects for the current HTTP request.
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
+    const request = ctx.getRequest();
     const message = exception.message.replace(/\n/g, '');
+    const time = new Date().toTimeString();
 
     switch (exception.code) {
       case 'P2002': {
@@ -19,6 +21,8 @@ export class PrismaClientExceptionFilter extends BaseExceptionFilter {
         response.status(status).json({
           statusCode: status,
           message: message,
+          time: time,
+          path: request.url,
         });
         break;
       }
@@ -26,7 +30,9 @@ export class PrismaClientExceptionFilter extends BaseExceptionFilter {
         const status = HttpStatus.NOT_FOUND;
         response.status(status).json({
           statusCode: status,
+          time: time,
           message: message,
+          path: request.url,
         });
         break;
       }
