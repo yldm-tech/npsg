@@ -7,7 +7,7 @@
   "license": "MIT",
   "scripts": {
     "build": "nest build",
-    "format": "prettier --write \"src/**/*.ts\"",
+    "format": "prettier --write \\\"server/src/**/*.ts\\\"",
     "start": "nest start",
     "dev": "nest start --watch",
     "debug": "nest start --debug --watch",
@@ -19,7 +19,7 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "playground": "ts-node playground.ts",
-    "seed": "ts-node prisma/seed.ts",
+    "seed": "ts-node server/prisma/seed.ts",
     "class": "npx nest generate class",
     "config": "npx nest generate config",
     "controller": "npx nest generate controller",
