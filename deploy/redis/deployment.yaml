@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-deployment
+  namespace: redis
+spec:
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: redis
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: redis
+    spec:
+      containers:
+        - name: redis
+          image: redis:5.0.4
+          imagePullPolicy: 'IfNotPresent'
+          resources:
+            limits:
+              memory: '512Mi'
+              cpu: '512m'
+          ports:
+            - containerPort: 6379
+          envFrom:
+            - configMapRef:
+                name: redis-config
+          volumeMounts:
+            - mountPath: /usr/local/redis/redis.conf
+              name: redis-db
+      volumes:
+        - name: redis-db
+          persistentVolumeClaim:
+            claimName: redis-pv-claim
