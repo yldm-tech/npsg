@@ -2,7 +2,7 @@ import { ValidationPipe } from '@nestjs/common';
 import { HttpAdapterHost, NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app/app.module';
-import { Prisma_client_exceptionFilter } from './common/prisma_client_exception.filter';
+import { Prisma_client_exceptionFilter } from './common/filter/prisma_client_exception.filter';
 import { NestFastifyApplication } from '@nestjs/platform-fastify';
 
 async function bootstrap() {
