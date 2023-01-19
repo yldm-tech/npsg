@@ -3,12 +3,11 @@ import { HttpAdapterHost, NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app/app.module';
 import { Prisma_client_exceptionFilter } from './common/filter/prisma_client_exception.filter';
-import { NestFastifyApplication } from '@nestjs/platform-fastify';
 import { LoggingInterceptor } from './common/interceptor/logger.interceptor';
 import { ExcludeNullInterceptor } from './common/interceptor/exclude_null.interceptor';
 
 async function bootstrap() {
-  const app = await NestFactory.create<NestFastifyApplication>(AppModule);
+  const app = await NestFactory.create(AppModule);
 
   // global pipes
   app.useGlobalPipes(new ValidationPipe({ whitelist: true }));

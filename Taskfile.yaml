@@ -2,15 +2,19 @@
 
 version: '3'
 
-vars:
-  GREETING: Hello, World!
-
 tasks:
   default:
     cmds:
-      - echo "{{.GREETING}}"
+      - echo {{.CLI_ARGS}}
     silent: true
-  
+
+  nest:generate:
+    cmds:
+      - npx nest generate controller {{.CLI_ARGS}}  --no-spec
+      - npx nest generate service {{.CLI_ARGS}}  --no-spec
+      - npx nest generate module {{.CLI_ARGS}}  --no-spec
+      - npx nest generate class {{.CLI_ARGS}}  --no-spec
+
   prisma:migrate:
     cmds:
       - npx prisma migrate dev --name init
@@ -32,6 +36,8 @@ tasks:
     cmds:
       - npx prisma db push
   
-  prisma:format: npx prisma format
+  prisma:format:
+    cmds:
+      - npx prisma format
   
 
