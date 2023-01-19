@@ -1,10 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Post } from '@prisma/client';
+import { BaseEntity } from '../common/entity/base.entity';
 
-export class PostEntity implements Post {
-  @ApiProperty()
-  id: number;
-
+export class PostEntity extends BaseEntity implements Post {
   @ApiProperty()
   title: string;
 
@@ -22,10 +20,4 @@ export class PostEntity implements Post {
 
   @ApiProperty()
   published: boolean;
-
-  @ApiProperty()
-  createdAt: Date;
-
-  @ApiProperty()
-  updatedAt: Date;
 }

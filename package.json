@@ -20,7 +20,7 @@
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "playground": "ts-node playground.ts",
     "seed": "ts-node prisma/seed.ts",
-    "class": "npx nest generate class",
+    "class": "npx nest generate class --no-spec",
     "config": "npx nest generate config",
     "controller": "npx nest generate controller --no-spec",
     "decorator": "npx nest generate decorator --no-spec",

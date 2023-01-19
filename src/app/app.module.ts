@@ -6,6 +6,7 @@ import { PostsModule } from '../posts/posts.module';
 import { LoggerMiddleware } from '../common/middleware/logger.middleware';
 import { ConfigModule } from '@nestjs/config';
 import emailConfig from '../common/config/email.config';
+import { UserModule } from '../user/user.module';
 // import { EmailModule } from '../email/email.module';
 
 @Module({
@@ -20,6 +21,7 @@ import emailConfig from '../common/config/email.config';
     // }),
     PrismaModule,
     PostsModule,
+    UserModule,
     // EmailModule,
   ],
   controllers: [AppController],
