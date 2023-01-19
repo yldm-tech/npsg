@@ -5,6 +5,8 @@
   "compilerOptions": {
     "deleteOutDir": true,
     "webpack": true,
-    "assets": ["templates/**/*"]
+    "assets": [
+      "templates/**/*"
+    ]
   }
 }

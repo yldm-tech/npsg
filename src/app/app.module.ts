@@ -4,10 +4,9 @@ import { AppService } from './app.service';
 import { PrismaModule } from '../prisma/prisma.module';
 import { PostsModule } from '../posts/posts.module';
 import { LoggerMiddleware } from '../common/middleware/logger.middleware';
-import { MailerModule } from '@nestjs-modules/mailer';
-import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ConfigModule } from '@nestjs/config';
 import emailConfig from '../common/config/email.config';
-import { EmailModule } from '../email/email.module';
+// import { EmailModule } from '../email/email.module';
 
 @Module({
   imports: [
@@ -15,13 +14,13 @@ import { EmailModule } from '../email/email.module';
       isGlobal: true,
       load: [emailConfig],
     }),
-    MailerModule.forRootAsync({
-      useFactory: (config: ConfigService) => config.get('emailConfig'),
-      inject: [ConfigService],
-    }),
+    // MailerModule.forRootAsync({
+    //   useFactory: (config: ConfigService) => config.get('emailConfig'),
+    //   inject: [ConfigService],
+    // }),
     PrismaModule,
     PostsModule,
-    EmailModule,
+    // EmailModule,
   ],
   controllers: [AppController],
   providers: [AppService],
