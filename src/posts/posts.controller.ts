@@ -14,8 +14,8 @@ import {
 } from '@nestjs/common';
 import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { PostsService } from './posts.service';
-import { CreatePostDto } from './create_post.dto';
-import { UpdatePostDto } from './update_post.dto';
+import { CreatePostDto } from './dto/create-post.dto';
+import { UpdatePostDto } from './dto/update-post.dto';
 import { PostEntity } from './post.entity';
 
 @Controller('posts')
