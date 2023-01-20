@@ -1,4 +1,4 @@
-import { PugAdapter } from '@nestjs-modules/mailer/dist/adapters/pug.adapter';
+import { EjsAdapter } from '@nestjs-modules/mailer/dist/adapters/ejs.adapter';
 
 export default () => ({
   transport: 'smtps://suzukaze.hazuki2024@gmail.com:Xiaomo2023@smtp.gmail.com',
@@ -7,7 +7,7 @@ export default () => ({
   },
   template: {
     dir: __dirname + '/templates',
-    adapter: new PugAdapter(),
+    adapter: new EjsAdapter(),
     options: {
       strict: true,
     },
