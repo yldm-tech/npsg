@@ -1,3 +1,4 @@
+import { PostsArgs } from './dto/posts.args';
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreatePostDto } from './dto/create-post.dto';
@@ -15,8 +16,8 @@ export class PostsService {
     return this.prisma.post.findMany({ where: { published: false } });
   }
 
-  findAll() {
-    return this.prisma.post.findMany({ where: { published: true } });
+  findAll(args: PostsArgs) {
+    return this.prisma.post.findMany({ where: { published: args.published } });
   }
 
   findOne(id: number) {

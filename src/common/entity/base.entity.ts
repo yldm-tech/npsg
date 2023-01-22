@@ -1,12 +1,12 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { Field, ID } from '@nestjs/graphql';
 
 export class BaseEntity {
-  @ApiProperty()
+  @Field((type) => ID)
   id: number;
 
-  @ApiProperty()
+  @Field((type) => ID)
   createdAt: Date;
 
-  @ApiProperty()
+  @Field((type) => ID)
   updatedAt: Date;
 }

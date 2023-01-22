@@ -1,0 +1,38 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+directive @upper on FIELD_DEFINITION
+
+"""post """
+type Posts {
+  title: String!
+  description: String
+  body: String!
+  authorId: Float!
+  content: String
+  published: Boolean!
+}
+
+type Query {
+  post(id: Float!): Posts!
+  posts(skip: Int! = 0, take: Int! = 25, published: Boolean! = false): [Posts!]!
+}
+
+type Mutation {
+  addPost(newPostData: CreatePostDto!): Posts!
+  removePost(id: Float!): Boolean!
+}
+
+input CreatePostDto {
+  title: String!
+  description: String!
+  body: String!
+  authorId: Float!
+  content: String!
+  published: Boolean! = false
+}
+
+type Subscription {
+  postAdded: Posts!
+}

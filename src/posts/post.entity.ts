@@ -1,23 +1,25 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Post } from '@prisma/client';
 import { BaseEntity } from '../common/entity/base.entity';
+import { Directive, Field, ID, ObjectType } from '@nestjs/graphql';
+import { Post } from '@prisma/client';
 
-export class PostEntity extends BaseEntity implements Post {
-  @ApiProperty()
+@ObjectType({ description: 'post ' })
+export class Posts extends BaseEntity implements Post {
+  @Field()
   title: string;
 
-  @ApiProperty({ required: false, nullable: true })
+  @Field({ nullable: true })
   description: string | null;
 
-  @ApiProperty()
+  @Field()
   body: string;
 
-  @ApiProperty()
+  @Field()
   authorId: number;
 
-  @ApiProperty()
+  @Field({ nullable: true })
   content: string | null;
 
-  @ApiProperty()
+  @Field()
   published: boolean;
 }

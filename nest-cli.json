@@ -5,6 +5,20 @@
   "compilerOptions": {
     "deleteOutDir": true,
     "webpack": true,
+    "plugins": [
+      {
+      "name":"@nestjs/swagger",
+      "options":{
+        "classValidatorShim": false,
+        "introspectComments": true
+      }
+    }, {
+        "name": "@nestjs/graphql",
+        "options": {
+          "introspectComments": true
+        }
+      }
+  ],
     "assets": [
       "templates/**/*"
     ]

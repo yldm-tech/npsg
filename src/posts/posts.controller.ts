@@ -16,7 +16,7 @@ import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { PostsService } from './posts.service';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
-import { PostEntity } from './post.entity';
+import { Posts } from './post.entity';
 
 @Controller('posts')
 @ApiTags('posts')
@@ -24,26 +24,30 @@ export class PostsController {
   constructor(private readonly postsService: PostsService) {}
 
   @Post()
-  @ApiCreatedResponse({ type: PostEntity })
+  @ApiCreatedResponse({ type: Posts })
   create(@Body() createArticleDto: CreatePostDto) {
     return this.postsService.create(createArticleDto);
   }
 
   @Get('drafts')
-  @ApiOkResponse({ type: PostEntity, isArray: true })
+  @ApiOkResponse({ type: Posts, isArray: true })
   findDrafts() {
     return this.postsService.findDrafts();
   }
 
   @Get()
   // @UseFilters(new Prisma_client_exceptionFilter())
-  @ApiOkResponse({ type: PostEntity, isArray: true })
+  @ApiOkResponse({ type: Posts, isArray: true })
   findAll() {
-    return this.postsService.findAll();
+    return this.postsService.findAll({
+      published: false,
+      skip: 1,
+      take: 25,
+    });
   }
 
   @Get(':id')
-  @ApiOkResponse({ type: PostEntity })
+  @ApiOkResponse({ type: Posts })
   async findOne(@Param('id', ParseIntPipe) id: number) {
     const post = await this.postsService.findOne(id);
     if (!post) {
@@ -54,7 +58,7 @@ export class PostsController {
   }
 
   @Patch(':id')
-  @ApiOkResponse({ type: PostEntity })
+  @ApiOkResponse({ type: Posts })
   update(
     @Param('id', ParseIntPipe) id: number,
     @Body() updateArticleDto: UpdatePostDto,
@@ -63,7 +67,7 @@ export class PostsController {
   }
 
   @Delete(':id')
-  @ApiOkResponse({ type: PostEntity })
+  @ApiOkResponse({ type: Posts })
   remove(@Param('id', ParseIntPipe) id: number) {
     return this.postsService.remove(id);
   }

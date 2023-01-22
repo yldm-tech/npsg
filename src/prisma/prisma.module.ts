@@ -6,9 +6,6 @@ import { PrismaService } from './prisma.service';
 @Global()
 @Module({
   providers: [PrismaService],
-  // By adding PrismaService to the exports array, any module that
-  // imports the PrismaModule will have access to PrismaService and
-  // can inject it into its own components/services
   exports: [PrismaService],
 })
 export class PrismaModule {}
