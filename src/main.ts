@@ -2,9 +2,9 @@ import { ValidationPipe } from '@nestjs/common';
 import { HttpAdapterHost, NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app/app.module';
-import { PrismaClientExceptionFilter } from './common/filter/prisma_client_exception_filter';
+import { PrismaClientExceptionFilter } from './common/filter/prisma-client-exception_filter';
 import { LoggingInterceptor } from './common/interceptor/logger.interceptor';
-import { ExcludeNullInterceptor } from './common/interceptor/exclude_null.interceptor';
+import { ExcludeNullInterceptor } from './common/interceptor/exclude-null.interceptor';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
