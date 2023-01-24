@@ -14,6 +14,7 @@ import {
   CacheKey,
   UseInterceptors,
   CacheInterceptor,
+  VERSION_NEUTRAL,
 } from '@nestjs/common';
 import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { PostsService } from './posts.service';
@@ -22,9 +23,12 @@ import { UpdatePostDto } from './dto/update-post.dto';
 import { Posts } from './post.entity';
 import { PrismaPromise } from '@prisma/client';
 
-@Controller('posts')
 @ApiTags('posts')
 @UseInterceptors(CacheInterceptor)
+@Controller({
+  path: 'posts',
+  version: VERSION_NEUTRAL,
+})
 export class PostsController {
   constructor(private readonly postsService: PostsService) {}
 
