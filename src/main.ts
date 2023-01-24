@@ -3,17 +3,17 @@ import {
   VersioningType,
   VERSION_NEUTRAL,
 } from '@nestjs/common';
-import * as session from 'express-session';
 import { HttpAdapterHost, NestFactory } from '@nestjs/core';
-import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import * as cookieParser from 'cookie-parser';
-import { AppModule } from './app.module';
-import * as compression from 'compression';
-import { PrismaClientExceptionFilter } from './common/filter/prisma-client-exception_filter';
-import { LoggingInterceptor } from './common/interceptor/logger.interceptor';
-import { ExcludeNullInterceptor } from './common/interceptor/exclude-null.interceptor';
-import { join } from 'path';
 import { NestExpressApplication } from '@nestjs/platform-express';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import * as compression from 'compression';
+import * as cookieParser from 'cookie-parser';
+import * as session from 'express-session';
+import { join } from 'path';
+import { AppModule } from './app.module';
+import { PrismaClientExceptionFilter } from './common/filter/prisma-client-exception_filter';
+import { ExcludeNullInterceptor } from './common/interceptor/exclude-null.interceptor';
+import { LoggingInterceptor } from './common/interceptor/logger.interceptor';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);

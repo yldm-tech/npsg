@@ -1,3 +1,4 @@
+import { HttpService } from '@nestjs/axios';
 import {
   Controller,
   Get,
@@ -8,11 +9,10 @@ import {
   Version,
   VERSION_NEUTRAL,
 } from '@nestjs/common';
-import { Cookies } from './common/decorator/cookie.decorator';
+import { AxiosError, AxiosResponse } from 'axios';
 import { Response } from 'express';
-import { HttpService } from '@nestjs/axios';
-import { AxiosResponse, AxiosError } from 'axios';
 import { catchError, firstValueFrom, interval, map, Observable } from 'rxjs';
+import { Cookies } from './common/decorator/cookie.decorator';
 
 @Controller({ version: VERSION_NEUTRAL })
 export class AppController {

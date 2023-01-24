@@ -1,7 +1,6 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { BaseEntity } from '../common/entity/base.entity';
-import { Directive, Field, ID, ObjectType } from '@nestjs/graphql';
+import { Field, ObjectType } from '@nestjs/graphql';
 import { Post } from '@prisma/client';
+import { BaseEntity } from '../common/entity/base.entity';
 
 @ObjectType({ description: 'post ' })
 export class Posts extends BaseEntity implements Post {

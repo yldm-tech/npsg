@@ -10,7 +10,6 @@ import { AppService } from './app.service';
 import { PostsModule } from './posts/posts.module';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { LoggerMiddleware } from './common/middleware/logger.middleware';
-import { UserModule } from './user/user.module';
 import { ApolloServerPluginLandingPageLocalDefault } from 'apollo-server-core';
 import { HttpModule } from '@nestjs/axios';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
@@ -19,12 +18,12 @@ import { join } from 'path';
 import { DirectiveLocation, GraphQLDirective } from 'graphql';
 import { CronJobService } from 'src/cron/cron.service';
 import { QueueModule } from './queue/queue.module';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
     PostsModule,
     UserModule,
-    ConfigModule,
     MailModule,
     QueueModule,
     OrderModule,
