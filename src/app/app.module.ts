@@ -1,14 +1,12 @@
+import { MailModule } from './../mail/mail.module';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { PrismaService } from './../prisma/prisma.service';
 import { MiddlewareConsumer, Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { PostsModule } from '../posts/posts.module';
 import { LoggerMiddleware } from '../common/middleware/logger.middleware';
-import { ConfigModule } from '@nestjs/config';
-import emailConfig from '../common/config/email.config';
 import { UserModule } from '../user/user.module';
-import { EmailModule } from '../email/email.module';
-import { ConfigService } from '@nestjs/config';
 import { ApolloServerPluginLandingPageLocalDefault } from 'apollo-server-core';
 
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
@@ -18,14 +16,13 @@ import { DirectiveLocation, GraphQLDirective } from 'graphql';
 
 @Module({
   imports: [
+    PostsModule,
+    UserModule,
+    ConfigModule,
+    MailModule,
     ConfigModule.forRoot({
-      isGlobal: true,
-      load: [emailConfig],
+      isGlobal: true, // no need to import into other modules
     }),
-    // EmailModule.apply({
-    //   useFactory: () => emailConfig(),
-    //   inject: [ConfigService],
-    // }),
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       debug: true,
@@ -42,9 +39,6 @@ import { DirectiveLocation, GraphQLDirective } from 'graphql';
       autoSchemaFile: join(process.cwd(), 'src/schema/schema.gql'),
       plugins: [ApolloServerPluginLandingPageLocalDefault()],
     }),
-    PostsModule,
-    UserModule,
-    // EmailModule,
   ],
   controllers: [AppController],
   providers: [AppService, PrismaService],
