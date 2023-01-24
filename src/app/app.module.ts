@@ -1,5 +1,6 @@
 import { MailModule } from './../mail/mail.module';
-import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ConfigModule } from '@nestjs/config';
+import { ScheduleModule } from '@nestjs/schedule';
 import { PrismaService } from './../prisma/prisma.service';
 import { CacheModule, MiddlewareConsumer, Module } from '@nestjs/common';
 import { AppController } from './app.controller';
@@ -13,6 +14,7 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { GraphQLModule } from '@nestjs/graphql';
 import { join } from 'path';
 import { DirectiveLocation, GraphQLDirective } from 'graphql';
+import { CronJobService } from 'src/cron/cron.service';
 
 @Module({
   imports: [
@@ -20,6 +22,7 @@ import { DirectiveLocation, GraphQLDirective } from 'graphql';
     UserModule,
     ConfigModule,
     MailModule,
+    ScheduleModule.forRoot(),
     CacheModule.register({
       isGlobal: true,
     }),
@@ -44,7 +47,7 @@ import { DirectiveLocation, GraphQLDirective } from 'graphql';
     }),
   ],
   controllers: [AppController],
-  providers: [AppService, PrismaService],
+  providers: [AppService, PrismaService, CronJobService],
 })
 export class AppModule {
   configure(consumer: MiddlewareConsumer) {
