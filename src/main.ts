@@ -40,9 +40,6 @@ async function bootstrap() {
   // cookie
   app.use(cookieParser());
 
-  // compression 提高性能
-  app.use(compression());
-
   // swagger configuration
   const config = new DocumentBuilder()
     .setTitle('nest-api')

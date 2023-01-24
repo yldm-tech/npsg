@@ -19,6 +19,8 @@ import { join } from 'path';
 import { DirectiveLocation, GraphQLDirective } from 'graphql';
 import { CronJobService } from 'src/cron/cron.service';
 import { QueueModule } from './queue/queue.module';
+import { FileModule } from './file/file.module';
+import { MulterModule } from '@nestjs/platform-express';
 
 @Module({
   imports: [
@@ -28,8 +30,16 @@ import { QueueModule } from './queue/queue.module';
     MailModule,
     QueueModule,
     OrderModule,
+    FileModule,
     ScheduleModule.forRoot(),
     EventEmitterModule.forRoot(),
+    MulterModule.registerAsync({
+      imports: [ConfigModule],
+      useFactory: async (configService: ConfigService) => ({
+        dest: configService.get<string>('MULTER_DEST'),
+      }),
+      inject: [ConfigService],
+    }),
     CacheModule.register({
       isGlobal: true,
     }),
