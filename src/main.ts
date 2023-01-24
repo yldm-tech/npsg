@@ -5,6 +5,7 @@ import {
 } from '@nestjs/common';
 import { HttpAdapterHost, NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import * as cookieParser from 'cookie-parser';
 import { AppModule } from './app.module';
 import { PrismaClientExceptionFilter } from './common/filter/prisma-client-exception_filter';
 import { LoggingInterceptor } from './common/interceptor/logger.interceptor';
@@ -29,6 +30,9 @@ async function bootstrap() {
     type: VersioningType.URI,
     defaultVersion: VERSION_NEUTRAL,
   });
+
+  // cookie
+  app.use(cookieParser());
 
   // swagger configuration
   const config = new DocumentBuilder()
