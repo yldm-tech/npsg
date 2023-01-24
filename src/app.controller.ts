@@ -4,6 +4,7 @@ import {
   Logger,
   Res,
   Session,
+  Sse,
   Version,
   VERSION_NEUTRAL,
 } from '@nestjs/common';
@@ -11,7 +12,7 @@ import { Cookies } from './common/decorator/cookie.decorator';
 import { Response } from 'express';
 import { HttpService } from '@nestjs/axios';
 import { AxiosResponse, AxiosError } from 'axios';
-import { catchError, firstValueFrom } from 'rxjs';
+import { catchError, firstValueFrom, interval, map, Observable } from 'rxjs';
 
 @Controller({ version: VERSION_NEUTRAL })
 export class AppController {
@@ -68,5 +69,12 @@ export class AppController {
     session.visits = session.visits ? session.visits + 1 : 1;
     console.log('session: ', session);
     return session;
+  }
+
+  @Sse('sse')
+  sse(): Observable<MessageEvent> {
+    return interval(1 * 1000).pipe(
+      map((index) => ({ data: { hello: 'world->' + index } } as MessageEvent)),
+    );
   }
 }
