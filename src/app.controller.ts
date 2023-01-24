@@ -1,9 +1,22 @@
-import { Controller, Get, Res, Version, VERSION_NEUTRAL } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Logger,
+  Res,
+  Version,
+  VERSION_NEUTRAL,
+} from '@nestjs/common';
 import { Cookies } from './common/decorator/cookie.decorator';
 import { Response } from 'express';
+import { HttpService } from '@nestjs/axios';
+import { AxiosResponse, AxiosError } from 'axios';
+import { catchError, firstValueFrom } from 'rxjs';
 
 @Controller({ version: VERSION_NEUTRAL })
 export class AppController {
+  private readonly logger = new Logger(AppController.name);
+  constructor(private readonly httpService: HttpService) {}
+
   @Get()
   getHello(): string {
     return 'hello';
@@ -34,5 +47,18 @@ export class AppController {
     response.cookie('nest', 'true');
     console.log('cookies name: ', name);
     return 'hello v2';
+  }
+
+  @Get('axios')
+  async getFromAxios(): Promise<AxiosResponse> {
+    const { data } = await firstValueFrom(
+      this.httpService.get<any>('http://httpbin.org/get').pipe(
+        catchError((error: AxiosError) => {
+          this.logger.error(error.response.data);
+          throw 'An error happened!';
+        }),
+      ),
+    );
+    return data;
   }
 }

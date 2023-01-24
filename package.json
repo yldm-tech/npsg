@@ -40,6 +40,7 @@
   "dependencies": {
     "@nestjs-modules/mailer": "^1.8.1",
     "@nestjs/apollo": "^10.1.7",
+    "@nestjs/axios": "^1.0.1",
     "@nestjs/bull": "^0.6.2",
     "@nestjs/common": "^9.2.1",
     "@nestjs/config": "^2.2.0",
