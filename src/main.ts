@@ -12,9 +12,11 @@ import * as compression from 'compression';
 import { PrismaClientExceptionFilter } from './common/filter/prisma-client-exception_filter';
 import { LoggingInterceptor } from './common/interceptor/logger.interceptor';
 import { ExcludeNullInterceptor } from './common/interceptor/exclude-null.interceptor';
+import { join } from 'path';
+import { NestExpressApplication } from '@nestjs/platform-express';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
   // global pipes
   app.useGlobalPipes(
@@ -64,6 +66,10 @@ async function bootstrap() {
       saveUninitialized: false,
     }),
   );
+
+  // static
+  app.useStaticAssets(join(__dirname, '..', 'static'));
+
   await app.listen(3000);
 }
 
