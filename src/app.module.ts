@@ -1,7 +1,8 @@
 import { MailModule } from './mail/mail.module';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ScheduleModule } from '@nestjs/schedule';
 import { PrismaService } from './prisma/prisma.service';
+import { BullModule } from '@nestjs/bull';
 import { CacheModule, MiddlewareConsumer, Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -15,6 +16,7 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { join } from 'path';
 import { DirectiveLocation, GraphQLDirective } from 'graphql';
 import { CronJobService } from 'src/cron/cron.service';
+import { QueueModule } from './queue/queue.module';
 
 @Module({
   imports: [
@@ -22,12 +24,23 @@ import { CronJobService } from 'src/cron/cron.service';
     UserModule,
     ConfigModule,
     MailModule,
+    QueueModule,
     ScheduleModule.forRoot(),
     CacheModule.register({
       isGlobal: true,
     }),
     ConfigModule.forRoot({
       isGlobal: true,
+    }),
+    BullModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: async (configService: ConfigService) => ({
+        redis: {
+          host: configService.get('REDIS_HOST'),
+          port: configService.get('REDIS_PORT'),
+        },
+      }),
+      inject: [ConfigService],
     }),
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
