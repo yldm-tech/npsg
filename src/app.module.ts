@@ -12,7 +12,7 @@ import { EventEmitterModule } from '@nestjs/event-emitter';
 import { LoggerMiddleware } from './common/middleware/logger.middleware';
 import { UserModule } from './user/user.module';
 import { ApolloServerPluginLandingPageLocalDefault } from 'apollo-server-core';
-
+import { HttpModule } from '@nestjs/axios';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { GraphQLModule } from '@nestjs/graphql';
 import { join } from 'path';
@@ -30,6 +30,10 @@ import { QueueModule } from './queue/queue.module';
     OrderModule,
     ScheduleModule.forRoot(),
     EventEmitterModule.forRoot(),
+    HttpModule.register({
+      timeout: 60 * 1000,
+      maxRedirects: 5,
+    }),
     CacheModule.register({
       isGlobal: true,
     }),
