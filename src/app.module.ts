@@ -1,3 +1,4 @@
+import { OrderModule } from './order/order.module';
 import { MailModule } from './mail/mail.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ScheduleModule } from '@nestjs/schedule';
@@ -7,6 +8,7 @@ import { CacheModule, MiddlewareConsumer, Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { PostsModule } from './posts/posts.module';
+import { EventEmitterModule } from '@nestjs/event-emitter';
 import { LoggerMiddleware } from './common/middleware/logger.middleware';
 import { UserModule } from './user/user.module';
 import { ApolloServerPluginLandingPageLocalDefault } from 'apollo-server-core';
@@ -25,7 +27,9 @@ import { QueueModule } from './queue/queue.module';
     ConfigModule,
     MailModule,
     QueueModule,
+    OrderModule,
     ScheduleModule.forRoot(),
+    EventEmitterModule.forRoot(),
     CacheModule.register({
       isGlobal: true,
     }),
