@@ -1,10 +1,7 @@
-import { MailService } from './../mail/mail.service';
 import { Controller, Get, Version, VERSION_NEUTRAL } from '@nestjs/common';
 
 @Controller({ version: VERSION_NEUTRAL })
 export class AppController {
-  constructor(private readonly mailService: MailService) {}
-
   @Get()
   getHello(): string {
     return 'hello';

@@ -1,13 +1,13 @@
-import { MailModule } from './../mail/mail.module';
+import { MailModule } from './mail/mail.module';
 import { ConfigModule } from '@nestjs/config';
 import { ScheduleModule } from '@nestjs/schedule';
-import { PrismaService } from './../prisma/prisma.service';
+import { PrismaService } from './prisma/prisma.service';
 import { CacheModule, MiddlewareConsumer, Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { PostsModule } from '../posts/posts.module';
-import { LoggerMiddleware } from '../common/middleware/logger.middleware';
-import { UserModule } from '../user/user.module';
+import { PostsModule } from './posts/posts.module';
+import { LoggerMiddleware } from './common/middleware/logger.middleware';
+import { UserModule } from './user/user.module';
 import { ApolloServerPluginLandingPageLocalDefault } from 'apollo-server-core';
 
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';

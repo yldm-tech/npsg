@@ -5,7 +5,7 @@ import {
 } from '@nestjs/common';
 import { HttpAdapterHost, NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { AppModule } from './app/app.module';
+import { AppModule } from './app.module';
 import { PrismaClientExceptionFilter } from './common/filter/prisma-client-exception_filter';
 import { LoggingInterceptor } from './common/interceptor/logger.interceptor';
 import { ExcludeNullInterceptor } from './common/interceptor/exclude-null.interceptor';
