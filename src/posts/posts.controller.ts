@@ -17,6 +17,7 @@ import { PostsService } from './posts.service';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { Posts } from './post.entity';
+import { PrismaPromise } from '@prisma/client';
 
 @Controller('posts')
 @ApiTags('posts')
@@ -38,7 +39,7 @@ export class PostsController {
   @Get()
   // @UseFilters(new Prisma_client_exceptionFilter())
   @ApiOkResponse({ type: Posts, isArray: true })
-  findAll() {
+  findAll(): PrismaPromise<Array<Posts>> {
     return this.postsService.findAll({
       published: false,
       skip: 1,
@@ -48,7 +49,7 @@ export class PostsController {
 
   @Get(':id')
   @ApiOkResponse({ type: Posts })
-  async findOne(@Param('id', ParseIntPipe) id: number) {
+  async findOne(@Param('id', ParseIntPipe) id: number): Promise<Posts> {
     const post = await this.postsService.findOne(id);
     if (!post) {
       throw new NotFoundException(`Article with ${id} does not exist.`);

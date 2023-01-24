@@ -10,10 +10,10 @@ tasks:
 
   nest:generate:
     cmds:
-      - npx nest generate controller {{.CLI_ARGS}}  --no-spec
-      - npx nest generate service {{.CLI_ARGS}}  --no-spec
-      - npx nest generate module {{.CLI_ARGS}}  --no-spec
-      - npx nest generate class {{.CLI_ARGS}}  --no-spec
+      - npx nest generate controller {{.CLI_ARGS}}
+      - npx nest generate service {{.CLI_ARGS}} 
+      - npx nest generate module {{.CLI_ARGS}} 
+      - npx nest generate class {{.CLI_ARGS}}
 
   prisma:migrate:
     cmds:
