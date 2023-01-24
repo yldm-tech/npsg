@@ -1,7 +1,7 @@
 import { MailModule } from './../mail/mail.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { PrismaService } from './../prisma/prisma.service';
-import { MiddlewareConsumer, Module } from '@nestjs/common';
+import { CacheModule, MiddlewareConsumer, Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { PostsModule } from '../posts/posts.module';
@@ -20,8 +20,11 @@ import { DirectiveLocation, GraphQLDirective } from 'graphql';
     UserModule,
     ConfigModule,
     MailModule,
+    CacheModule.register({
+      isGlobal: true,
+    }),
     ConfigModule.forRoot({
-      isGlobal: true, // no need to import into other modules
+      isGlobal: true,
     }),
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,

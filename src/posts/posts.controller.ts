@@ -1,6 +1,4 @@
-// definition of different routes/route handlers
-// SwaggerModule searches for all @Body(), @Query() and @Param() decorators
-// on the route handlers to generate API page
+import { PrismaClientExceptionFilter } from './../common/filter/prisma-client-exception_filter';
 import {
   Controller,
   Get,
@@ -11,6 +9,11 @@ import {
   Delete,
   ParseIntPipe,
   NotFoundException,
+  UseFilters,
+  CacheTTL,
+  CacheKey,
+  UseInterceptors,
+  CacheInterceptor,
 } from '@nestjs/common';
 import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { PostsService } from './posts.service';
@@ -21,6 +24,7 @@ import { PrismaPromise } from '@prisma/client';
 
 @Controller('posts')
 @ApiTags('posts')
+@UseInterceptors(CacheInterceptor)
 export class PostsController {
   constructor(private readonly postsService: PostsService) {}
 
@@ -36,8 +40,10 @@ export class PostsController {
     return this.postsService.findDrafts();
   }
 
+  @CacheKey('all_posts')
+  @CacheTTL(20)
   @Get()
-  // @UseFilters(new Prisma_client_exceptionFilter())
+  @UseFilters(new PrismaClientExceptionFilter())
   @ApiOkResponse({ type: Posts, isArray: true })
   findAll(): PrismaPromise<Array<Posts>> {
     return this.postsService.findAll({
