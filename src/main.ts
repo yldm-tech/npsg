@@ -3,6 +3,7 @@ import {
   VersioningType,
   VERSION_NEUTRAL,
 } from '@nestjs/common';
+import * as session from 'express-session';
 import { HttpAdapterHost, NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import * as cookieParser from 'cookie-parser';
@@ -55,6 +56,14 @@ async function bootstrap() {
   SwaggerModule.setup('docs', app, document);
 
   app.enableShutdownHooks();
+  // session
+  app.use(
+    session({
+      secret: 'session',
+      resave: false,
+      saveUninitialized: false,
+    }),
+  );
   await app.listen(3000);
 }
 

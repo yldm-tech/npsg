@@ -3,6 +3,7 @@ import {
   Get,
   Logger,
   Res,
+  Session,
   Version,
   VERSION_NEUTRAL,
 } from '@nestjs/common';
@@ -60,5 +61,12 @@ export class AppController {
       ),
     );
     return data;
+  }
+
+  @Get('/session')
+  session(@Session() session: Record<string, any>) {
+    session.visits = session.visits ? session.visits + 1 : 1;
+    console.log('session: ', session);
+    return session;
   }
 }
