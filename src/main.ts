@@ -7,6 +7,7 @@ import { HttpAdapterHost, NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import * as cookieParser from 'cookie-parser';
 import { AppModule } from './app.module';
+import * as compression from 'compression';
 import { PrismaClientExceptionFilter } from './common/filter/prisma-client-exception_filter';
 import { LoggingInterceptor } from './common/interceptor/logger.interceptor';
 import { ExcludeNullInterceptor } from './common/interceptor/exclude-null.interceptor';
@@ -58,6 +59,3 @@ async function bootstrap() {
 }
 
 bootstrap();
-function compression(): any {
-  throw new Error('Function not implemented.');
-}
