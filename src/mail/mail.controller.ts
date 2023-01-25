@@ -1,6 +1,6 @@
-import { Controller, Get, Query, Req } from '@nestjs/common';
-import { MailService } from './mail.service';
+import { Controller, Get, Query } from '@nestjs/common';
 import { SentMessageInfo } from 'nodemailer';
+import { MailService } from './mail.service';
 
 @Controller('/mail')
 export class MailController {

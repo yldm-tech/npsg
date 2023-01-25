@@ -1,9 +1,17 @@
 import { PrismaClient } from '@prisma/client';
+import { Role } from 'src/user/user';
 
 const prisma = new PrismaClient();
 
 async function main() {
   // create two dummy posts
+  const xiaomo = {
+    name: 'xiaomo',
+    email: 'xiaomo@xiaomo.info',
+    password: '$2b$10$jAA0vBjSZUautzMdb/LB7OBE5I1dtRcsGwz5z9qX90MNBWlJGAeo', // xiaomo123
+    roles: [Role.Admin, Role.User],
+  };
+
   const post1 = await prisma.post.upsert({
     where: { title: 'Prisma Adds Support for MongoDB' },
     update: {},
@@ -11,12 +19,9 @@ async function main() {
       User: {
         connectOrCreate: {
           where: {
-            email: 'xiaomo@xiaomo.info',
+            email: xiaomo.email,
           },
-          create: {
-            name: 'xiaomo',
-            email: 'xiaomo@xiaomo.info',
-          },
+          create: xiaomo,
         },
       },
       title: 'Prisma Adds Support for MongoDB',
@@ -33,12 +38,9 @@ async function main() {
       User: {
         connectOrCreate: {
           where: {
-            email: 'xiaomo@xiaomo.info',
+            email: xiaomo.email,
           },
-          create: {
-            name: 'xiaomo',
-            email: 'xiaomo@xiaomo.info',
-          },
+          create: xiaomo,
         },
       },
       title: 'What is new in Prisma? (Q1/22)',

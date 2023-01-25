@@ -4,15 +4,19 @@ import {
   VERSION_NEUTRAL,
 } from '@nestjs/common';
 import { HttpAdapterHost, NestFactory } from '@nestjs/core';
+import { NestExpressApplication } from '@nestjs/platform-express';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import * as compression from 'compression';
 import * as cookieParser from 'cookie-parser';
+import * as session from 'express-session';
+import { join } from 'path';
 import { AppModule } from './app.module';
 import { PrismaClientExceptionFilter } from './common/filter/prisma-client-exception_filter';
-import { LoggingInterceptor } from './common/interceptor/logger.interceptor';
 import { ExcludeNullInterceptor } from './common/interceptor/exclude-null.interceptor';
+import { LoggingInterceptor } from './common/interceptor/logger.interceptor';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
   // global pipes
   app.useGlobalPipes(
@@ -51,10 +55,19 @@ async function bootstrap() {
   SwaggerModule.setup('docs', app, document);
 
   app.enableShutdownHooks();
+  // session
+  app.use(
+    session({
+      secret: 'session',
+      resave: false,
+      saveUninitialized: false,
+    }),
+  );
+
+  // static
+  app.useStaticAssets(join(__dirname, '..', 'static'));
+
   await app.listen(3000);
 }
 
 bootstrap();
-function compression(): any {
-  throw new Error('Function not implemented.');
-}

@@ -1,31 +1,32 @@
-import { OrderModule } from './order/order.module';
-import { MailModule } from './mail/mail.module';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import { ScheduleModule } from '@nestjs/schedule';
-import { PrismaService } from './prisma/prisma.service';
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
+import { HttpModule } from '@nestjs/axios';
 import { BullModule } from '@nestjs/bull';
 import { CacheModule, MiddlewareConsumer, Module } from '@nestjs/common';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { EventEmitterModule } from '@nestjs/event-emitter';
+import { GraphQLModule } from '@nestjs/graphql';
+import { ScheduleModule } from '@nestjs/schedule';
+import { ApolloServerPluginLandingPageLocalDefault } from 'apollo-server-core';
+import { DirectiveLocation, GraphQLDirective } from 'graphql';
+import { join } from 'path';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { PostsModule } from './posts/posts.module';
-import { EventEmitterModule } from '@nestjs/event-emitter';
+import { AuthModule } from './auth/auth.module';
 import { LoggerMiddleware } from './common/middleware/logger.middleware';
-import { UserModule } from './user/user.module';
-import { ApolloServerPluginLandingPageLocalDefault } from 'apollo-server-core';
-
-import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
-import { GraphQLModule } from '@nestjs/graphql';
-import { join } from 'path';
-import { DirectiveLocation, GraphQLDirective } from 'graphql';
-import { CronJobService } from 'src/cron/cron.service';
+import { MailModule } from './mail/mail.module';
+import { OrderModule } from './order/order.module';
+import { PostsModule } from './posts/posts.module';
+import { PrismaService } from './prisma/prisma.service';
 import { QueueModule } from './queue/queue.module';
 import { FileModule } from './file/file.module';
 import { MulterModule } from '@nestjs/platform-express';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
     PostsModule,
     UserModule,
+    AuthModule,
     ConfigModule,
     MailModule,
     QueueModule,
@@ -33,6 +34,10 @@ import { MulterModule } from '@nestjs/platform-express';
     FileModule,
     ScheduleModule.forRoot(),
     EventEmitterModule.forRoot(),
+    HttpModule.register({
+      timeout: 60 * 1000,
+      maxRedirects: 5,
+    }),
     MulterModule.registerAsync({
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => ({
@@ -74,7 +79,12 @@ import { MulterModule } from '@nestjs/platform-express';
     }),
   ],
   controllers: [AppController],
-  providers: [AppService, PrismaService, CronJobService],
+  providers: [
+    AppService,
+    PrismaService,
+    // 根据需要开启cronJob
+    //  CronJobService,
+  ],
 })
 export class AppModule {
   configure(consumer: MiddlewareConsumer) {
