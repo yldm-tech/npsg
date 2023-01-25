@@ -35,7 +35,10 @@
     "resolver": "npx nest generate resolver --no-spec",
     "service": "npx nest generate service --no-spec",
     "lib": "npx nest generate library --no-spec",
-    "resource": "npx nest generate resource --no-spec"
+    "resource": "npx nest generate resource --no-spec",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs --port 8080"
   },
   "dependencies": {
     "@nestjs-modules/mailer": "^1.8.1",
@@ -105,7 +108,9 @@
     "ts-loader": "^9.4.2",
     "ts-node": "^10.9.1",
     "tsconfig-paths": "4.1.2",
-    "typescript": "^4.9.4"
+    "typescript": "^4.9.4",
+    "vitepress": "^1.0.0-alpha.40",
+    "vue": "^3.2.45"
   },
   "jest": {
     "moduleFileExtensions": [
