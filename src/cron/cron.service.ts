@@ -1,10 +1,10 @@
-import { Global, Injectable, Logger } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import {
   Cron,
   CronExpression,
   Interval,
-  Timeout,
   SchedulerRegistry,
+  Timeout,
 } from '@nestjs/schedule';
 
 @Injectable()
@@ -28,7 +28,7 @@ export class CronJobService {
     timeZone: 'Asia/Tokyo',
   })
   triggerNotifications() {
-    console.log('Called every day at midnight');
+    // console.log('Called every day at midnight');
   }
 
   /**
