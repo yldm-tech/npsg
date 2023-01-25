@@ -14,7 +14,7 @@ hero:
   actions:
     - theme: brand
       text: 开始
-      link: /guide/
+      link: /guide/1-nestjs
     - theme: alt
       text: 更多
       link: https://github.com/lantron-ltd/npsg
@@ -29,7 +29,7 @@ features:
       src: ./prisma.png
     title: Prisma
     link: 'https://www.prisma.io/'
-    details: 下一代 Node.js 和 TypeScript 构建的ORM框架.
+    details: 下一代 Node.js 和 TypeScript 构建的ORM框架。
   - icon: 
       src: ./swagger.png
     title: Swagger
