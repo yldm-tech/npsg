@@ -38,13 +38,6 @@ import { UserModule } from './user/user.module';
       timeout: 60 * 1000,
       maxRedirects: 5,
     }),
-    MulterModule.registerAsync({
-      imports: [ConfigModule],
-      useFactory: async (configService: ConfigService) => ({
-        dest: configService.get<string>('MULTER_DEST'),
-      }),
-      inject: [ConfigService],
-    }),
     CacheModule.register({
       isGlobal: true,
     }),

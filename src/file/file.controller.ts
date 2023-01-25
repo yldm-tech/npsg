@@ -6,6 +6,7 @@ import {
   MaxFileSizeValidator,
   ParseFilePipe,
   Post,
+  Query,
   Res,
   StreamableFile,
   UploadedFile,
@@ -15,17 +16,21 @@ import {
 import { FileService } from './file.service';
 import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import { FileSizeValidationPipe } from 'src/common/pipe/file-size.pipe';
-import { createReadStream } from 'fs';
-import { join } from 'path';
-import { Response } from 'express';
+import { query, Response } from 'express';
+import { HttpService } from '@nestjs/axios';
+import { request } from 'http';
+import { Readable } from 'stream';
+import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('file')
 @Controller('file')
 export class FileController {
   constructor(private readonly fileService: FileService) {}
 
+  @ApiOkResponse()
   @Post('upload')
   @UseInterceptors(FileInterceptor('file'))
-  uploadFile(
+  async uploadFile(
     @UploadedFile(
       new ParseFilePipe({
         validators: [
@@ -35,14 +40,17 @@ export class FileController {
       }),
     )
     file: Express.Multer.File,
-  ) {
-    this.fileService.upload(file);
-    return true;
+  ): Promise<any> {
+    const url = await this.fileService.upload(file);
+    return {
+      url: url,
+    };
   }
 
+  @ApiCreatedResponse()
   @Post('uploads')
   @UseInterceptors(FilesInterceptor('files'))
-  uploadFiles(
+  async uploadFiles(
     @UploadedFiles(
       new ParseFilePipe({
         validators: [
@@ -53,30 +61,15 @@ export class FileController {
     )
     files: Array<Express.Multer.File>,
   ) {
-    this.fileService.uploads(files);
-    return true;
+    return await this.fileService.uploads(files);
   }
 
+  @ApiOkResponse()
   @Get('download')
-  @Header('Content-Type', 'application/octet-stream')
-  @Header('Content-Disposition', 'attachment; filename="download.tar"')
-  async downloadFile(@Res() res: Response) {
-    const { filename, stream } = await this.fileService.downloadFile();
-    return stream.pipe(res);
-  }
-  @Get()
-  @Header('Content-Type', 'application/json')
-  @Header('Content-Disposition', 'attachment; filename="package.json"')
-  getFile(@Res({ passthrough: true }) res: Response): StreamableFile {
-    const file = createReadStream(join(process.cwd(), 'package.json'));
-    return new StreamableFile(file);
-  }
-
-  @Get('static')
-  @Header('Content-Type', 'application/json')
-  @Header('Content-Disposition', 'attachment; filename="package.json"')
-  getStaticFile(): StreamableFile {
-    const file = createReadStream(join(process.cwd(), 'package.json'));
-    return new StreamableFile(file);
+  async downloadFile(@Query('path') path: string, @Res() res: Response) {
+    const file = await this.fileService.downloadFile(path);
+    res.header('Content-Type', 'application/octet-stream');
+    res.header('Content-Disposition', `attachment; filename="${path}"`);
+    Readable.from(file as Buffer).pipe(res);
   }
 }

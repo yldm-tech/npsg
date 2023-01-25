@@ -55,6 +55,7 @@
     "@nestjs/websockets": "^9.2.1",
     "@prisma/client": "^4.9.0",
     "apollo-server-express": "^3.11.1",
+    "aws-sdk": "^2.1301.0",
     "bcrypt": "^5.1.0",
     "bull": "^4.10.2",
     "cache-manager": "^5.1.4",
