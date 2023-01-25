@@ -1,0 +1,391 @@
+openapi: 3.0.0
+paths:
+  /:
+    get:
+      operationId: AppController_getHello
+      summary: ''
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+  /v1:
+    get:
+      operationId: AppController_getHelloV1
+      summary: ''
+      description: http://localhost:3000/v1
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+  /v2:
+    get:
+      operationId: AppController_getHelloV2
+      summary: ''
+      description: |-
+        http://localhost:3000/v2
+        1. 默认会返回一个 nest=true 的 cookie
+        2. 在postman中的Headers中设置一个key为[Cookie],[value]为[name=nest]的参数，会在控制台打印出来
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+  /axios:
+    get:
+      operationId: AppController_getFromAxios
+      summary: ''
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+  /session:
+    get:
+      operationId: AppController_session
+      summary: ''
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+  /sse:
+    get:
+      operationId: AppController_sse
+      summary: ''
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+  /posts:
+    post:
+      operationId: PostsController_create
+      summary: ''
+      description: ''
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePostDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Posts'
+      tags: &ref_0
+        - posts
+    get:
+      operationId: PostsController_findAll
+      summary: ''
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Posts'
+      tags: *ref_0
+  /posts/drafts:
+    get:
+      operationId: PostsController_findDrafts
+      summary: ''
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Posts'
+      tags: *ref_0
+  /posts/{id}:
+    get:
+      operationId: PostsController_findOne
+      summary: ''
+      description: ''
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Posts'
+      tags: *ref_0
+    patch:
+      operationId: PostsController_update
+      summary: ''
+      description: ''
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdatePostDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Posts'
+      tags: *ref_0
+    delete:
+      operationId: PostsController_remove
+      summary: ''
+      description: ''
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Posts'
+      tags: *ref_0
+  /mail/sendMail:
+    get:
+      operationId: MailController_sendMail
+      summary: ''
+      description: ''
+      parameters:
+        - name: mail
+          required: true
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+  /queue/transcode:
+    post:
+      operationId: QueueController_transcode
+      summary: ''
+      description: ''
+      parameters: []
+      responses:
+        '201':
+          description: ''
+  /order:
+    post:
+      operationId: OrdersController_create
+      summary: ''
+      description: ''
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateOrderDto'
+      responses:
+        '201':
+          description: ''
+  /auth/login:
+    post:
+      operationId: AuthController_login
+      summary: ''
+      description: ''
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginInput'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+  /auth/profile:
+    get:
+      operationId: AuthController_getProfile
+      summary: ''
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+  /auth/updatePassword:
+    post:
+      operationId: AuthController_updatePassword
+      summary: ''
+      description: ''
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdatePasswordInput'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+info:
+  title: nest-api
+  description: The nest API description
+  version: '0.1'
+  contact: {}
+tags: []
+servers: []
+components:
+  securitySchemes:
+    basic:
+      type: http
+      scheme: basic
+  schemas:
+    CreatePostDto:
+      type: object
+      properties:
+        description:
+          type: string
+        published:
+          type: boolean
+          default: false
+        title:
+          type: string
+        body:
+          type: string
+        authorId:
+          type: number
+        content:
+          type: string
+          nullable: true
+      required:
+        - title
+        - body
+        - authorId
+        - content
+    Posts:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+          nullable: true
+        body:
+          type: string
+        authorId:
+          type: number
+        content:
+          type: string
+          nullable: true
+        published:
+          type: boolean
+        id:
+          type: number
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+      required:
+        - title
+        - description
+        - body
+        - authorId
+        - content
+        - published
+        - id
+        - createdAt
+        - updatedAt
+    UpdatePostDto:
+      type: object
+      properties:
+        description:
+          type: string
+        published:
+          type: boolean
+          default: false
+        title:
+          type: string
+        body:
+          type: string
+        authorId:
+          type: number
+        content:
+          type: string
+          nullable: true
+    CreateOrderDto:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+      required:
+        - name
+        - description
+    LoginInput:
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+      required:
+        - email
+        - password
+    UpdatePasswordInput:
+      type: object
+      properties: {}
