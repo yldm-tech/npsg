@@ -4,6 +4,6 @@ export default [
   { text: 'API 参考', link: '/api/' },
   {
     text: '更新日志',
-    link: 'https://github.com/lantron-ltd/npsg/releases',
+    link: 'https://github.com/lantron-ltd/npsg/blob/main/CHANGELOG.md',
   },
 ];

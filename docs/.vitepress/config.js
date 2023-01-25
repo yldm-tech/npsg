@@ -12,7 +12,7 @@ export default defineConfig({
       {
         rel: 'apple-touch-icon',
         sizes: '180x180',
-        href: '/assets/favicons/apple-touch-icon.png',
+        href: '/logo.png',
       },
     ],
     [
@@ -21,7 +21,7 @@ export default defineConfig({
         rel: 'icon',
         type: 'image/png',
         sizes: '32x32',
-        href: '/assets/favicons/favicon-32x32.png',
+        href: '/logo.png',
       },
     ],
     [
@@ -30,36 +30,17 @@ export default defineConfig({
         rel: 'icon',
         type: 'image/png',
         sizes: '16x16',
-        href: '/assets/favicons/favicon-16x16.png',
+        href: '/logo.png',
       },
     ],
     ['link', { rel: 'manifest', href: '/assets/favicons/site.webmanifest' }],
-    [
-      'link',
-      {
-        rel: 'mask-icon',
-        href: '/assets/favicons/safari-pinned-tab.svg',
-        color: '#3a0839',
-      },
-    ],
-    ['link', { rel: 'shortcut icon', href: '/assets/favicons/favicon.ico' }],
+    ['link', { rel: 'shortcut icon', href: '/logo.png' }],
     ['meta', { name: 'msapplication-TileColor', content: '#3a0839' }],
-    [
-      'meta',
-      {
-        name: 'msapplication-config',
-        content: '/assets/favicons/browserconfig.xml',
-      },
-    ],
-    ['meta', { name: 'theme-color', content: '#ffffff' }],
   ],
-
   lastUpdated: true,
   cleanUrls: 'without-subfolders',
 
   base: process.env.BASE || '/npsg',
-  head: [['link', { rel: 'icon', type: 'image/svg+xml', href: '/logo.png' }]],
-
   markdown: {
     headers: {
       level: [0, 0],

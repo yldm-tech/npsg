@@ -7,6 +7,10 @@ tasks:
     cmds:
       - echo {{.CLI_ARGS}}
     silent: true
+  
+  init:
+    cmds:
+      -  npm install -g conventional-changelog-cli
 
   nest:generate:
     cmds:
@@ -39,5 +43,10 @@ tasks:
   prisma:format:
     cmds:
       - npx prisma format
+
+  changelog:
+    cmds:
+      - conventional-changelog -p angular -i CHANGELOG.md -s
+
   
 
