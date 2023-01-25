@@ -10,7 +10,7 @@ export default defineConfig({
   lastUpdated: true,
   cleanUrls: 'without-subfolders',
 
-  base: process.env.BASE || '/',
+  base: process.env.BASE || '/npsg',
   head: [['link', { rel: 'icon', type: 'image/svg+xml', href: '/logo.png' }]],
 
   markdown: {
