@@ -22,7 +22,6 @@ export class OrdersService {
   constructor(private eventEmitter: EventEmitter2) {}
 
   create(createOrderDto: CreateOrderDto) {
-    console.log(createOrderDto);
     const order = {
       id: this.orders.length + 1,
       ...createOrderDto,

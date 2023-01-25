@@ -1,58 +1,52 @@
 import { Injectable } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
+import { PrismaService } from 'src/prisma/prisma.service';
+import ICreateUserInput from './interface/create-user-input.interface';
+import IUpdatePasswordInput from './interface/update-user-input.interface';
+import { Role } from './user';
 
 export type User = any;
 
 @Injectable()
 export class UserService {
-  constructor(
-    private readonly usersService: UserService,
-    private readonly jwtService: JwtService,
-  ) {}
+  constructor(private readonly prismaService: PrismaService) {}
 
-  private readonly users = [
-    {
-      id: 1,
-      name: 'xiaomo',
-      email: 'xiaomo@xiaomo.info',
-      password: 'xiaomo',
-      createdAt: new Date(),
-      updateAt: new Date(),
-    },
-    {
-      id: 2,
-      email: 'xiaomo@xiaomo.info',
-      name: 'maria',
-      password: 'guess',
-      createdAt: new Date(),
-      updateAt: new Date(),
-    },
-  ];
-
-  async findOne(username: string): Promise<User | undefined> {
-    return this.users.find((user) => user.name === username);
+  create({ email, encryptedPassword }: ICreateUserInput) {
+    return this.prismaService.user.create({
+      data: {
+        email: email,
+        name: email,
+        password: encryptedPassword,
+        roles: [Role.User, Role.Buyer],
+      },
+    });
   }
 
-  async login(user: User) {
-    const payload = { username: user.name, sub: user.id };
-    return {
-      access_token: this.jwtService.sign(payload, {
-        expiresIn: '1000s',
-        algorithm: 'HS256',
-        secret: 'secret',
-        issuer: 'http://localhost:3000',
-        audience: 'http://localhost:3000',
-      }),
-    };
+  async findOne(userId: number) {
+    return this.prismaService.user.findUnique({
+      where: {
+        id: userId,
+      },
+    });
   }
 
-  async validateUser(username: string, pass: string): Promise<any> {
-    console.log('AuthService validateUser');
-    const user = await this.findOne(username);
-    if (user && user.password === pass) {
-      const { password, ...result } = user;
-      return result;
-    }
-    return null;
+  async findOneByEmail(email: string): Promise<User | undefined> {
+    return this.prismaService.user.findUnique({
+      where: { email: email },
+    });
+  }
+
+  async updateOne(uuid: number, updatePasswordInput: IUpdatePasswordInput) {
+    const { newEncryptedPassword } = updatePasswordInput;
+    const user = await this.findOne(uuid);
+    if (!user) return null;
+    await this.prismaService.user.update({
+      where: {
+        id: uuid,
+      },
+      data: {
+        password: newEncryptedPassword,
+      },
+    });
+    return user;
   }
 }

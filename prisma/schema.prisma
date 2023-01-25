@@ -8,27 +8,41 @@ datasource db {
 }
 
 model Post {
-  id          Int      @id @default(autoincrement())
-  title       String   @unique
+  id          Int       @id @default(autoincrement())
+  title       String    @unique
   content     String?
   body        String
   description String?
-  published   Boolean  @default(false)
-  authorId    Int      @map("author_id")
-  createdAt   DateTime @default(now()) @map("created_at")
-  updatedAt   DateTime @updatedAt @map("updated_at")
+  published   Boolean   @default(false)
+  authorId    Int       @map("author_id")
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime? @updatedAt @map("updated_at")
   // relationship
-  User        User     @relation(fields: [authorId], references: [id])
+  User        User      @relation(fields: [authorId], references: [id])
 
   @@map("posts")
 }
 
 model User {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  name  String?
+  id        Int       @id @default(autoincrement())
+  email     String    @unique
+  name      String?
+  password  String
+  roles     String[]
   // relationship
-  Post  Post[]
+  Post      Post[]
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime? @updatedAt @map("updated_at")
 
   @@map("users")
+}
+
+model AppConfig {
+  id        Int       @id @default(autoincrement())
+  key       String    @unique
+  value     String
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime? @updatedAt @map("updated_at")
+
+  @@map("config")
 }
