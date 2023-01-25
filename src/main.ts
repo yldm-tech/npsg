@@ -9,7 +9,10 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import * as compression from 'compression';
 import * as cookieParser from 'cookie-parser';
 import * as session from 'express-session';
+import * as fs from 'fs';
+import * as yaml from 'js-yaml';
 import { join } from 'path';
+import { doc } from 'prettier';
 import { AppModule } from './app.module';
 import { PrismaClientExceptionFilter } from './common/filter/prisma-client-exception_filter';
 import { ExcludeNullInterceptor } from './common/interceptor/exclude-null.interceptor';
@@ -53,6 +56,17 @@ async function bootstrap() {
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('docs', app, document);
+  // swagger json
+  const jsonDocument = JSON.stringify(
+    JSON.parse(JSON.stringify(document)),
+    null,
+    2,
+  );
+  console.log(jsonDocument);
+  fs.writeFileSync(join(__dirname, '../docs/swagger.json'), jsonDocument);
+  // swagger yaml
+  const yamlDocument = yaml.dump(document);
+  fs.writeFileSync(join(__dirname, '../docs/swagger.yaml'), yamlDocument);
 
   app.enableShutdownHooks();
   // session

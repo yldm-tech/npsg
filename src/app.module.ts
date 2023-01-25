@@ -74,7 +74,7 @@ import { UserModule } from './user/user.module';
           }),
         ],
       },
-      autoSchemaFile: join(process.cwd(), 'src/schema/schema.gql'),
+      autoSchemaFile: join(__dirname, '../docs/schema.gql'),
       plugins: [ApolloServerPluginLandingPageLocalDefault()],
     }),
   ],
