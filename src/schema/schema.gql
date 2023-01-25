@@ -49,7 +49,7 @@ input userInput {
 type Query {
   post(id: Float!): Posts!
   posts(skip: Int! = 0, take: Int! = 25, published: Boolean! = false): [Posts!]!
-  currentUser: user
+  profile: user
 }
 
 type Mutation {

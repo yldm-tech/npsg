@@ -1,28 +1,33 @@
-import { Controller, Get, Post, Request, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
 import { AuthService } from 'src/auth/auth.service';
-import { User } from '../common/decorator/user.decorator';
-import { UserEntity } from '../user/user';
+import { CurrentUser } from 'src/common/decorator/current-user.decorator';
+import { LoginInput } from './dto/login-request.dto';
 import { JwtAuthGuard } from './guard/jwt-auth.guard';
-import { LocalAuthGuard } from './guard/local-auth.guard';
+import UpdatePasswordInput from './dto/update-password.request';
+import IUserContext from './interface/user-context.interface';
+import { User } from '@prisma/client';
 
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @Get()
-  getUser(@User() user: UserEntity): UserEntity {
-    return user;
-  }
-
-  @UseGuards(LocalAuthGuard)
   @Post('/login')
-  async login(@Request() req) {
-    return this.authService.login(req.user);
+  async login(@Body() loginInput: LoginInput) {
+    return this.authService.login(loginInput);
   }
 
   @UseGuards(JwtAuthGuard)
   @Get('/profile')
-  getProfile(@Request() req) {
-    return req.user;
+  getProfile(@CurrentUser() user: IUserContext): Promise<User> {
+    return this.authService.findUserFromContext(user);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Post('/updatePassword')
+  updatePassword(
+    @CurrentUser() user: IUserContext,
+    @Body() updatePasswordInput: UpdatePasswordInput,
+  ) {
+    return this.authService.updatePassword(user.userId, updatePasswordInput);
   }
 }
