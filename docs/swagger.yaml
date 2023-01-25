@@ -186,48 +186,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/Posts'
       tags: *ref_0
-  /mail/sendMail:
-    get:
-      operationId: MailController_sendMail
-      summary: ''
-      description: ''
-      parameters:
-        - name: mail
-          required: true
-          in: query
-          schema:
-            type: string
-      responses:
-        '200':
-          description: ''
-          content:
-            application/json:
-              schema:
-                type: object
-  /queue/transcode:
-    post:
-      operationId: QueueController_transcode
-      summary: ''
-      description: ''
-      parameters: []
-      responses:
-        '201':
-          description: ''
-  /order:
-    post:
-      operationId: OrdersController_create
-      summary: ''
-      description: ''
-      parameters: []
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CreateOrderDto'
-      responses:
-        '201':
-          description: ''
   /auth/login:
     post:
       operationId: AuthController_login
@@ -279,6 +237,90 @@ paths:
             application/json:
               schema:
                 type: object
+  /mail/sendMail:
+    get:
+      operationId: MailController_sendMail
+      summary: ''
+      description: ''
+      parameters:
+        - name: mail
+          required: true
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+  /queue/transcode:
+    post:
+      operationId: QueueController_transcode
+      summary: ''
+      description: ''
+      parameters: []
+      responses:
+        '201':
+          description: ''
+  /order:
+    post:
+      operationId: OrdersController_create
+      summary: ''
+      description: ''
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateOrderDto'
+      responses:
+        '201':
+          description: ''
+  /file/upload:
+    post:
+      operationId: FileController_uploadFile
+      summary: ''
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+      tags: &ref_1
+        - file
+  /file/uploads:
+    post:
+      operationId: FileController_uploadFiles
+      summary: ''
+      description: ''
+      parameters: []
+      responses:
+        '201':
+          description: ''
+      tags: *ref_1
+  /file/download:
+    get:
+      operationId: FileController_downloadFile
+      summary: ''
+      description: ''
+      parameters:
+        - name: path
+          required: true
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+      tags: *ref_1
 info:
   title: nest-api
   description: The nest API description
@@ -366,16 +408,6 @@ components:
         content:
           type: string
           nullable: true
-    CreateOrderDto:
-      type: object
-      properties:
-        name:
-          type: string
-        description:
-          type: string
-      required:
-        - name
-        - description
     LoginInput:
       type: object
       properties:
@@ -389,3 +421,13 @@ components:
     UpdatePasswordInput:
       type: object
       properties: {}
+    CreateOrderDto:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+      required:
+        - name
+        - description

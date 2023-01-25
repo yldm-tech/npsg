@@ -9,7 +9,6 @@ import { ScheduleModule } from '@nestjs/schedule';
 import { ApolloServerPluginLandingPageLocalDefault } from 'apollo-server-core';
 import { DirectiveLocation, GraphQLDirective } from 'graphql';
 import { join } from 'path';
-import { CronJobService } from 'src/cron/cron.service';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
@@ -19,15 +18,20 @@ import { OrderModule } from './order/order.module';
 import { PostsModule } from './posts/posts.module';
 import { PrismaService } from './prisma/prisma.service';
 import { QueueModule } from './queue/queue.module';
+import { FileModule } from './file/file.module';
+import { MulterModule } from '@nestjs/platform-express';
 import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
     PostsModule,
     UserModule,
+    AuthModule,
+    ConfigModule,
     MailModule,
     QueueModule,
     OrderModule,
+    FileModule,
     ScheduleModule.forRoot(),
     EventEmitterModule.forRoot(),
     HttpModule.register({
@@ -66,7 +70,6 @@ import { UserModule } from './user/user.module';
       autoSchemaFile: join(__dirname, '../docs/schema.gql'),
       plugins: [ApolloServerPluginLandingPageLocalDefault()],
     }),
-    AuthModule,
   ],
   controllers: [AppController],
   providers: [
