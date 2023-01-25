@@ -4,7 +4,7 @@ import nav from './configs/nav';
 import sidebar from './configs/sidebar';
 
 export default defineConfig({
-  title: 'Npst',
+  title: 'Npsg',
   description: '基于Nestjs的server框架',
 
   lastUpdated: true,
@@ -62,7 +62,7 @@ export default defineConfig({
 
     footer: {
       message: 'Released under the MIT License.',
-      copyright: 'Copyright © 2023 npst',
+      copyright: `Copyright © ${new Date().getFullYear()} npst`,
     },
   },
 });

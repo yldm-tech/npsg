@@ -1,11 +1,11 @@
 ---
 layout: home
 
-title: npst
+title: Npsg
 titleTemplate: 使用nestjs、prisma、swagger搭建的开箱即用的脚手架。
 
 hero:
-  name: Npst
+  name: Npsg
   text: 基于Nest搭建的Server Framework
   # tagline: 基于NestJS搭建的后端框架
   image:
