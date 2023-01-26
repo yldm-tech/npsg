@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { EventEmitter2 } from '@nestjs/event-emitter';
+import { eventConstants } from 'src/user/constants';
 import { Order } from '../order/entities/order.entity';
 import { CreateOrderDto } from './dto/create-order.dto';
-import { OrderCreatedEvent } from './order-created.event';
+import { OrderCreatedEvent } from './dto/order-created.event';
 
 @Injectable()
 export class OrdersService {
@@ -31,7 +32,10 @@ export class OrdersService {
     const orderCreatedEvent = new OrderCreatedEvent();
     orderCreatedEvent.name = order.name;
     orderCreatedEvent.description = order.description;
-    this.eventEmitter.emit('order.created', orderCreatedEvent);
+    this.eventEmitter.emit(
+      eventConstants.CREATE_ORDER_EVENT,
+      orderCreatedEvent,
+    );
 
     return order;
   }

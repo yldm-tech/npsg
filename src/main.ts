@@ -6,17 +6,16 @@ import {
 import { HttpAdapterHost, NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import * as compression from 'compression';
 import * as cookieParser from 'cookie-parser';
 import * as session from 'express-session';
 import * as fs from 'fs';
 import * as yaml from 'js-yaml';
 import { join } from 'path';
-import { doc } from 'prettier';
 import { AppModule } from './app.module';
 import { PrismaClientExceptionFilter } from './common/filter/prisma-client-exception_filter';
 import { ExcludeNullInterceptor } from './common/interceptor/exclude-null.interceptor';
 import { LoggingInterceptor } from './common/interceptor/logger.interceptor';
+import { sessionKey } from './user/constants';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -25,8 +24,6 @@ async function bootstrap() {
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,
-      transform: false,
-      forbidUnknownValues: false,
     }),
   );
 
@@ -62,7 +59,6 @@ async function bootstrap() {
     null,
     2,
   );
-  console.log(jsonDocument);
   fs.writeFileSync(join(__dirname, '../docs/swagger.json'), jsonDocument);
   // swagger yaml
   const yamlDocument = yaml.dump(document);
@@ -72,7 +68,7 @@ async function bootstrap() {
   // session
   app.use(
     session({
-      secret: 'session',
+      secret: sessionKey,
       resave: false,
       saveUninitialized: false,
     }),

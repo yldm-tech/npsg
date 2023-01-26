@@ -1,11 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { OnEvent } from '@nestjs/event-emitter';
-import { OrderCreatedEvent } from '../order-created.event';
+import { eventConstants } from 'src/user/constants';
+import { OrderCreatedEvent } from '../dto/order-created.event';
 
 @Injectable()
 export class OrderCreatedListener {
-  @OnEvent('order.created')
+  @OnEvent(eventConstants.CREATE_ORDER_EVENT)
   handleOrderCreatedEvent(event: OrderCreatedEvent) {
-    console.log(event);
+    console.log(
+      `listened handleOrderCreatedEvent: ${event.name} - ${event.description}`,
+    );
   }
 }

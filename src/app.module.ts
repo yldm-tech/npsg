@@ -12,7 +12,6 @@ import { join } from 'path';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
-import { LoggerMiddleware } from './common/middleware/logger.middleware';
 import { MailModule } from './mail/mail.module';
 import { OrderModule } from './order/order.module';
 import { PostsModule } from './posts/posts.module';
@@ -21,6 +20,7 @@ import { QueueModule } from './queue/queue.module';
 import { FileModule } from './file/file.module';
 import { MulterModule } from '@nestjs/platform-express';
 import { UserModule } from './user/user.module';
+import { LoggerMiddleware } from './common/middleware/logger.middleware';
 
 @Module({
   imports: [
@@ -48,8 +48,14 @@ import { UserModule } from './user/user.module';
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => ({
         redis: {
-          host: configService.get('REDIS_HOST'),
-          port: configService.get('REDIS_PORT'),
+          host:
+            (process.env.REDIS_HOST as string) ||
+            configService.get('REDIS_HOST') ||
+            '127.0.0.1',
+          port:
+            (process.env.REDIS_PORT as unknown as number) ||
+            configService.get('REDIS_PORT') ||
+            6379,
         },
       }),
       inject: [ConfigService],

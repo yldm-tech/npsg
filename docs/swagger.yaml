@@ -277,8 +277,12 @@ paths:
             schema:
               $ref: '#/components/schemas/CreateOrderDto'
       responses:
+        '200':
+          description: Create order
         '201':
           description: ''
+      tags:
+        - order
   /file/upload:
     post:
       operationId: FileController_uploadFile

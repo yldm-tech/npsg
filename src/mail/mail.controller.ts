@@ -9,7 +9,6 @@ export class MailController {
   @Get('/sendMail')
   async sendMail(@Query('mail') mail: string): Promise<SentMessageInfo> {
     const info = await this.mailService.sendMail(mail);
-    console.log(info);
     return info;
   }
 }

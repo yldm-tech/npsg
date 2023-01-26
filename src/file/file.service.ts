@@ -8,13 +8,17 @@ import { PassThrough } from 'stream';
 @Injectable()
 export class FileService {
   private logger = new Logger(FileService.name);
-
   private s3: AWS.S3;
+
   constructor(private readonly configService: ConfigService) {
     AWS.config.update({
-      accessKeyId: configService.get<string>('AWS_ACCESS_KEY_ID'),
-      secretAccessKey: configService.get<string>('AWS_SECRET_ACCESS_KEY'),
-      region: configService.get<string>('AWS_REGION'),
+      accessKeyId:
+        process.env.AWS_ACCESS_KEY_ID ||
+        configService.get<string>('AWS_ACCESS_KEY_ID'),
+      secretAccessKey:
+        process.env.AWS_SECRET_ACCESS_KEY ||
+        configService.get<string>('AWS_SECRET_ACCESS_KEY'),
+      region: process.env.AWS_REGION || configService.get<string>('AWS_REGION'),
     });
     this.s3 = new AWS.S3();
   }
@@ -22,7 +26,6 @@ export class FileService {
   async upload(file: Express.Multer.File) {
     const bucketName = this.configService.get<string>('AWS_BUCKET_NAME');
     const objectKey = `${new Date().getFullYear()}/${file.originalname}`;
-    console.log(file);
     const params = {
       Bucket: bucketName,
       Key: objectKey,

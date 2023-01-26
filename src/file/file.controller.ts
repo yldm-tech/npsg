@@ -1,24 +1,17 @@
 import {
   Controller,
-  FileTypeValidator,
   Get,
-  Header,
-  MaxFileSizeValidator,
   ParseFilePipe,
   Post,
   Query,
   Res,
-  StreamableFile,
   UploadedFile,
   UploadedFiles,
   UseInterceptors,
 } from '@nestjs/common';
 import { FileService } from './file.service';
 import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
-import { FileSizeValidationPipe } from 'src/common/pipe/file-size.pipe';
-import { query, Response } from 'express';
-import { HttpService } from '@nestjs/axios';
-import { request } from 'http';
+import { Response } from 'express';
 import { Readable } from 'stream';
 import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 
