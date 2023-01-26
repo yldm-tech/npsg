@@ -12,7 +12,7 @@ export default defineConfig({
       {
         rel: 'apple-touch-icon',
         sizes: '180x180',
-        href: 'npsg/logo.png',
+        href: 'logo.png',
       },
     ],
     [
@@ -21,7 +21,7 @@ export default defineConfig({
         rel: 'icon',
         type: 'image/png',
         sizes: '32x32',
-        href: 'npsg/logo.png',
+        href: 'logo.png',
       },
     ],
     [
@@ -30,10 +30,10 @@ export default defineConfig({
         rel: 'icon',
         type: 'image/png',
         sizes: '16x16',
-        href: 'npsg/logo.png',
+        href: 'logo.png',
       },
     ],
-    ['link', { rel: 'icon', href: 'npsg/logo.png' }],
+    ['link', { rel: 'icon', href: 'logo.png' }],
     ['meta', { name: 'msapplication-TileColor', content: '#3a0839' }],
   ],
   lastUpdated: true,
