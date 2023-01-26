@@ -9,6 +9,7 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import * as cookieParser from 'cookie-parser';
 import * as session from 'express-session';
 import * as fs from 'fs';
+import * as compression from 'compression';
 import * as yaml from 'js-yaml';
 import { join } from 'path';
 import { AppModule } from './app.module';
@@ -19,6 +20,9 @@ import { sessionKey } from './user/constants';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
+
+  // 提高性能
+  app.use(compression());
 
   // global pipes
   app.useGlobalPipes(
