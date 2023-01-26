@@ -52,6 +52,7 @@ tasks:
 
   release:
     cmds:
+      - git fetch
       - yarn release
 
   
