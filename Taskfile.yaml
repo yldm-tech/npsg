@@ -54,6 +54,7 @@ tasks:
     cmds:
       - git fetch
       - yarn release
+      - task changelog
 
   
 
