@@ -1,6 +1,6 @@
 {
   "name": "nest-prisma-swagger-template",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "nest prisma swagger template",
   "author": "Evan",
   "private": false,
@@ -38,7 +38,8 @@
     "resource": "npx nest generate resource --no-spec",
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
-    "docs:preview": "vitepress preview docs --port 8080"
+    "docs:preview": "vitepress preview docs --port 8080",
+    "release": "./deploy/bin/release.sh"
   },
   "dependencies": {
     "@nestjs-modules/mailer": "^1.8.1",
