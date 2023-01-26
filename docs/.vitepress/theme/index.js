@@ -2,7 +2,7 @@ import DefaultTheme from 'vitepress/theme';
 import 'vitepress-theme-demoblock/dist/theme/styles/index.css';
 import { useComponents } from './useComponents';
 import './styles/index.css';
-import Button from './components/Button.vue';
+import Button from './../components/Button.vue';
 
 export default {
   ...DefaultTheme,
