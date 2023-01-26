@@ -55,6 +55,7 @@ tasks:
       - git fetch
       - yarn release
       - task changelog
-
+      - git add .
+      - git cz
   
 
