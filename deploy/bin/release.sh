@@ -11,9 +11,9 @@ if [ -z "$release" ]; then
     release="minor";
 fi
 
-# Default release branch is master 
+# Default release branch is main 
 if [ -z "$branch" ] ; then
-    branch="master"; 
+    branch="main"; 
 fi;
 
 
@@ -21,7 +21,7 @@ echo "Branch is $branch"
 echo "Release as $release"
 
 # Tag prefix
-prefix="prefix_v"
+prefix="v"
 
 git pull origin $branch
 echo "Current pull origin $branch."
