@@ -4,77 +4,13 @@
 
 directive @upper on FIELD_DEFINITION
 
-type user {
-  email: String!
-  name: String
-  password: String!
-
-  """User Role"""
-  roles: [Role!]!
-}
-
-"""Different User Role types"""
-enum Role {
-  """Basic, shared, default user access scope"""
-  User
-  Seller
-  Buyer
-  Admin
-}
-
-type LoginResponse {
-  """jwt access token of user"""
-  accessToken: String!
-}
-
-"""post"""
-type Posts {
-  title: String!
-  description: String
-  body: String!
-  authorId: Float!
-  content: String
-  published: Boolean!
-}
-
-input userInput {
-  email: String!
-  name: String
-  password: String!
-
-  """User Role"""
-  roles: [Role!]! = [User]
-}
-
-type Query {
-  post(id: Float!): Posts!
-  posts(skip: Int! = 0, take: Int! = 25, published: Boolean! = false): [Posts!]!
-  profile: user
-}
-
-type Mutation {
-  addPost(newPostData: CreatePostDto!): Posts!
-  removePost(id: Float!): Boolean!
-  signup(signupInput: SignUpInput!): user!
-  login(loginInput: LoginInput!): LoginResponse!
-  updatePassword(updatePasswordInput: UpdatePasswordInput!): user
-}
-
 input CreatePostDto {
-  title: String!
-  description: String!
-  body: String!
   authorId: Float!
+  body: String!
   content: String!
+  description: String!
   published: Boolean! = false
-}
-
-input SignUpInput {
-  """ email address of user"""
-  email: String!
-
-  """ password of user"""
-  password: String!
+  title: String!
 }
 
 input LoginInput {
@@ -85,10 +21,75 @@ input LoginInput {
   password: String!
 }
 
-input UpdatePasswordInput {
-  newPassword: String!
+type LoginResponse {
+  """jwt access token of user"""
+  accessToken: String!
+}
+
+type Mutation {
+  addPost(newPostData: CreatePostDto!): Posts!
+  login(loginInput: LoginInput!): LoginResponse!
+  removePost(id: Float!): Boolean!
+  signup(signupInput: SignUpInput!): user!
+  updatePassword(updatePasswordInput: UpdatePasswordInput!): user
+}
+
+"""post"""
+type Posts {
+  authorId: Float!
+  body: String!
+  content: String
+  description: String
+  published: Boolean!
+  title: String!
+}
+
+type Query {
+  post(id: Float!): Posts!
+  posts(published: Boolean! = false, skip: Int! = 0, take: Int! = 25): [Posts!]!
+  profile: user
+}
+
+"""Different User Role types"""
+enum Role {
+  Admin
+  Buyer
+  Seller
+
+  """Basic, shared, default user access scope"""
+  User
+}
+
+input SignUpInput {
+  """ email address of user"""
+  email: String!
+
+  """ password of user"""
+  password: String!
 }
 
 type Subscription {
   postAdded: Posts!
+}
+
+input UpdatePasswordInput {
+  newPassword: String!
+}
+
+type user {
+  email: String!
+  name: String
+  password: String!
+
+  """User Role"""
+  roles: [Role!]!
+}
+
+input userInput {
+  email: String!
+  name: String
+  password: String!
+
+  """User Role"""
+  roles: [Role!]! = [User]
 }
