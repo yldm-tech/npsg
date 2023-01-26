@@ -9,12 +9,12 @@ hero:
   text: 开箱即用的后端框架
   tagline: 基于Nest、Prisma、Swagger和graphQL构建
   image:
-    src: /logo.png
+    src: logo.png
     alt: npsg
   actions:
     - theme: brand
       text: 开始
-      link: /guide/1-nestjs
+      link: /guide/
     - theme: alt
       text: 更多
       link: https://github.com/lantron-ltd/npsg
