@@ -1,6 +1,6 @@
 {
   "name": "nest-prisma-swagger-template",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "nest prisma swagger template",
   "author": "Evan",
   "private": false,
