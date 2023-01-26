@@ -1,8 +1,8 @@
 {
-  "name": "nest-prisma-swagger-template",
+  "name": "npsg",
   "version": "0.7.0",
   "description": "nest prisma swagger template",
-  "author": "Evan",
+  "author": "Evan<suzukaze.hazuki2020@gmail.com>",
   "private": false,
   "license": "MIT",
   "scripts": {
