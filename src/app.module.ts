@@ -19,32 +19,36 @@ import { PostsModule } from './posts/posts.module';
 import { PrismaService } from './prisma/prisma.service';
 import { QueueModule } from './queue/queue.module';
 import { FileModule } from './file/file.module';
-import { MulterModule } from '@nestjs/platform-express';
 import { UserModule } from './user/user.module';
+import { CronModule } from './cron/cron.module';
 
 @Module({
   imports: [
-    PostsModule,
-    UserModule,
-    AuthModule,
-    ConfigModule,
-    MailModule,
-    QueueModule,
-    OrderModule,
-    FileModule,
-    ScheduleModule.forRoot(),
-    EventEmitterModule.forRoot(),
+    // CronModule, // 定义任务(👈schedule根据需要打开或关闭)
+    PostsModule, // 文章模块(CRUD)
+    UserModule, // 用户模块(resolver)
+    AuthModule, // 认证服务(passport + jwt)
+    MailModule, // 邮件发送 (nodemailer)
+    QueueModule, // 消息队列 (bull)
+    OrderModule, // 订单模块 (event)
+    FileModule, // 文件上传下载 (aws sdk)
+    // common modules
+    EventEmitterModule.forRoot(), // 👈 事件模块
     HttpModule.register({
+      // 👈 http 请求模块
       timeout: 60 * 1000,
       maxRedirects: 5,
     }),
     CacheModule.register({
+      // 👈 缓存模块
       isGlobal: true,
     }),
     ConfigModule.forRoot({
+      // 👈 配置模块
       isGlobal: true,
     }),
     BullModule.forRootAsync({
+      // 👈 消息队列模块
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => ({
         redis: {
@@ -55,6 +59,7 @@ import { UserModule } from './user/user.module';
       inject: [ConfigService],
     }),
     GraphQLModule.forRoot<ApolloDriverConfig>({
+      // 👈 GraphQL 模块
       driver: ApolloDriver,
       debug: true,
       playground: false,
@@ -72,12 +77,7 @@ import { UserModule } from './user/user.module';
     }),
   ],
   controllers: [AppController],
-  providers: [
-    AppService,
-    PrismaService,
-    // 根据需要开启cronJob
-    //  CronJobService,
-  ],
+  providers: [AppService, PrismaService],
 })
 export class AppModule {
   configure(consumer: MiddlewareConsumer) {
