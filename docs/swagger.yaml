@@ -13,7 +13,7 @@ paths:
             application/json:
               schema:
                 type: string
-  /v1:
+  /v1/hello:
     get:
       operationId: AppController_getHelloV1
       summary: ''
@@ -26,7 +26,7 @@ paths:
             application/json:
               schema:
                 type: string
-  /v2:
+  /v2/hello:
     get:
       operationId: AppController_getHelloV2
       summary: ''
@@ -217,7 +217,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
+                $ref: '#/components/schemas/UserEntity'
   /auth/updatePassword:
     post:
       operationId: AuthController_updatePassword
@@ -418,6 +418,21 @@ components:
       required:
         - email
         - password
+    UserEntity:
+      type: object
+      properties:
+        id:
+          type: number
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+      required:
+        - id
+        - createdAt
+        - updatedAt
     UpdatePasswordInput:
       type: object
       properties: {}

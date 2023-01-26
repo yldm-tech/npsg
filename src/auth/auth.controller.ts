@@ -1,4 +1,13 @@
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { UserEntity } from 'src/user/user';
+import {
+  Body,
+  ClassSerializerInterceptor,
+  Controller,
+  Get,
+  Post,
+  UseGuards,
+  UseInterceptors,
+} from '@nestjs/common';
 import { AuthService } from 'src/auth/auth.service';
 import { CurrentUser } from 'src/common/decorator/current-user.decorator';
 import { LoginInput } from './dto/login-request.dto';
@@ -17,8 +26,9 @@ export class AuthController {
   }
 
   @UseGuards(JwtAuthGuard)
+  @UseInterceptors(ClassSerializerInterceptor)
   @Get('/profile')
-  getProfile(@CurrentUser() user: IUserContext): Promise<User> {
+  getProfile(@CurrentUser() user: IUserContext): Promise<UserEntity> {
     return this.authService.findUserFromContext(user);
   }
 

@@ -6,6 +6,7 @@ import {
   registerEnumType,
 } from '@nestjs/graphql';
 import { User } from '@prisma/client';
+import { Exclude } from 'class-transformer';
 import { BaseEntity } from '../common/entity/base.entity';
 
 export enum Role {
@@ -28,16 +29,22 @@ registerEnumType(Role, {
 @InputType('userInput')
 @ObjectType('user')
 export class UserEntity extends BaseEntity implements User {
-  @Field((type) => String)
+  @Field(() => String)
   email: string;
 
-  @Field((type) => String, { nullable: true })
+  @Field(() => String, { nullable: true })
   name: string;
 
   @HideField()
-  @Field((type) => String)
+  @Field(() => String)
+  @Exclude()
   password: string;
 
   @Field(() => [Role], { description: 'User Role' })
-  roles: Role[] = [Role.User];
+  roles: string[] = [Role.User];
+
+  constructor(partial: Partial<UserEntity>) {
+    super();
+    Object.assign(this, partial);
+  }
 }

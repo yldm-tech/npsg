@@ -59,7 +59,9 @@ export class AuthService {
     } as LoginResponse;
   }
 
-  async findUserFromContext(userContext: IUserContext) {
+  async findUserFromContext(
+    userContext: IUserContext,
+  ): Promise<UserEntity> | undefined {
     return this.userService.findOne(userContext.userId);
   }
 
@@ -67,8 +69,7 @@ export class AuthService {
     const user = await this.userService.findOneByEmail(username);
     const isPasswordCorrect = await bcrypt.compare(pass, user.password);
     if (user && isPasswordCorrect) {
-      const { password, ...result } = user;
-      return result;
+      return user;
     }
     throw new BadRequestException('user email or password is wrong');
   }

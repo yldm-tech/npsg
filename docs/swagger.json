@@ -21,7 +21,7 @@
         }
       }
     },
-    "/v1": {
+    "/v1/hello": {
       "get": {
         "operationId": "AppController_getHelloV1",
         "summary": "",
@@ -41,7 +41,7 @@
         }
       }
     },
-    "/v2": {
+    "/v2/hello": {
       "get": {
         "operationId": "AppController_getHelloV2",
         "summary": "",
@@ -334,7 +334,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object"
+                  "$ref": "#/components/schemas/UserEntity"
                 }
               }
             }
@@ -637,6 +637,27 @@
         "required": [
           "email",
           "password"
+        ]
+      },
+      "UserEntity": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "updatedAt": {
+            "format": "date-time",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "createdAt",
+          "updatedAt"
         ]
       },
       "UpdatePasswordInput": {

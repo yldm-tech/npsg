@@ -28,7 +28,7 @@ export class AppController {
    * http://localhost:3000/v1
    * @returns
    */
-  @Get()
+  @Get('hello')
   @Version('1')
   getHelloV1(): string {
     return 'hello v1';
@@ -40,7 +40,7 @@ export class AppController {
    * 2. 在postman中的Headers中设置一个key为[Cookie],[value]为[name=nest]的参数，会在控制台打印出来
    * @returns
    */
-  @Get()
+  @Get('hello')
   @Version('2')
   getHelloV2(
     @Cookies('name') name: string,
