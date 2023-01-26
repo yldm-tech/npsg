@@ -14,18 +14,23 @@ open http://localhost:3000/docs
 - test.http
 
 # changelog
-- feat:新功能
-- fix：修补
-- docs:文档
-- style:格式
-- refactor:重构（既不是新增，也不是代码变动）
-- test：增加测试
-- chore：构建过程中或辅助工具的变动。
+```
+git add .
+git cz
+```
+会出现引导，根据引导填写即可，最后执行`task changelog就会自动生成`[changelog](CHANGELOG.md)
 
 ```
-feat: 需求(123) 新增了某某功能
-
-详细描述某某功能（可省略）
-
+Select the type of change that you're committing: 
+(Use arrow keys)
+❯ feat:     A new feature 
+  fix:      A bug fix 
+  docs:     Documentation only changes 
+  style:    Changes that do not affect the meaning 
+of the code (white-space, formatting, missing 
+semi-colons, etc) 
+  refactor: A code change that neither fixes a bug 
+(Move up and down to reveal more choices)
 ```
-打版本之后运行`task changelog会自动添加更新日志到`[changelog](CHANGELOG.md)
+
+
