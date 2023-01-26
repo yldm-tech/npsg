@@ -1,13 +1,4 @@
-# Changelog
-
-All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
-
-## [0.13.0](https://github.com/lantron-ltd/npsg/compare/v0.12.0...v0.13.0) (2023-01-26)
-
-
-### Features
-
-* **effective server:** compression ([08d3ee5](https://github.com/lantron-ltd/npsg/commit/08d3ee5d16811a15a2600bf06bbe9cfcaa8cfa36))
+# [0.13.0](https://github.com/lantron-ltd/npsg/compare/v0.12.0...v0.13.0) (2023-01-26)
 
 
 ### Bug Fixes
@@ -15,6 +6,13 @@ All notable changes to this project will be documented in this file. See [standa
 * **fix @body has no value error:** reason is validator don't know how to validate ([6c91c01](https://github.com/lantron-ltd/npsg/commit/6c91c018ff6340a3dc09ed7791b6fa10dc6427d5))
 * **fix docs compile error:** readd the style and vue file ([2052696](https://github.com/lantron-ltd/npsg/commit/2052696799aa85e4756dc7666b06d6e7085c1a9b))
 * **fix tasskfile  bug:** impore release command ([bb49732](https://github.com/lantron-ltd/npsg/commit/bb49732e9e2d1eba66d9fe5150f0ba7d97a3c4d0))
+
+
+### Features
+
+* **effective server:** compression ([08d3ee5](https://github.com/lantron-ltd/npsg/commit/08d3ee5d16811a15a2600bf06bbe9cfcaa8cfa36))
+
+
 
 # [0.12.0](https://github.com/lantron-ltd/npsg/compare/v0.11.0...v0.12.0) (2023-01-26)
 
@@ -64,3 +62,6 @@ All notable changes to this project will be documented in this file. See [standa
 ### Reverts
 
 * Revert "move the server" ([89238d4](https://github.com/lantron-ltd/npsg/commit/89238d42ea4e1457db7731501f67dc8ab40f33ab))
+
+
+
