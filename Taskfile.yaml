@@ -11,6 +11,8 @@ tasks:
   init:
     cmds:
       -  npm install -g conventional-changelog-cli
+      -  npm install -g standard-version
+      -  chmod +x deploy/bin/*
 
   nest:generate:
     cmds:
@@ -46,7 +48,11 @@ tasks:
 
   changelog:
     cmds:
-      - conventional-changelog -p angular -i CHANGELOG.md -s
+      - conventional-changelog -p angular -i CHANGELOG.md -s -r 0
+
+  release:
+    cmds:
+      - yarn release
 
   
 

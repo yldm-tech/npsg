@@ -32,5 +32,3 @@ semi-colons, etc)
   refactor: A code change that neither fixes a bug 
 (Move up and down to reveal more choices)
 ```
-
-
