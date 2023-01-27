@@ -5,6 +5,7 @@ import { NotFoundException, ParseIntPipe } from '@nestjs/common';
 import { PubSub } from 'graphql-subscriptions';
 import { Args, Mutation, Query, Resolver, Subscription } from '@nestjs/graphql';
 import { CreatePostDto } from './dto/create-post.dto';
+import { postConstants } from './post.constant';
 
 const pubSub = new PubSub();
 @Resolver((of) => Posts)
@@ -29,9 +30,9 @@ export class PostsResolver {
   async addPost(
     @Args('newPostData') newPostData: CreatePostDto,
   ): Promise<Posts> {
-    const recipe = await this.postService.create(newPostData);
-    pubSub.publish('postAdded', { recipeAdded: recipe });
-    return recipe;
+    const post = await this.postService.create(newPostData);
+    pubSub.publish(postConstants.POST_ADDED, { recipeAdded: post });
+    return post;
   }
 
   @Mutation((returns) => Boolean)
@@ -41,6 +42,6 @@ export class PostsResolver {
 
   @Subscription((returns) => Posts)
   postAdded() {
-    return pubSub.asyncIterator('postAdded');
+    return pubSub.asyncIterator(postConstants.POST_ADDED);
   }
 }
