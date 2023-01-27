@@ -22,9 +22,11 @@ import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
 import { UserModule } from './user/user.module';
 import { LoggerMiddleware } from './common/middleware/logger.middleware';
 import { APP_GUARD } from '@nestjs/core';
+import { ChatModule } from './chat/chat.module';
 
 @Module({
   imports: [
+    ChatModule,
     PostsModule,
     UserModule,
     AuthModule,

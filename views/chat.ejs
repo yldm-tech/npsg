@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+  <!-- Bootstrap CSS -->
+  <link href="/css/bootstrap.min.css" rel="stylesheet" />
+
+  <title>Let Chat</title>
+</head>
+
+<body>
+  <nav class="navbar navbar-light bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand">Lets Chat</a>
+    </div>
+  </nav>
+  <div class="container">
+    <div class="mb-3 mt-3">
+      <ul style="list-style: none" id="data-container"></ul>
+    </div>
+    <div class="mb-3 mt-4">
+      <input class="form-control" id="email" rows="3" placeholder="Your Email" />
+    </div>
+    <div class="mb-3 mt-4">
+      <input class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Say something..." />
+    </div>
+  </div>
+  <script src="/js/socket.io.min.js"></script>
+  <script src="/js/chat.js"></script>
+  <script src="/js/bootstrap.min.js"></script>
+</body>
+
+</html>

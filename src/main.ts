@@ -59,6 +59,9 @@ async function bootstrap() {
 
   // static
   app.useStaticAssets(join(__dirname, '..', 'static'));
+  app.setBaseViewsDir(join(__dirname, '..', 'views'));
+  app.setViewEngine('ejs');
+
   // cookie
   app.use(cookieParser());
   // security
