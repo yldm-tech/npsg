@@ -18,9 +18,10 @@ import { PostsModule } from './posts/posts.module';
 import { PrismaService } from './prisma/prisma.service';
 import { QueueModule } from './queue/queue.module';
 import { FileModule } from './file/file.module';
-import { MulterModule } from '@nestjs/platform-express';
+import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
 import { UserModule } from './user/user.module';
 import { LoggerMiddleware } from './common/middleware/logger.middleware';
+import { APP_GUARD } from '@nestjs/core';
 
 @Module({
   imports: [
@@ -60,6 +61,13 @@ import { LoggerMiddleware } from './common/middleware/logger.middleware';
       }),
       inject: [ConfigService],
     }),
+    ThrottlerModule.forRootAsync({
+      useFactory: (configService: ConfigService) => ({
+        ttl: configService.get('RATE_TTL') || 60,
+        limit: configService.get('RATE_LIMIT') || 10,
+      }),
+      inject: [ConfigService],
+    }),
     GraphQLModule.forRootAsync<ApolloDriverConfig>({
       driver: ApolloDriver,
       inject: [ConfigService],
@@ -70,6 +78,10 @@ import { LoggerMiddleware } from './common/middleware/logger.middleware';
         sortSchema: true,
         autoSchemaFile: join(__dirname, '../docs/schema.gql'),
         plugins: [ApolloServerPluginLandingPageLocalDefault()],
+        cors: {
+          origin: '*',
+          credentials: true,
+        },
         buildSchemaOptions: {
           directives: [
             new GraphQLDirective({
@@ -82,7 +94,15 @@ import { LoggerMiddleware } from './common/middleware/logger.middleware';
     }),
   ],
   controllers: [AppController],
-  providers: [AppService, PrismaService],
+  providers: [
+    AppService,
+    PrismaService,
+    // 如果不需要全局速率限制，可以在这里把这里注释掉
+    {
+      provide: APP_GUARD,
+      useClass: ThrottlerGuard,
+    },
+  ],
 })
 export class AppModule {
   configure(consumer: MiddlewareConsumer) {
