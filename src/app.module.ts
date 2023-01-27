@@ -74,7 +74,9 @@ import { APP_GUARD } from '@nestjs/core';
       useFactory: async (configService: ConfigService) => ({
         debug: configService.get<boolean>('DEBUG'),
         playground: false,
-        installSubscriptionHandlers: true,
+        subscriptions: {
+          'graphql-ws': true,
+        },
         sortSchema: true,
         autoSchemaFile: join(__dirname, '../docs/schema.gql'),
         plugins: [ApolloServerPluginLandingPageLocalDefault()],
