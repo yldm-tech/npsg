@@ -11,6 +11,8 @@ import * as session from 'express-session';
 import * as fs from 'fs';
 import * as compression from 'compression';
 import * as yaml from 'js-yaml';
+import helmet from 'helmet';
+import * as csurf from 'csurf';
 import { join } from 'path';
 import { AppModule } from './app.module';
 import { PrismaClientExceptionFilter } from './common/filter/prisma-client-exception_filter';
@@ -45,8 +47,24 @@ async function bootstrap() {
     defaultVersion: VERSION_NEUTRAL,
   });
 
+  app.enableShutdownHooks();
+  // session
+  app.use(
+    session({
+      secret: sessionKey,
+      resave: false,
+      saveUninitialized: false,
+    }),
+  );
+
+  // static
+  app.useStaticAssets(join(__dirname, '..', 'static'));
   // cookie
   app.use(cookieParser());
+  // security
+  app.use(helmet());
+  app.enableCors();
+  app.use(csurf()); // 必须在cookieParser之后
 
   // swagger configuration
   const config = new DocumentBuilder()
@@ -67,19 +85,6 @@ async function bootstrap() {
   // swagger yaml
   const yamlDocument = yaml.dump(document);
   fs.writeFileSync(join(__dirname, '../docs/swagger.yaml'), yamlDocument);
-
-  app.enableShutdownHooks();
-  // session
-  app.use(
-    session({
-      secret: sessionKey,
-      resave: false,
-      saveUninitialized: false,
-    }),
-  );
-
-  // static
-  app.useStaticAssets(join(__dirname, '..', 'static'));
 
   await app.listen(3000);
 }
