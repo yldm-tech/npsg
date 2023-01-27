@@ -73,6 +73,24 @@ paths:
       responses:
         '200':
           description: ''
+  /chat:
+    get:
+      operationId: ChatController_Home
+      summary: ''
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+  /chat/api/chat:
+    get:
+      operationId: ChatController_Chat
+      summary: ''
+      description: 供chat.ejs中的ajax请求调用;
+      parameters: []
+      responses:
+        '200':
+          description: ''
   /posts:
     post:
       operationId: PostsController_create
