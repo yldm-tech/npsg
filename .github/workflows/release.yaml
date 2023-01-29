@@ -66,7 +66,6 @@ jobs:
           echo "id =>$id"
           echo "sha =>$sha"
           echo "WORKFLOW_URL =>$WORKFLOW_URL"
-    # returned job values:
     outputs:
       WORKFLOW_URL: ${{ steps.setup.outputs.WORKFLOW_URL }}
 
@@ -106,7 +105,9 @@ jobs:
             echo "RELEASE=${RELEASE}" >> ${GITHUB_OUTPUT}
             echo "STATUS=success" >> ${GITHUB_OUTPUT}
           fi
-      # 3. 把用户选择的方选写入 ${GITHUB_ENV}
+
+
+      # 把用户选择的方选写入 ${GITHUB_ENV}
       - name: 把用户选择的方选写入 ${GITHUB_ENV}
         id: find_semantic_version_method
         timeout-minutes: 1
@@ -117,7 +118,8 @@ jobs:
             METHOD="patch"
           fi
           echo "METHOD=${METHOD}" >> ${GITHUB_OUTPUT}
-      # 4. 设置golang环境
+      
+      # 设置nodejs环境
       - name: setup nodejs
         uses: actions/setup-node@v3
         with:
@@ -130,7 +132,7 @@ jobs:
         timeout-minutes: 1
         run: |
           echo "ERROR_TEXT=Failed to find new tag." >> ${GITHUB_ENV}
-          TAG=$(git describe --exact-match --tags $(git log -n1 --pretty='%h'))
+          TAG=$(git describe --tags --abbrev=0)
           echo "New version is: ${TAG}"
           echo "TAG=${TAG}" >> ${GITHUB_OUTPUT}
       
@@ -141,6 +143,7 @@ jobs:
           version: 2.x
           repo-token: ${{ secrets.GITHUB_TOKEN }}
 
+      # 设置golang环境
       - name: Setup Golang
         uses: actions/setup-go@v3
         timeout-minutes: 25
@@ -149,15 +152,17 @@ jobs:
           check-latest: true
           cache: false
 
+      # 设置git tag
       - name: Setup git-vertag
         run: go install github.com/kyoh86/git-vertag@latest
 
+      # 打tag
       - name: Bump-up Semantic Version
         env:
           METHOD: ${{ steps.find_semantic_version_method.outputs.METHOD }}
         run: $(go env GOPATH)/bin/git-vertag ${{ env.METHOD }}
 
-      # 9. 安装nodejs依赖
+      # 安装nodejs依赖
       - name: 安装nodejs依赖
         id: initialize_nodejs_environment
         env:
