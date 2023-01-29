@@ -166,7 +166,7 @@ jobs:
         env:
           METHOD: ${{ steps.find_semantic_version_method.outputs.METHOD }}
         run: |
-          new_tag = $(go env GOPATH)/bin/git-vertag ${{ env.METHOD }}  
+          new_tag = ${$(go env GOPATH)/bin/git-vertag ${{ env.METHOD }} } 
           echo ${new_tag} >> {GITHUB_OUTPUT}      
 
       # 安装nodejs依赖
