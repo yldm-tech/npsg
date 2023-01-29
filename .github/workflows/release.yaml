@@ -179,6 +179,9 @@ jobs:
         timeout-minutes: 10
         run: yarn
 
+
+      - name: debug
+        run: echo ${{ steps.bump_up_semantic_version.outputs.TAG }}
       # # release body
       # - name: Create Release Body
       #   id: release_body
