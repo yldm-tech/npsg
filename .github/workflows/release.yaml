@@ -188,6 +188,7 @@ jobs:
         run: |
           echo "ERROR_TEXT=Failed to prepare release body." >> ${GITHUB_ENV}
           RELEASE_BODY_FILE_PATH=$(mktemp)
+          chmod +x ${GITHUB_WORKSPACE}/.github/bin/create-release-body.sh
           ${GITHUB_WORKSPACE}/.github/bin/create-release-body.sh ${{ github.repository }} ${{ env.GITHUB_PAT }} ${{ env.SHA }} ${RELEASE_BODY_FILE_PATH}
           echo "RELEASE_BODY_FILE_PATH=${RELEASE_BODY_FILE_PATH}" >> ${GITHUB_OUTPUT}
       
