@@ -1,3 +1,4 @@
+import { Logger } from '@nestjs/common';
 import {
   SubscribeMessage,
   WebSocketGateway,
@@ -19,6 +20,8 @@ import { ChatEntity } from './entities/chat.entity';
 export class ChatGateway
   implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect
 {
+  private logger: Logger = new Logger('ChatGateway');
+
   constructor(private chatService: ChatService) {}
 
   @WebSocketServer() server: Server;
@@ -30,14 +33,14 @@ export class ChatGateway
   }
 
   afterInit(server: Server) {
-    console.log(server);
+    this.logger.log(server);
   }
 
   handleDisconnect(client: Socket) {
-    console.log(`Disconnected: ${client.id}`);
+    this.logger.log(`Disconnected: ${client.id}`);
   }
 
   handleConnection(client: Socket, ...args: any[]) {
-    console.log(`Connected ${client.id}`);
+    this.logger.log(`Connected ${client.id}`);
   }
 }

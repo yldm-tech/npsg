@@ -23,6 +23,7 @@ import { UserModule } from './user/user.module';
 import { LoggerMiddleware } from './common/middleware/logger.middleware';
 import { APP_GUARD } from '@nestjs/core';
 import { ChatModule } from './chat/chat.module';
+import { HealthModule } from './health/health.module';
 
 @Module({
   imports: [
@@ -35,6 +36,7 @@ import { ChatModule } from './chat/chat.module';
     QueueModule,
     OrderModule,
     FileModule,
+    HealthModule,
     ScheduleModule.forRoot(),
     EventEmitterModule.forRoot(),
     HttpModule.register({

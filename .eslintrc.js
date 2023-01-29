@@ -16,7 +16,7 @@ module.exports = {
     jest: true,
   },
 
-  ignorePatterns: ['.eslintrc.js', '*.ejs'],
+  ignorePatterns: ['.eslintrc.js', '*.ejs', '*.js'],
   rules: {
     'no-unused-vars': 'off',
     '@typescript-eslint/no-unused-vars': 'off',

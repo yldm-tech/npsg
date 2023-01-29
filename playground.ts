@@ -38,17 +38,6 @@ async function main() {
   //   },
   // });
 
-  const config = await prisma.appConfig.update({
-    where: {
-      key: 'restart',
-    },
-    data: {
-      value: '200',
-    },
-  });
-
-  console.log(config);
-
   const result = await prisma.post.findFirst();
 
   console.log(result);
