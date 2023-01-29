@@ -167,14 +167,13 @@ jobs:
           METHOD: ${{ steps.find_semantic_version_method.outputs.METHOD }}
         run: |
           CURRENT_TAG=git-vertag ${{ env.METHOD }}
-          echo TAG=${CURRENT_TAG} >> ${GITHUB_OUTPUT}
+          echo NEW_TAG=${CURRENT_TAG} >> ${${GITHUB_ENV}}
 
     
       - name: debug
         run: |
           echo 'start debug'
-          echo ${{ steps.configure_settings.outputs.STATUS }}
-          echo ${{ steps.bump_up_semantic_version.outputs.TAG }}
+          echo ${{ env.NEW_TAG }}
 
       # 安装nodejs依赖
       - name: 安装nodejs依赖
@@ -209,8 +208,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ env.GITHUB_PAT }}
         with:
-          tag_name: ${{ steps.bump_up_semantic_version.outputs.TAG }}
-          release_name: ${{ steps.bump_up_semantic_version.outputs.TAG }}
+          tag_name: ${{ env.NEW_TAG }}
+          release_name: ${{ env.NEW_TAG }}
           # body_path: ${{ steps.release_body.outputs.RELEASE_BODY_FILE_PATH }}
           draft: false
           prerelease: false
