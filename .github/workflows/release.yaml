@@ -1,0 +1,234 @@
+name: Release
+
+on:
+  repository_dispatch:
+    types:
+      - trigger_release
+
+  workflow_dispatch:
+    inputs:
+      method:
+        description: |
+          Which number to increment in the semantic versioning.
+          Set 'major', 'minor' or 'patch'.
+        required: true
+        type: choice
+        options:
+          - "patch"
+          - "minor"
+          - "major"
+        default: "patch"
+      release:
+        description: |
+          Whether is this new release or just only build for development.
+          Set 'build-only' or 'release'.
+        required: true
+        type: choice
+        options:
+          - "build-only"
+          - "release"
+        default: "release"
+
+permissions:
+  contents: "read"
+  id-token: "write"
+
+env:
+  GITHUB_UID: ${{ secrets.CMS_GITHUB_UID }}
+  GITHUB_PAT: ${{ secrets.CMS_GITHUB_PAT }}
+  GITHUB_DOCKER_REGISTRY: "ghcr.io/lantron-ltd"
+  GOLANG_VERSION: 1.19
+  CONTAINER_IMAGE_NAME: "npsg"
+  CONTAINER_SPIDER_FILE: "./Dockerfile"
+  DEVELOPMENT_VERSION: development
+
+
+jobs:
+  setup:
+    name: Setup
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Setup
+        id: setup
+        timeout-minutes: 1
+        run: |
+          URI="https://api.github.com"
+          API_HEADER="Accept: application/vnd.github.v3+json"
+          AUTH_HEADER="Authorization: token ${{ secrets.CMS_GITHUB_PAT }}"
+          body=$(curl -sSL -H "${AUTH_HEADER}" -H "$API_HEADER" "$URI/repos/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}/jobs")
+          url=$(echo "${body}" | jq .jobs | jq .[-1] | jq .html_url)
+          id=$(echo "${body}"  | jq .jobs | jq .[-1] | jq .id)
+          sha=$(echo "${body}" | jq .jobs | jq .[-1] | jq -r .head_sha)
+          echo "WORKFLOW_URL=${url}" >> ${GITHUB_OUTPUT}
+          echo "body =>$body"
+          echo "url =>$url"
+          echo "id =>$id"
+          echo "sha =>$sha"
+          echo "WORKFLOW_URL =>$WORKFLOW_URL"
+    # returned job values:
+    outputs:
+      WORKFLOW_URL: ${{ steps.setup.outputs.WORKFLOW_URL }}
+
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    needs: [setup]
+
+    steps:
+      # 1. checkout 代码
+      - name: 拉取最新代码
+        uses: actions/checkout@v3
+        timeout-minutes: 1
+        with:
+          fetch-depth: 0
+
+      # 2. 读取用户选择的输入数据
+      - name: 配置环境
+        id: configure_settings
+        timeout-minutes: 1
+        env:
+          RELEASE: ${{inputs.release}}
+        run: |
+          echo "ERROR_TEXT=Failed to configure settings." >> ${GITHUB_ENV}
+          case "${{ env.RELEASE }}" in
+            'build-only' | '' ) RELEASE='build-only' ;;
+            'release')          RELEASE='release' ;;
+          esac
+          set +e
+          CURRENT_TAG=$(git describe --exact-match --tags $(git log -n1 --pretty='%h') 2>/dev/null)
+          set -e
+          if [ -n "${CURRENT_TAG}" ] && [ "${RELEASE}" == "release" ]; then
+            echo "::error::Release \"${CURRENT_TAG}\" is already existing at current SHA. Does not create and build as new release again."
+            echo "ERROR_TEXT=Failed to configure settings. Release \"${CURRENT_TAG}\" is already existing at current SHA." >> ${GITHUB_ENV}
+            echo "STATUS=failure" >> ${GITHUB_OUTPUT}
+          else
+            echo "RELEASE=${RELEASE}" >> ${GITHUB_OUTPUT}
+            echo "STATUS=success" >> ${GITHUB_OUTPUT}
+          fi
+      # 3. 把用户选择的方选写入 ${GITHUB_ENV}
+      - name: 把用户选择的方选写入 ${GITHUB_ENV}
+        id: find_semantic_version_method
+        timeout-minutes: 1
+        run: |
+          echo "ERROR_TEXT=Failed to find semantic version method." >> ${GITHUB_ENV}
+          METHOD="${{inputs.method}}"
+          if [ -z "${{inputs.method}}" ]; then
+            METHOD="patch"
+          fi
+          echo "METHOD=${METHOD}" >> ${GITHUB_OUTPUT}
+      # 4. 设置golang环境
+      - name: setup nodejs
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
+      # 查找最新tag
+      - name: 查找最新tag
+        id: find_new_tag
+        if: ${{ steps.configure_settings.outputs.STATUS == 'success' }}
+        timeout-minutes: 1
+        run: |
+          echo "ERROR_TEXT=Failed to find new tag." >> ${GITHUB_ENV}
+          TAG=$(git describe --exact-match --tags $(git log -n1 --pretty='%h'))
+          echo "New version is: ${TAG}"
+          echo "TAG=${TAG}" >> ${GITHUB_OUTPUT}
+      
+      # 安装task
+      - name: 安装task
+        uses: arduino/setup-task@v1
+        with:
+          version: 2.x
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Golang
+        uses: actions/setup-go@v3
+        timeout-minutes: 25
+        with:
+          go-version: ${{ env.GOLANG_VERSION }}
+          check-latest: true
+          cache: false
+
+      - name: Setup git-vertag
+        run: go install github.com/kyoh86/git-vertag@latest
+
+      - name: Bump-up Semantic Version
+        env:
+          METHOD: ${{ steps.find_semantic_version_method.outputs.METHOD }}
+        run: $(go env GOPATH)/bin/git-vertag ${{ env.METHOD }}
+
+      # 9. 安装nodejs依赖
+      - name: 安装nodejs依赖
+        id: initialize_nodejs_environment
+        env:
+          REMOTE_CONTAINERS: "true"
+          GITHUB_UID: ${{ env.GITHUB_UID }}
+          GITHUB_PAT: ${{ env.GITHUB_PAT }}
+        timeout-minutes: 10
+        run: yarn
+      
+      # Release
+      - name: Release
+        if: ${{ steps.configure_settings.outputs.STATUS == 'success' }}
+        timeout-minutes: 10
+        env:
+          REMOTE_CONTAINERS: "true"
+          GITHUB_UID: ${{ env.GITHUB_UID }}
+          GITHUB_PAT: ${{ env.GITHUB_PAT }}
+          GITHUB_TOKEN: ${{ env.GITHUB_PAT }}
+          RELEASE: ${{ steps.configure_settings.outputs.RELEASE }}
+        run: |
+          echo "ERROR_TEXT=Failed to release version." >> ${GITHUB_ENV}
+          echo 'deb [trusted=yes] https://repo.goreleaser.com/apt/ /' | sudo tee /etc/apt/sources.list.d/goreleaser.list
+          sudo apt update
+          sudo apt install goreleaser
+          case "${{ env.RELEASE }}" in
+            'build-only')
+              GOPATH=$(go env GOPATH) goreleaser release --rm-dist --snapshot ;;
+            'release')
+              GOPATH=$(go env GOPATH) goreleaser release --rm-dist ;;
+          esac
+     
+     
+      - name: 设置镜像tag
+        id: set_container_image_tags
+        if: ${{ steps.configure_settings.outputs.STATUS == 'success' }}
+        timeout-minutes: 5
+        env:
+          GITHUB_PAT: ${{ env.GITHUB_PAT }}
+        run: |
+          echo "GITHUB_IMAGE_DEV=${{ env.GITHUB_DOCKER_REGISTRY }}/${{ env.CONTAINER_IMAGE_NAME }}:${{ env.DEVELOPMENT_VERSION }}" >> ${GITHUB_OUTPUT}
+          echo "GITHUB_IMAGE_PROD=${{ env.GITHUB_DOCKER_REGISTRY }}/${{ env.CONTAINER_IMAGE_NAME }}:${{ steps.find_new_tag.outputs.TAG }}" >> ${GITHUB_OUTPUT}
+          echo "GITHUB_IMAGE_LATEST=${{ env.GITHUB_DOCKER_REGISTRY }}/${{ env.CONTAINER_IMAGE_NAME }}:latest" >> ${GITHUB_OUTPUT}
+
+      - name: 打包npsg镜像
+        uses: redhat-actions/buildah-build@v2
+        if: ${{ steps.configure_settings.outputs.STATUS == 'success' && steps.configure_settings.outputs.RELEASE == 'release' }}
+        env:
+          GITHUB_IMAGE_PROD: ${{ steps.set_container_image_tags.outputs.GITHUB_IMAGE_PROD }}
+          GITHUB_IMAGE_LATEST: ${{ steps.set_container_image_tags.outputs.GITHUB_IMAGE_LATEST }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        with:
+          tags: |
+            ${{ env.GITHUB_IMAGE_PROD }} ${{ env.GITHUB_IMAGE_LATEST }}
+          containerfiles: |
+            ${{ env.CONTAINER_FILE }}
+
+      #  登陆到github docker
+      - name: 登陆到github docker
+        uses: docker/login-action@v2
+        with:
+          registry: ${{ env.GITHUB_DOCKER_REGISTRY }}
+          username: ${{ env.GITHUB_UID }}
+          password: ${{ env.GITHUB_PAT }}
+
+
+      - name: 推送npsg镜像到github
+        uses: redhat-actions/push-to-registry@v2
+        if: ${{ steps.configure_settings.outputs.STATUS == 'success' && steps.configure_settings.outputs.RELEASE == 'release' }}
+        with:
+          image: ${{ env.CONTAINER_IMAGE_NAME }}
+          tags: ${{ steps.find_new_tag.outputs.TAG }} latest
+          registry: ${{ env.GITHUB_DOCKER_REGISTRY }}
+          username: ${{ env.GITHUB_UID }}
+          password: ${{ env.GITHUB_PAT }}
