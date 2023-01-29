@@ -2,7 +2,7 @@ apiVersion: v1
 kind: PersistentVolume
 metadata:
   name: npsg-pv-volume
-  namespace: npsg
+  namespace: template
   labels:
     app: npsg
 spec:
@@ -17,7 +17,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: npsg-pv-claim
-  namespace: npsg
+  namespace: template
   labels:
     app: npsg
 spec:

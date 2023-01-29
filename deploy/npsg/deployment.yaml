@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: npsg-deployment
-  namespace: npsg
+  namespace: template
 spec:
   strategy:
     type: Recreate

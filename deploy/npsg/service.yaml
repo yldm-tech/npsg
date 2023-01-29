@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: npsg-service
-  namespace: npsg
+  namespace: template
   labels:
     app: npsg
 spec:
