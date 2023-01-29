@@ -13,7 +13,15 @@ import { FileService } from './file.service';
 import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import { Response } from 'express';
 import { Readable } from 'stream';
-import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBody,
+  ApiConsumes,
+  ApiCreatedResponse,
+  ApiOkResponse,
+  ApiTags,
+} from '@nestjs/swagger';
+import { FileUploadDto } from './dto/file-upload.dto';
+import { FilesUploadDto } from './dto/files-upload.to';
 
 @ApiTags('file')
 @Controller('file')
@@ -22,6 +30,11 @@ export class FileController {
 
   @ApiOkResponse()
   @Post('upload')
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({
+    description: 'List of files',
+    type: FileUploadDto,
+  })
   @UseInterceptors(FileInterceptor('file'))
   async uploadFile(
     @UploadedFile(
@@ -42,6 +55,11 @@ export class FileController {
 
   @ApiCreatedResponse()
   @Post('uploads')
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({
+    description: 'List of files',
+    type: FilesUploadDto,
+  })
   @UseInterceptors(FilesInterceptor('files'))
   async uploadFiles(
     @UploadedFiles(

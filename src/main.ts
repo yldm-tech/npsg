@@ -67,7 +67,13 @@ async function bootstrap() {
   // security
   app.use(helmet());
   app.enableCors();
-  app.use(csurf()); // 必须在cookieParser之后
+  app.use(
+    csurf({
+      cookie: true,
+      httpOnly: true,
+      value: readCsrfToken,
+    }),
+  ); // 必须在cookieParser之后
 
   // swagger configuration
   const config = new DocumentBuilder()
@@ -93,3 +99,7 @@ async function bootstrap() {
 }
 
 bootstrap();
+
+function readCsrfToken(req) {
+  return req.csrfToken();
+}

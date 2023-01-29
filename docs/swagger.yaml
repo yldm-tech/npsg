@@ -307,6 +307,13 @@ paths:
       summary: ''
       description: ''
       parameters: []
+      requestBody:
+        required: true
+        description: List of files
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/FileUploadDto'
       responses:
         '200':
           description: ''
@@ -324,6 +331,13 @@ paths:
       summary: ''
       description: ''
       parameters: []
+      requestBody:
+        required: true
+        description: List of files
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/FilesUploadDto'
       responses:
         '201':
           description: ''
@@ -468,3 +482,21 @@ components:
       required:
         - name
         - description
+    FileUploadDto:
+      type: object
+      properties:
+        file:
+          type: string
+          format: binary
+      required:
+        - file
+    FilesUploadDto:
+      type: object
+      properties:
+        files:
+          type: array
+          items:
+            type: string
+            format: binary
+      required:
+        - files
