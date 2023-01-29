@@ -1,3 +1,4 @@
+import { SignUpInput } from './dto/signup-request.dto';
 import { UserEntity } from 'src/user/user';
 import {
   Body,
@@ -14,11 +15,18 @@ import { LoginInput } from './dto/login-request.dto';
 import { JwtAuthGuard } from './guard/jwt-auth.guard';
 import UpdatePasswordInput from './dto/update-password.request';
 import IUserContext from './interface/user-context.interface';
-import { User } from '@prisma/client';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
 @Controller('auth')
+@ApiTags('auth')
+@ApiBearerAuth()
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
+
+  @Post('/signup')
+  async signup(@Body() signupInput: SignUpInput) {
+    return this.authService.signup(signupInput);
+  }
 
   @Post('/login')
   async login(@Body() loginInput: LoginInput) {

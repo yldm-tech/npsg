@@ -18,7 +18,10 @@
               }
             }
           }
-        }
+        },
+        "tags": [
+          "app"
+        ]
       }
     },
     "/v1/hello": {
@@ -38,7 +41,10 @@
               }
             }
           }
-        }
+        },
+        "tags": [
+          "app"
+        ]
       }
     },
     "/v2/hello": {
@@ -58,7 +64,10 @@
               }
             }
           }
-        }
+        },
+        "tags": [
+          "app"
+        ]
       }
     },
     "/axios": {
@@ -71,7 +80,10 @@
           "200": {
             "description": ""
           }
-        }
+        },
+        "tags": [
+          "app"
+        ]
       }
     },
     "/session": {
@@ -91,7 +103,10 @@
               }
             }
           }
-        }
+        },
+        "tags": [
+          "app"
+        ]
       }
     },
     "/sse": {
@@ -104,7 +119,10 @@
           "200": {
             "description": ""
           }
-        }
+        },
+        "tags": [
+          "app"
+        ]
       }
     },
     "/chat": {
@@ -117,7 +135,10 @@
           "200": {
             "description": ""
           }
-        }
+        },
+        "tags": [
+          "chat"
+        ]
       }
     },
     "/chat/api/chat": {
@@ -130,7 +151,10 @@
           "200": {
             "description": ""
           }
-        }
+        },
+        "tags": [
+          "chat"
+        ]
       }
     },
     "/posts": {
@@ -318,6 +342,44 @@
         ]
       }
     },
+    "/auth/signup": {
+      "post": {
+        "operationId": "AuthController_signup",
+        "summary": "",
+        "description": "",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SignUpInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "auth"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
     "/auth/login": {
       "post": {
         "operationId": "AuthController_login",
@@ -345,7 +407,15 @@
               }
             }
           }
-        }
+        },
+        "tags": [
+          "auth"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
       }
     },
     "/auth/profile": {
@@ -365,7 +435,15 @@
               }
             }
           }
-        }
+        },
+        "tags": [
+          "auth"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
       }
     },
     "/auth/updatePassword": {
@@ -395,7 +473,15 @@
               }
             }
           }
-        }
+        },
+        "tags": [
+          "auth"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
       }
     },
     "/mail/sendMail": {
@@ -424,7 +510,10 @@
               }
             }
           }
-        }
+        },
+        "tags": [
+          "mail"
+        ]
       }
     },
     "/queue/transcode": {
@@ -437,7 +526,10 @@
           "201": {
             "description": ""
           }
-        }
+        },
+        "tags": [
+          "queue"
+        ]
       }
     },
     "/order": {
@@ -572,6 +664,11 @@
       "basic": {
         "type": "http",
         "scheme": "basic"
+      },
+      "bearer": {
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "type": "http"
       }
     },
     "schemas": {
@@ -677,6 +774,21 @@
             "nullable": true
           }
         }
+      },
+      "SignUpInput": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "email",
+          "password"
+        ]
       },
       "LoginInput": {
         "type": "object",

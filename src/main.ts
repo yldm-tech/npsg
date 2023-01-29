@@ -81,6 +81,8 @@ async function bootstrap() {
     .setDescription('The nest API description')
     .addBasicAuth()
     .setVersion('0.1')
+    .addBearerAuth()
+    // .addCookieAuth('Authorization')
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('docs', app, document);

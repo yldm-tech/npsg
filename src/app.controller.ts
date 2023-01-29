@@ -1,3 +1,4 @@
+import { ApiTags } from '@nestjs/swagger';
 import { HttpService } from '@nestjs/axios';
 import {
   Controller,
@@ -15,6 +16,7 @@ import { catchError, firstValueFrom, interval, map, Observable } from 'rxjs';
 import { Cookies } from './common/decorator/cookie.decorator';
 
 @Controller({ version: VERSION_NEUTRAL })
+@ApiTags('app')
 export class AppController {
   private readonly logger = new Logger(AppController.name);
   constructor(private readonly httpService: HttpService) {}

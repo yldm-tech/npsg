@@ -13,6 +13,8 @@ paths:
             application/json:
               schema:
                 type: string
+      tags: &ref_0
+        - app
   /v1/hello:
     get:
       operationId: AppController_getHelloV1
@@ -26,6 +28,7 @@ paths:
             application/json:
               schema:
                 type: string
+      tags: *ref_0
   /v2/hello:
     get:
       operationId: AppController_getHelloV2
@@ -42,6 +45,7 @@ paths:
             application/json:
               schema:
                 type: string
+      tags: *ref_0
   /axios:
     get:
       operationId: AppController_getFromAxios
@@ -51,6 +55,7 @@ paths:
       responses:
         '200':
           description: ''
+      tags: *ref_0
   /session:
     get:
       operationId: AppController_session
@@ -64,6 +69,7 @@ paths:
             application/json:
               schema:
                 type: object
+      tags: *ref_0
   /sse:
     get:
       operationId: AppController_sse
@@ -73,6 +79,7 @@ paths:
       responses:
         '200':
           description: ''
+      tags: *ref_0
   /chat:
     get:
       operationId: ChatController_Home
@@ -82,6 +89,8 @@ paths:
       responses:
         '200':
           description: ''
+      tags: &ref_1
+        - chat
   /chat/api/chat:
     get:
       operationId: ChatController_Chat
@@ -91,6 +100,7 @@ paths:
       responses:
         '200':
           description: ''
+      tags: *ref_1
   /posts:
     post:
       operationId: PostsController_create
@@ -110,7 +120,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Posts'
-      tags: &ref_0
+      tags: &ref_2
         - posts
     get:
       operationId: PostsController_findAll
@@ -126,7 +136,7 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Posts'
-      tags: *ref_0
+      tags: *ref_2
   /posts/drafts:
     get:
       operationId: PostsController_findDrafts
@@ -142,7 +152,7 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Posts'
-      tags: *ref_0
+      tags: *ref_2
   /posts/{id}:
     get:
       operationId: PostsController_findOne
@@ -161,7 +171,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Posts'
-      tags: *ref_0
+      tags: *ref_2
     patch:
       operationId: PostsController_update
       summary: ''
@@ -185,7 +195,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Posts'
-      tags: *ref_0
+      tags: *ref_2
     delete:
       operationId: PostsController_remove
       summary: ''
@@ -203,7 +213,30 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Posts'
-      tags: *ref_0
+      tags: *ref_2
+  /auth/signup:
+    post:
+      operationId: AuthController_signup
+      summary: ''
+      description: ''
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SignUpInput'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+      tags: &ref_3
+        - auth
+      security: &ref_4
+        - bearer: []
   /auth/login:
     post:
       operationId: AuthController_login
@@ -223,6 +256,8 @@ paths:
             application/json:
               schema:
                 type: object
+      tags: *ref_3
+      security: *ref_4
   /auth/profile:
     get:
       operationId: AuthController_getProfile
@@ -236,6 +271,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UserEntity'
+      tags: *ref_3
+      security: *ref_4
   /auth/updatePassword:
     post:
       operationId: AuthController_updatePassword
@@ -255,6 +292,8 @@ paths:
             application/json:
               schema:
                 type: object
+      tags: *ref_3
+      security: *ref_4
   /mail/sendMail:
     get:
       operationId: MailController_sendMail
@@ -273,6 +312,8 @@ paths:
             application/json:
               schema:
                 type: object
+      tags:
+        - mail
   /queue/transcode:
     post:
       operationId: QueueController_transcode
@@ -282,6 +323,8 @@ paths:
       responses:
         '201':
           description: ''
+      tags:
+        - queue
   /order:
     post:
       operationId: OrdersController_create
@@ -323,7 +366,7 @@ paths:
             application/json:
               schema:
                 type: object
-      tags: &ref_1
+      tags: &ref_5
         - file
   /file/uploads:
     post:
@@ -341,7 +384,7 @@ paths:
       responses:
         '201':
           description: ''
-      tags: *ref_1
+      tags: *ref_5
   /file/download:
     get:
       operationId: FileController_downloadFile
@@ -356,7 +399,7 @@ paths:
       responses:
         '200':
           description: ''
-      tags: *ref_1
+      tags: *ref_5
 info:
   title: nest-api
   description: The nest API description
@@ -369,6 +412,10 @@ components:
     basic:
       type: http
       scheme: basic
+    bearer:
+      scheme: bearer
+      bearerFormat: JWT
+      type: http
   schemas:
     CreatePostDto:
       type: object
@@ -444,6 +491,16 @@ components:
         content:
           type: string
           nullable: true
+    SignUpInput:
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+      required:
+        - email
+        - password
     LoginInput:
       type: object
       properties:
