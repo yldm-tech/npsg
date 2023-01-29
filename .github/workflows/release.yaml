@@ -125,20 +125,6 @@ jobs:
         with:
           node-version: 16
 
-      # 查找最新tag
-      - name: 查找最新tag
-        id: find_new_tag
-        if: ${{ steps.configure_settings.outputs.STATUS == 'success' }}
-        timeout-minutes: 1
-        run: |
-          echo "ERROR_TEXT=Failed to find new tag." >> ${GITHUB_ENV}
-          TAG=$(git describe --tags --abbrev=0)
-          echo "New version is: ${TAG}"
-          echo "TAG=${TAG}" >> ${GITHUB_OUTPUT}
-          cp ./package.json /tmp/package.json
-          sleep 1
-          cat /tmp/package.json | jq ".version = \"${TAG}\"" > ./package.json
-          rm /tmp/package.json
       
       # 安装task
       - name: 安装task
@@ -156,18 +142,30 @@ jobs:
           check-latest: true
           cache: false
 
-      # 设置git tag
-      - name: Setup git-vertag
+      # 安装git-vertag
+      - name: 安装git-vertag
         run: go install github.com/kyoh86/git-vertag@latest
 
-      # 获取最新版本的下一个版本
+      # 设置git tag
       - name: Bump-up Semantic Version
-        id: bump_up_semantic_version
         env:
           METHOD: ${{ steps.find_semantic_version_method.outputs.METHOD }}
+        run: $(go env GOPATH)/bin/git-vertag ${{ env.METHOD }}
+
+            # 查找最新tag
+      - name: 查找最新tag
+        id: find_new_tag
+        if: ${{ steps.configure_settings.outputs.STATUS == 'success' }}
+        timeout-minutes: 1
         run: |
-          CURRENT_TAG=git-vertag ${{ env.METHOD }}
-          echo NEW_TAG=${CURRENT_TAG} >> ${GITHUB_OUTPUT}
+          echo "ERROR_TEXT=Failed to find new tag." >> ${GITHUB_ENV}
+          TAG=$(git describe --exact-match --tags $(git log -n1 --pretty='%h'))
+          echo "New version is: ${TAG}"
+          echo "TAG=${TAG}" >> ${GITHUB_OUTPUT}
+          cp ./package.json /tmp/package.json
+          sleep 1
+          cat /tmp/package.json | jq ".version = \"${TAG}\"" > ./package.json
+          rm /tmp/package.json
 
       # 安装nodejs依赖
       - name: 安装nodejs依赖
@@ -179,20 +177,6 @@ jobs:
         timeout-minutes: 10
         run: yarn
 
-      # # release body
-      # - name: Create Release Body
-      #   id: release_body
-      #   if: ${{ steps.configure_settings.outputs.STATUS == 'success' && steps.configure_settings.outputs.RELEASE == 'release' }}
-      #   env:
-      #     GITHUB_PAT: ${{ env.GITHUB_PAT }}
-      #     SHA: ${{ needs.check_status.outputs.SHA }}
-      #   run: |
-      #     echo "ERROR_TEXT=Failed to prepare release body." >> ${GITHUB_ENV}
-      #     RELEASE_BODY_FILE_PATH=$(mktemp)
-      #     chmod +x ${GITHUB_WORKSPACE}/.github/bin/create-release-body.sh
-      #     ${GITHUB_WORKSPACE}/.github/bin/create-release-body.sh ${{ github.repository }} ${{ env.GITHUB_PAT }} ${{ env.SHA }} ${RELEASE_BODY_FILE_PATH}
-      #     echo "RELEASE_BODY_FILE_PATH=${RELEASE_BODY_FILE_PATH}" >> ${GITHUB_OUTPUT}
-      
       # Release
       - name: Create a Release
         id: create_release
@@ -201,8 +185,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ env.GITHUB_PAT }}
         with:
-          tag_name: ${{ steps.bump_up_semantic_version.outputs.NEW_TAG }}
-          release_name: ${{ steps.bump_up_semantic_version.outputs.NEW_TAG }}
+          tag_name: ${{ steps.find_new_tag.outputs.NEW_TAG }}
+          release_name: ${{ steps.find_new_tag.outputs.NEW_TAG }}
           # body_path: ${{ steps.release_body.outputs.RELEASE_BODY_FILE_PATH }}
           draft: false
           prerelease: false
