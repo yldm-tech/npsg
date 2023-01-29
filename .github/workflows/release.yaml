@@ -173,26 +173,18 @@ jobs:
         run: yarn
       
       # Release
-      - name: Release
-        if: ${{ steps.configure_settings.outputs.STATUS == 'success' }}
-        timeout-minutes: 10
+      - name: Create a Release
+        id: create_release
+        if: ${{ steps.configure_settings.outputs.STATUS == 'success' && steps.configure_settings.outputs.RELEASE == 'release' }}
+        uses: actions/create-release@v1
         env:
-          REMOTE_CONTAINERS: "true"
-          GITHUB_UID: ${{ env.GITHUB_UID }}
-          GITHUB_PAT: ${{ env.GITHUB_PAT }}
           GITHUB_TOKEN: ${{ env.GITHUB_PAT }}
-          RELEASE: ${{ steps.configure_settings.outputs.RELEASE }}
-        run: |
-          echo "ERROR_TEXT=Failed to release version." >> ${GITHUB_ENV}
-          echo 'deb [trusted=yes] https://repo.goreleaser.com/apt/ /' | sudo tee /etc/apt/sources.list.d/goreleaser.list
-          sudo apt update
-          sudo apt install goreleaser
-          case "${{ env.RELEASE }}" in
-            'build-only')
-              GOPATH=$(go env GOPATH) goreleaser release --rm-dist --snapshot ;;
-            'release')
-              GOPATH=$(go env GOPATH) goreleaser release --rm-dist ;;
-          esac
+        with:
+          tag_name: ${{ steps.find_new_tag.outputs.TAG }}
+          release_name: ${{ steps.find_new_tag.outputs.TAG }}
+          body_path: ${{ steps.release_body.outputs.RELEASE_BODY_FILE_PATH }}
+          draft: false
+          prerelease: false
      
      
       - name: 设置镜像tag
