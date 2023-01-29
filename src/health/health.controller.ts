@@ -9,7 +9,6 @@ import {
   MicroserviceHealthIndicator,
   HealthCheck,
 } from '@nestjs/terminus';
-import { config } from 'process';
 import { PrismaHealthIndicator } from './prisma.indicator';
 
 @Controller('health')
