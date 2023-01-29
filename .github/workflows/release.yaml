@@ -216,7 +216,6 @@ jobs:
             ${{ env.GITHUB_IMAGE_PROD }} ${{ env.GITHUB_IMAGE_LATEST }}
           containerfiles: |
             ${{ env.CONTAINER_FILE }}
-          archs: linux/amd64,linux/arm64
 
       #  登陆到github docker
       - name: 登陆到github docker
