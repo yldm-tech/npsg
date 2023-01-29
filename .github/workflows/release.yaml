@@ -169,6 +169,13 @@ jobs:
           CURRENT_TAG=git-vertag ${{ env.METHOD }}
           echo TAG=${CURRENT_TAG} >> ${GITHUB_OUTPUT}
 
+    
+      - name: debug
+        run: |
+          echo 'start debug'
+          echo ${{ steps.configure_settings.outputs.STATUS }}
+          echo ${{ steps.bump_up_semantic_version.outputs.TAG }}
+
       # 安装nodejs依赖
       - name: 安装nodejs依赖
         id: initialize_nodejs_environment
@@ -180,8 +187,6 @@ jobs:
         run: yarn
 
 
-      - name: debug
-        run: echo ${{ steps.bump_up_semantic_version.outputs.TAG }}
       # # release body
       # - name: Create Release Body
       #   id: release_body
