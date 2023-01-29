@@ -178,19 +178,19 @@ jobs:
         timeout-minutes: 10
         run: yarn
 
-      # release body
-      - name: Create Release Body
-        id: release_body
-        if: ${{ steps.configure_settings.outputs.STATUS == 'success' && steps.configure_settings.outputs.RELEASE == 'release' }}
-        env:
-          GITHUB_PAT: ${{ env.GITHUB_PAT }}
-          SHA: ${{ needs.check_status.outputs.SHA }}
-        run: |
-          echo "ERROR_TEXT=Failed to prepare release body." >> ${GITHUB_ENV}
-          RELEASE_BODY_FILE_PATH=$(mktemp)
-          chmod +x ${GITHUB_WORKSPACE}/.github/bin/create-release-body.sh
-          ${GITHUB_WORKSPACE}/.github/bin/create-release-body.sh ${{ github.repository }} ${{ env.GITHUB_PAT }} ${{ env.SHA }} ${RELEASE_BODY_FILE_PATH}
-          echo "RELEASE_BODY_FILE_PATH=${RELEASE_BODY_FILE_PATH}" >> ${GITHUB_OUTPUT}
+      # # release body
+      # - name: Create Release Body
+      #   id: release_body
+      #   if: ${{ steps.configure_settings.outputs.STATUS == 'success' && steps.configure_settings.outputs.RELEASE == 'release' }}
+      #   env:
+      #     GITHUB_PAT: ${{ env.GITHUB_PAT }}
+      #     SHA: ${{ needs.check_status.outputs.SHA }}
+      #   run: |
+      #     echo "ERROR_TEXT=Failed to prepare release body." >> ${GITHUB_ENV}
+      #     RELEASE_BODY_FILE_PATH=$(mktemp)
+      #     chmod +x ${GITHUB_WORKSPACE}/.github/bin/create-release-body.sh
+      #     ${GITHUB_WORKSPACE}/.github/bin/create-release-body.sh ${{ github.repository }} ${{ env.GITHUB_PAT }} ${{ env.SHA }} ${RELEASE_BODY_FILE_PATH}
+      #     echo "RELEASE_BODY_FILE_PATH=${RELEASE_BODY_FILE_PATH}" >> ${GITHUB_OUTPUT}
       
       # Release
       - name: Create a Release
@@ -202,7 +202,7 @@ jobs:
         with:
           tag_name: ${{ steps.bump_up_semantic_version.outputs.TAG }}
           release_name: ${{ steps.bump_up_semantic_version.outputs.TAG }}
-          body_path: ${{ steps.release_body.outputs.RELEASE_BODY_FILE_PATH }}
+          # body_path: ${{ steps.release_body.outputs.RELEASE_BODY_FILE_PATH }}
           draft: false
           prerelease: false
      
