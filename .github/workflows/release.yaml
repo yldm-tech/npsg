@@ -212,11 +212,11 @@ jobs:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
         with:
           base-image: node:16-alpine
-          platforms: linux/amd64,linux/arm64
           tags: |
             ${{ env.GITHUB_IMAGE_PROD }} ${{ env.GITHUB_IMAGE_LATEST }}
           containerfiles: |
             ${{ env.CONTAINER_FILE }}
+          platforms: linux/amd64,linux/arm64
 
       #  登陆到github docker
       - name: 登陆到github docker
