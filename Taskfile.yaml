@@ -12,6 +12,7 @@ tasks:
     cmds:
       -  npm install -g conventional-changelog-cli
       -  npm install -g standard-version
+      -  npm install -g commitizen
       -  chmod +x deploy/bin/*
 
   nest:generate:
