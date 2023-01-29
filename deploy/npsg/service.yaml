@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: npsg-service
+  namespace: npsg
+  labels:
+    app: npsg
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 3000
+      targetPort: 3000
+      protocol: TCP
+  selector:
+    app: npsg

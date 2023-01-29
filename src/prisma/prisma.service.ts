@@ -1,3 +1,4 @@
+import { endpoint } from './../../node_modules/aws-sdk/clients/sns.d';
 import {
   INestApplication,
   Injectable,
@@ -5,6 +6,8 @@ import {
   OnModuleInit,
 } from '@nestjs/common';
 import { Prisma, PrismaClient } from '@prisma/client';
+import { ConfigService } from '@nestjs/config';
+import { processEnv } from 'src/constant/process-env';
 
 @Injectable()
 export class PrismaService
@@ -13,11 +16,30 @@ export class PrismaService
 {
   private readonly logger = new Logger(PrismaService.name);
 
-  constructor() {
-    super({ log: ['query', 'info', 'warn', 'error'] });
+  constructor(configService: ConfigService) {
+    const envUrl = processEnv.DATABASE_URL;
+    const configUrl = configService.get('DATABASE_URL');
+    super({
+      log: ['query', 'info', 'warn', 'error'],
+      datasources: {
+        db: {
+          url: envUrl || configUrl,
+        },
+      },
+    });
   }
 
   async onModuleInit() {
+    this.configSqlLog();
+  }
+
+  async enableShutdownHooks(app: INestApplication) {
+    this.$on('beforeExit', async () => {
+      await app.close();
+    });
+  }
+
+  private async configSqlLog() {
     this.$on('query', (event) => {
       this.logger.log(
         `Query: ${event.query}`,
@@ -35,11 +57,5 @@ export class PrismaService
       this.logger.log(`warn: ${event.message}`);
     });
     await this.$connect();
-  }
-
-  async enableShutdownHooks(app: INestApplication) {
-    this.$on('beforeExit', async () => {
-      await app.close();
-    });
   }
 }

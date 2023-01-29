@@ -24,6 +24,7 @@ import { LoggerMiddleware } from './common/middleware/logger.middleware';
 import { APP_GUARD } from '@nestjs/core';
 import { ChatModule } from './chat/chat.module';
 import { HealthModule } from './health/health.module';
+import { processEnv } from './constant/process-env';
 
 @Module({
   imports: [
@@ -54,13 +55,11 @@ import { HealthModule } from './health/health.module';
       useFactory: async (configService: ConfigService) => ({
         redis: {
           host:
-            (process.env.REDIS_HOST as string) ||
+            processEnv.REDIS_HOST ||
             configService.get('REDIS_HOST') ||
             '127.0.0.1',
           port:
-            (process.env.REDIS_PORT as unknown as number) ||
-            configService.get('REDIS_PORT') ||
-            6379,
+            processEnv.REDIS_PORT || configService.get('REDIS_PORT') || 6379,
         },
       }),
       inject: [ConfigService],

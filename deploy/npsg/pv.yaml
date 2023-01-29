@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: npsg-pv-volume
+  namespace: npsg
+  labels:
+    app: npsg
+spec:
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: '/mnt/data'
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: npsg-pv-claim
+  namespace: npsg
+  labels:
+    app: npsg
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi

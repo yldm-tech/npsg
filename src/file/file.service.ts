@@ -1,9 +1,7 @@
 import { ConfigService } from '@nestjs/config';
-import { BadRequestException, Injectable, Logger } from '@nestjs/common';
-import * as fs from 'fs';
-import * as zlib from 'zlib';
+import { Injectable, Logger } from '@nestjs/common';
 import * as AWS from 'aws-sdk';
-import { PassThrough } from 'stream';
+import { processEnv } from 'src/constant/process-env';
 
 @Injectable()
 export class FileService {
@@ -13,12 +11,12 @@ export class FileService {
   constructor(private readonly configService: ConfigService) {
     AWS.config.update({
       accessKeyId:
-        process.env.AWS_ACCESS_KEY_ID ||
+        processEnv.AWS_ACCESS_KEY_ID ||
         configService.get<string>('AWS_ACCESS_KEY_ID'),
       secretAccessKey:
-        process.env.AWS_SECRET_ACCESS_KEY ||
+        processEnv.AWS_SECRET_ACCESS_KEY ||
         configService.get<string>('AWS_SECRET_ACCESS_KEY'),
-      region: process.env.AWS_REGION || configService.get<string>('AWS_REGION'),
+      region: processEnv.AWS_REGION || configService.get<string>('AWS_REGION'),
     });
     this.s3 = new AWS.S3();
   }

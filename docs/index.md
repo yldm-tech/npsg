@@ -14,7 +14,7 @@ hero:
   actions:
     - theme: brand
       text: 开始
-      link: /guide/
+      link: /components/
     - theme: alt
       text: 更多
       link: https://github.com/lantron-ltd/npsg

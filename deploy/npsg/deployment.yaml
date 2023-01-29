@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: npsg-deployment
+  namespace: npsg
+spec:
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: npsg
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: npsg
+    spec:
+      imagePullSecrets:
+        - name: docker
+      containers:
+        - name: npsg
+          image: ghcr.io/lantron-ltd/npsg:v0.15
+          imagePullPolicy: 'IfNotPresent'
+          resources:
+            limits:
+              memory: '512Mi'
+              cpu: '512m'
+          ports:
+            - containerPort: 3000
+          env:
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: npsg-secret
+                  key: DATABASE_URL
+   
+          volumeMounts:
+            - mountPath: /etc/npsg
+              name: npsg-volume
+      volumes:
+        - name: npsg-volume
+          persistentVolumeClaim:
+            claimName: npsg-pv-claim

@@ -23,6 +23,7 @@ export class AppController {
 
   @Get()
   getHello(): string {
+    console.log(process.env.NODE_ENV);
     return 'hello';
   }
 
