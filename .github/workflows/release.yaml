@@ -211,6 +211,7 @@ jobs:
           GITHUB_IMAGE_LATEST: ${{ steps.set_container_image_tags.outputs.GITHUB_IMAGE_LATEST }}
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
         with:
+          base-image: node:16-alpine
           tags: |
             ${{ env.GITHUB_IMAGE_PROD }} ${{ env.GITHUB_IMAGE_LATEST }}
           containerfiles: |
