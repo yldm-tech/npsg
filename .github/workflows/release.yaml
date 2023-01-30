@@ -203,19 +203,24 @@ jobs:
           echo "GITHUB_IMAGE_PROD=${{ env.GITHUB_DOCKER_REGISTRY }}/${{ env.CONTAINER_IMAGE_NAME }}:${{ steps.find_new_tag.outputs.TAG }}" >> ${GITHUB_OUTPUT}
           echo "GITHUB_IMAGE_LATEST=${{ env.GITHUB_DOCKER_REGISTRY }}/${{ env.CONTAINER_IMAGE_NAME }}:latest" >> ${GITHUB_OUTPUT}
 
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
       - name: 打包npsg镜像
-        uses: redhat-actions/buildah-build@v2
+        uses: docker/build-push-action@v3
         if: ${{ steps.configure_settings.outputs.STATUS == 'success' && steps.configure_settings.outputs.RELEASE == 'release' }}
         env:
           GITHUB_IMAGE_PROD: ${{ steps.set_container_image_tags.outputs.GITHUB_IMAGE_PROD }}
           GITHUB_IMAGE_LATEST: ${{ steps.set_container_image_tags.outputs.GITHUB_IMAGE_LATEST }}
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
         with:
-          base-image: node:16-alpine
+          platforms: linux/amd64,linux/arm64
           tags: |
             ${{ env.GITHUB_IMAGE_PROD }},${{ env.GITHUB_IMAGE_LATEST }}
-          containerfiles: |
-            ${{ env.CONTAINER_FILE }}
+          push: false
 
       #  登陆到github docker
       - name: 登陆到github docker
