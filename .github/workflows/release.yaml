@@ -209,7 +209,15 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
-      - name: 打包npsg镜像
+      #  登陆到github docker
+      - name: 登陆到github docker
+        uses: docker/login-action@v2
+        with:
+          registry: ${{ env.GITHUB_DOCKER_REGISTRY }}
+          username: ${{ env.GITHUB_UID }}
+          password: ${{ env.GITHUB_PAT }}
+
+      - name: 打包npsg镜像并推送
         uses: docker/build-push-action@v3
         if: ${{ steps.configure_settings.outputs.STATUS == 'success' && steps.configure_settings.outputs.RELEASE == 'release' }}
         env:
@@ -220,23 +228,16 @@ jobs:
           platforms: linux/amd64,linux/arm64
           tags: |
             ${{ env.GITHUB_IMAGE_PROD }},${{ env.GITHUB_IMAGE_LATEST }}
-          push: false
-
-      #  登陆到github docker
-      - name: 登陆到github docker
-        uses: docker/login-action@v2
-        with:
-          registry: ${{ env.GITHUB_DOCKER_REGISTRY }}
-          username: ${{ env.GITHUB_UID }}
-          password: ${{ env.GITHUB_PAT }}
+          push: true
 
 
-      - name: 推送npsg镜像到github
-        uses: redhat-actions/push-to-registry@v2
-        if: ${{ steps.configure_settings.outputs.STATUS == 'success' && steps.configure_settings.outputs.RELEASE == 'release' }}
-        with:
-          image: ${{ env.CONTAINER_IMAGE_NAME }}
-          tags: ${{ steps.find_new_tag.outputs.TAG }} latest
-          registry: ${{ env.GITHUB_DOCKER_REGISTRY }}
-          username: ${{ env.GITHUB_UID }}
-          password: ${{ env.GITHUB_PAT }}
+
+      # - name: 推送npsg镜像到github
+      #   uses: redhat-actions/push-to-registry@v2
+      #   if: ${{ steps.configure_settings.outputs.STATUS == 'success' && steps.configure_settings.outputs.RELEASE == 'release' }}
+      #   with:
+      #     image: ${{ env.CONTAINER_IMAGE_NAME }}
+      #     tags: ${{ steps.find_new_tag.outputs.TAG }} latest
+      #     registry: ${{ env.GITHUB_DOCKER_REGISTRY }}
+      #     username: ${{ env.GITHUB_UID }}
+      #     password: ${{ env.GITHUB_PAT }}
