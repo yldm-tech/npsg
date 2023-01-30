@@ -19,6 +19,16 @@ services:
     restart: on-failure
     ports:
       - "6379:6379"
+  
+  web:
+    container_name: web
+    hostname: npsg
+    image: ghcr.io/lantron-ltd/npsg:v0.14.11
+    restart: on-failure
+    ports:
+      - "3000:3000"
+    environment:
+      - DATABASE_URL=postgres://myuser:mypassword@postgres:5432/npsg
 
 volumes:
   postgres:
