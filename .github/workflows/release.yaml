@@ -225,7 +225,7 @@ jobs:
           GITHUB_IMAGE_LATEST: ${{ steps.set_container_image_tags.outputs.GITHUB_IMAGE_LATEST }}
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
         with:
-          platforms: linux/amd64,linux/arm64
+          # platforms: linux/amd64,linux/arm64
           tags: |
             ${{ env.GITHUB_IMAGE_PROD }},${{ env.GITHUB_IMAGE_LATEST }}
           push: true

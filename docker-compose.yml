@@ -23,7 +23,7 @@ services:
   web:
     container_name: web
     hostname: npsg
-    image: ghcr.io/lantron-ltd/npsg:v0.14.11
+    image: ghcr.io/lantron-ltd/npsg:latest
     restart: on-failure
     ports:
       - "3000:3000"
