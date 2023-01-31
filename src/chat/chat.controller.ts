@@ -1,6 +1,5 @@
 import { ApiTags } from '@nestjs/swagger';
 import { Controller, Get, Render, Res } from '@nestjs/common';
-import { get } from 'http';
 import { ChatService } from './chat.service';
 
 @Controller('chat')
