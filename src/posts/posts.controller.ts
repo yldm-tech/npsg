@@ -32,18 +32,31 @@ import { PrismaPromise } from '@prisma/client';
 export class PostsController {
   constructor(private readonly postsService: PostsService) {}
 
+  /**
+   * 创建文章
+   * @param createArticleDto dto
+   * @returns
+   */
   @Post()
   @ApiCreatedResponse({ type: Posts })
   create(@Body() createArticleDto: CreatePostDto) {
     return this.postsService.create(createArticleDto);
   }
 
+  /**
+   * 获取所有草稿
+   * @returns
+   */
   @Get('drafts')
   @ApiOkResponse({ type: Posts, isArray: true })
   findDrafts() {
     return this.postsService.findDrafts();
   }
 
+  /**
+   * 获取所有文章
+   * @returns
+   */
   @CacheKey('all_posts')
   @CacheTTL(20)
   @Get()
@@ -57,6 +70,11 @@ export class PostsController {
     });
   }
 
+  /**
+   * 根据id获取文章
+   * @param id id
+   * @returns
+   */
   @Get(':id')
   @ApiOkResponse({ type: Posts })
   async findOne(@Param('id', ParseIntPipe) id: number): Promise<Posts> {
@@ -68,6 +86,12 @@ export class PostsController {
     return post;
   }
 
+  /**
+   * 根据id修改文章
+   * @param id id
+   * @param updateArticleDto
+   * @returns
+   */
   @Patch(':id')
   @ApiOkResponse({ type: Posts })
   update(
@@ -77,6 +101,11 @@ export class PostsController {
     return this.postsService.update(id, updateArticleDto);
   }
 
+  /**
+   * 根据id删除文章
+   * @param id id
+   * @returns
+   */
   @Delete(':id')
   @ApiOkResponse({ type: Posts })
   remove(@Param('id', ParseIntPipe) id: number) {

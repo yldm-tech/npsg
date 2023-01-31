@@ -1,3 +1,4 @@
+import { ApiTags } from '@nestjs/swagger';
 import { Controller, Get } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { RedisOptions, Transport } from '@nestjs/microservices';
@@ -13,6 +14,7 @@ import { processEnv } from 'src/common/constant/process-env';
 import { PrismaHealthIndicator } from './prisma.indicator';
 
 @Controller('health')
+@ApiTags('app')
 export class HealthController {
   constructor(
     private readonly configService: ConfigService,

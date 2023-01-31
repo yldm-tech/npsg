@@ -26,6 +26,11 @@ export class AuthService {
     private readonly configService: ConfigService,
   ) {}
 
+  /**
+   * 注册账号
+   * @param signupInput 注册信息
+   * @returns
+   */
   async register(signupInput: RegisterInput) {
     const { email, password } = signupInput;
     const existed = await this.userService.findOneByEmail(email);
@@ -39,6 +44,11 @@ export class AuthService {
     });
   }
 
+  /**
+   * 登陆
+   * @param loginInput 登陆信息
+   * @returns
+   */
   async login(loginInput: LoginInput): Promise<LoginResponse> {
     console.log(loginInput);
     const { email, password } = loginInput;
@@ -61,10 +71,21 @@ export class AuthService {
     } as LoginResponse;
   }
 
-  async findUserFromContext(userContext: IUserContext) {
+  /**
+   *
+   * @param userContext 根据id获取用户信息
+   * @returns
+   */
+  async findUserById(userContext: IUserContext) {
     return this.userService.findOne(userContext.userId);
   }
 
+  /**
+   * 验证用户合法性
+   * @param username 用户名
+   * @param pass
+   * @returns
+   */
   async validateUser(username: string, pass: string) {
     const user = await this.userService.findOneByEmail(username);
     if (!user) {
@@ -77,6 +98,12 @@ export class AuthService {
     throw new BadRequestException('user email or password is wrong');
   }
 
+  /**
+   * 修改用户密码
+   * @param uuid uid
+   * @param updatePasswordInput
+   * @returns
+   */
   async updatePassword(uuid: number, updatePasswordInput: UpdatePasswordInput) {
     const { newPassword } = updatePasswordInput;
     const encryptedPassword = await bcrypt.hash(newPassword, 10);
@@ -85,6 +112,11 @@ export class AuthService {
     });
   }
 
+  /**
+   * google 登陆
+   * @param googleUser google用户信息
+   * @returns
+   */
   async googleLogin(googleUser: GoogleUser) {
     if (!googleUser) {
       throw new BadRequestException('cannot get google user,please try again');

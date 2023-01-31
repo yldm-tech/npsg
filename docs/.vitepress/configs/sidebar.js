@@ -48,8 +48,8 @@ function getFeaturesSidebar() {
           link: '/feature/1-auth',
         },
         {
-          text: '字段验证',
-          link: '/feature/2-validation',
+          text: '即时聊天',
+          link: '/feature/2-chat',
         },
         {
           text: '缓存',

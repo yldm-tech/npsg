@@ -39,7 +39,7 @@ export class AuthController {
   @UseInterceptors(ClassSerializerInterceptor)
   @Get('/profile')
   getProfile(@CurrentUser() user: IUserContext): Promise<UserEntity> {
-    return this.authService.findUserFromContext(user);
+    return this.authService.findUserById(user);
   }
 
   @UseGuards(JwtAuthGuard)

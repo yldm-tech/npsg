@@ -28,7 +28,7 @@ export class AuthResolver {
   @UseGuards(GqlAuthGuard)
   @Query(() => UserEntity, { name: 'profile', nullable: true })
   async getCurrentUser(@CurrentGqlUser() user): Promise<User> {
-    return this.authService.findUserFromContext(user);
+    return this.authService.findUserById(user);
   }
 
   @UseGuards(GqlAuthGuard)

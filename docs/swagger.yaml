@@ -105,7 +105,7 @@ paths:
     post:
       operationId: PostsController_create
       summary: ''
-      description: ''
+      description: 创建文章
       parameters: []
       requestBody:
         required: true
@@ -125,7 +125,7 @@ paths:
     get:
       operationId: PostsController_findAll
       summary: ''
-      description: ''
+      description: 获取所有文章
       parameters: []
       responses:
         '200':
@@ -141,7 +141,7 @@ paths:
     get:
       operationId: PostsController_findDrafts
       summary: ''
-      description: ''
+      description: 获取所有草稿
       parameters: []
       responses:
         '200':
@@ -157,7 +157,7 @@ paths:
     get:
       operationId: PostsController_findOne
       summary: ''
-      description: ''
+      description: 根据id获取文章
       parameters:
         - name: id
           required: true
@@ -175,7 +175,7 @@ paths:
     patch:
       operationId: PostsController_update
       summary: ''
-      description: ''
+      description: 根据id修改文章
       parameters:
         - name: id
           required: true
@@ -199,7 +199,7 @@ paths:
     delete:
       operationId: PostsController_remove
       summary: ''
-      description: ''
+      description: 根据id删除文章
       parameters:
         - name: id
           required: true
@@ -524,6 +524,8 @@ paths:
                           type: string
                       additionalProperties:
                         type: string
+      tags:
+        - app
 info:
   title: nest-api
   description: The nest API description

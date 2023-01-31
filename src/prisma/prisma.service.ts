@@ -48,13 +48,13 @@ export class PrismaService
       );
     });
     this.$on('info', (event) => {
-      this.logger.log(`message: ${event.message}`);
+      this.logger.log(`${event.message}`);
     });
     this.$on('error', (event) => {
-      this.logger.log(`error: ${event.message}`);
+      this.logger.error(`${event.message}`);
     });
     this.$on('warn', (event) => {
-      this.logger.log(`warn: ${event.message}`);
+      this.logger.warn(` ${event.message}`);
     });
     await this.$connect();
   }
