@@ -59,7 +59,6 @@ endpoint: `auth/profile`  GET
 ![profile](/feature/auth/profile.png)
 
  
-
 ### 4. 修改密码
 
 endpoint: `auth/profile`  GET
