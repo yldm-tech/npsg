@@ -314,6 +314,10 @@ paths:
       responses:
         '200':
           description: ''
+          content:
+            application/json:
+              schema:
+                type: object
       tags: *ref_3
       security: *ref_4
   /mail/sendMail:

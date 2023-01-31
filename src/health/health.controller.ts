@@ -9,6 +9,7 @@ import {
   MicroserviceHealthIndicator,
   HealthCheck,
 } from '@nestjs/terminus';
+import { processEnv } from 'src/constant/process-env';
 import { PrismaHealthIndicator } from './prisma.indicator';
 
 @Controller('health')
@@ -39,6 +40,14 @@ export class HealthController {
           options: {
             host: this.configService.get('REDIS_HOST') || 'localhost',
             port: this.configService.get('REDIS_PORT') || 6379,
+            username:
+              this.configService.get('REDIS_USERNAME') ||
+              processEnv.REDIS_USERNAME ||
+              '',
+            password:
+              this.configService.get('REDIS_PASSWORD') ||
+              processEnv.REDIS_PASSWORD ||
+              '',
           },
         }),
     ]);

@@ -55,11 +55,19 @@ import { processEnv } from './constant/process-env';
       useFactory: async (configService: ConfigService) => ({
         redis: {
           host:
-            processEnv.REDIS_HOST ||
             configService.get('REDIS_HOST') ||
+            processEnv.REDIS_HOST ||
             '127.0.0.1',
           port:
             processEnv.REDIS_PORT || configService.get('REDIS_PORT') || 6379,
+          username:
+            configService.get('REDIS_USERNAME') ||
+            processEnv.REDIS_USERNAME ||
+            '',
+          password:
+            configService.get('REDIS_PASSWORD') ||
+            processEnv.REDIS_PASSWORD ||
+            '',
         },
       }),
       inject: [ConfigService],
