@@ -30,7 +30,7 @@ type Mutation {
   addPost(newPostData: CreatePostDto!): Posts!
   login(loginInput: LoginInput!): LoginResponse!
   removePost(id: Float!): Boolean!
-  signup(signupInput: SignUpInput!): user!
+  signup(signupInput: RegisterInput!): user!
   updatePassword(updatePasswordInput: UpdatePasswordInput!): user
 }
 
@@ -50,6 +50,14 @@ type Query {
   profile: user
 }
 
+input RegisterInput {
+  """ email address of user"""
+  email: String!
+
+  """ password of user"""
+  password: String!
+}
+
 """Different User Role types"""
 enum Role {
   Admin
@@ -58,14 +66,6 @@ enum Role {
 
   """Basic, shared, default user access scope"""
   User
-}
-
-input SignUpInput {
-  """ email address of user"""
-  email: String!
-
-  """ password of user"""
-  password: String!
 }
 
 type Subscription {

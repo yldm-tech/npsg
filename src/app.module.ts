@@ -24,7 +24,7 @@ import { LoggerMiddleware } from './common/middleware/logger.middleware';
 import { APP_GUARD } from '@nestjs/core';
 import { ChatModule } from './chat/chat.module';
 import { HealthModule } from './health/health.module';
-import { processEnv } from './constant/process-env';
+import { processEnv } from './common/constant/process-env';
 
 @Module({
   imports: [

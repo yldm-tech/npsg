@@ -1,7 +1,7 @@
 export default {
-  '/microservice/': getMicroServiceSidebar(),
   '/components/': getComponentsSidebar(),
-  '/guide/': getGuideSidebar(),
+  '/feature/': getFeaturesSidebar(),
+  '/deploy/': getDeploySidebar(),
 };
 
 function getMicroServiceSidebar() {
@@ -38,6 +38,89 @@ function getMicroServiceSidebar() {
   ];
 }
 
+function getFeaturesSidebar() {
+  return [
+    {
+      text: '功能介绍',
+      items: [
+        {
+          text: '认证授权',
+          link: '/feature/1-auth',
+        },
+        {
+          text: '字段验证',
+          link: '/feature/2-validation',
+        },
+        {
+          text: '缓存',
+          link: '/feature/3-caching',
+        },
+        {
+          text: '多版本API',
+          link: '/feature/4-versioning',
+        },
+
+        {
+          text: '定时任务',
+          link: '/feature/5-task-scheduling',
+        },
+        {
+          text: '队列',
+          link: '/feature/6-queues',
+        },
+        {
+          text: '日志',
+          link: '/feature/7-logger',
+        },
+        {
+          text: '事件推送',
+          link: '/feature/8-events',
+        },
+        {
+          text: '文件上传',
+          link: '/feature/9-file-upload',
+        },
+        {
+          text: 'Http',
+          link: '/feature/10-http',
+        },
+        {
+          text: 'Session',
+          link: '/feature/11-session',
+        },
+        {
+          text: '服务器推送',
+          link: '/feature/12-sse',
+        },
+        {
+          text: '认证',
+          link: '/feature/13-authentication',
+        },
+        {
+          text: '授权',
+          link: '/feature/14-authorization',
+        },
+        {
+          text: 'CORS',
+          link: '/feature/15-cors',
+        },
+        {
+          text: 'CSRF',
+          link: '/feature/16-csrf',
+        },
+        {
+          text: '速率限制',
+          link: '/feature/17-rate-limiting',
+        },
+        {
+          text: 'WebSocket',
+          link: '/feature/18-websocket',
+        },
+      ],
+    },
+  ];
+}
+
 function getComponentsSidebar() {
   return [
     {
@@ -45,102 +128,94 @@ function getComponentsSidebar() {
       items: [
         {
           text: '配置',
-          link: '/components/1-configuration',
+          link: '/feature/1-configuration',
         },
         {
           text: '字段验证',
-          link: '/components/2-validation',
+          link: '/feature/2-validation',
         },
         {
           text: '缓存',
-          link: '/components/3-caching',
+          link: '/feature/3-caching',
         },
         {
           text: '多版本API',
-          link: '/components/4-versioning',
+          link: '/feature/4-versioning',
         },
 
         {
           text: '定时任务',
-          link: '/components/5-task-scheduling',
+          link: '/feature/5-task-scheduling',
         },
         {
           text: '队列',
-          link: '/components/6-queues',
+          link: '/feature/6-queues',
         },
         {
           text: '日志',
-          link: '/components/7-logger',
+          link: '/feature/7-logger',
         },
         {
           text: '事件推送',
-          link: '/components/8-events',
+          link: '/feature/8-events',
         },
         {
           text: '文件上传',
-          link: '/components/9-file-upload',
+          link: '/feature/9-file-upload',
         },
         {
           text: 'Http',
-          link: '/components/10-http',
+          link: '/feature/10-http',
         },
         {
           text: 'Session',
-          link: '/components/11-session',
+          link: '/feature/11-session',
         },
         {
           text: '服务器推送',
-          link: '/components/12-sse',
+          link: '/feature/12-sse',
         },
         {
           text: '认证',
-          link: '/components/13-authentication',
+          link: '/feature/13-authentication',
         },
         {
           text: '授权',
-          link: '/components/14-authorization',
+          link: '/feature/14-authorization',
         },
         {
           text: 'CORS',
-          link: '/components/15-cors',
+          link: '/feature/15-cors',
         },
         {
           text: 'CSRF',
-          link: '/components/16-csrf',
+          link: '/feature/16-csrf',
         },
         {
           text: '速率限制',
-          link: '/components/17-rate-limiting',
+          link: '/feature/17-rate-limiting',
         },
         {
           text: 'WebSocket',
-          link: '/components/18-websocket',
+          link: '/feature/18-websocket',
         },
       ],
     },
   ];
 }
 
-function getGuideSidebar() {
+function getDeploySidebar() {
   return [
     {
-      text: '组成',
+      text: '部署',
       items: [
         {
-          text: 'Nestjs',
-          link: '/guide/1-nestjs',
+          text: '本地开发',
+          link: '/deploy/1-local',
         },
         {
-          text: 'Prisma',
-          link: '/guide/2-prisma',
-        },
-        {
-          text: 'Swagger',
-          link: '/guide/3-swagger',
-        },
-        {
-          text: 'GraphQL',
-          link: '/guide/4-graphql',
+          text: '线上部署',
+          link: '/deploy/2-prod',
         },
       ],
     },

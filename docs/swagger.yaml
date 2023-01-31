@@ -214,9 +214,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/Posts'
       tags: *ref_2
-  /auth/signup:
+  /auth/register:
     post:
-      operationId: AuthController_signup
+      operationId: AuthController_register
       summary: ''
       description: ''
       parameters: []
@@ -225,7 +225,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/SignUpInput'
+              $ref: '#/components/schemas/RegisterInput'
       responses:
         '201':
           description: ''
@@ -255,7 +255,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
+                $ref: '#/components/schemas/LoginResponse'
       tags: *ref_3
       security: *ref_4
   /auth/profile:
@@ -317,7 +317,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
+                $ref: '#/components/schemas/LoginResponse'
       tags: *ref_3
       security: *ref_4
   /mail/sendMail:
@@ -615,7 +615,7 @@ components:
         content:
           type: string
           nullable: true
-    SignUpInput:
+    RegisterInput:
       type: object
       properties:
         email:
@@ -635,6 +635,13 @@ components:
       required:
         - email
         - password
+    LoginResponse:
+      type: object
+      properties:
+        accessToken:
+          type: string
+      required:
+        - accessToken
     UserEntity:
       type: object
       properties:

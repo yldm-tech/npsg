@@ -342,9 +342,9 @@
         ]
       }
     },
-    "/auth/signup": {
+    "/auth/register": {
       "post": {
-        "operationId": "AuthController_signup",
+        "operationId": "AuthController_register",
         "summary": "",
         "description": "",
         "parameters": [],
@@ -353,7 +353,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/SignUpInput"
+                "$ref": "#/components/schemas/RegisterInput"
               }
             }
           }
@@ -402,7 +402,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object"
+                  "$ref": "#/components/schemas/LoginResponse"
                 }
               }
             }
@@ -517,7 +517,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object"
+                  "$ref": "#/components/schemas/LoginResponse"
                 }
               }
             }
@@ -985,7 +985,7 @@
           }
         }
       },
-      "SignUpInput": {
+      "RegisterInput": {
         "type": "object",
         "properties": {
           "email": {
@@ -1013,6 +1013,17 @@
         "required": [
           "email",
           "password"
+        ]
+      },
+      "LoginResponse": {
+        "type": "object",
+        "properties": {
+          "accessToken": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "accessToken"
         ]
       },
       "UserEntity": {

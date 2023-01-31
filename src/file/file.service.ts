@@ -1,7 +1,7 @@
 import { ConfigService } from '@nestjs/config';
 import { Injectable, Logger } from '@nestjs/common';
 import * as AWS from 'aws-sdk';
-import { processEnv } from 'src/constant/process-env';
+import { processEnv } from 'src/common/constant/process-env';
 
 @Injectable()
 export class FileService {
