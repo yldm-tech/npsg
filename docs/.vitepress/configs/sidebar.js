@@ -52,8 +52,8 @@ function getFeaturesSidebar() {
           link: '/feature/2-chat',
         },
         {
-          text: '缓存',
-          link: '/feature/3-caching',
+          text: '定时任务',
+          link: '/feature/3-cron',
         },
         {
           text: '多版本API',

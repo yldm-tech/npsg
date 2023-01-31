@@ -6,6 +6,7 @@ import {
   SchedulerRegistry,
   Timeout,
 } from '@nestjs/schedule';
+import { CronJob } from 'cron';
 
 @Injectable()
 export class CronJobService {
@@ -45,6 +46,11 @@ export class CronJobService {
   @Timeout(5000)
   handleTimeout() {
     this.logger.debug('Called once after 5 seconds');
+  }
+
+  addCron(name: string, job: CronJob) {
+    this.schedulerRegistry.addCronJob(name, job);
+    this.logger.warn(`job ${name} added!`);
   }
 
   /**
