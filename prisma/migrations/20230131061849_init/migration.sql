@@ -18,8 +18,10 @@ CREATE TABLE "users" (
     "id" SERIAL NOT NULL,
     "email" TEXT NOT NULL,
     "name" TEXT,
-    "password" TEXT NOT NULL,
+    "password" TEXT,
+    "google_id" TEXT,
     "roles" TEXT[],
+    "picture" TEXT,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3),
 
@@ -37,11 +39,25 @@ CREATE TABLE "config" (
     CONSTRAINT "config_pkey" PRIMARY KEY ("id")
 );
 
+-- CreateTable
+CREATE TABLE "chat" (
+    "id" SERIAL NOT NULL,
+    "email" TEXT NOT NULL,
+    "text" TEXT NOT NULL,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3),
+
+    CONSTRAINT "chat_pkey" PRIMARY KEY ("id")
+);
+
 -- CreateIndex
 CREATE UNIQUE INDEX "posts_title_key" ON "posts"("title");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "users_email_key" ON "users"("email");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "users_google_id_key" ON "users"("google_id");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "config_key_key" ON "config"("key");

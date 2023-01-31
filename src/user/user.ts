@@ -7,6 +7,7 @@ import {
 } from '@nestjs/graphql';
 import { User } from '@prisma/client';
 import { Exclude } from 'class-transformer';
+import { IsArray, IsString, IsUrl, isURL } from 'class-validator';
 import { BaseEntity } from '../common/entity/base.entity';
 
 export enum Role {
@@ -29,18 +30,30 @@ registerEnumType(Role, {
 @InputType('userInput')
 @ObjectType('user')
 export class UserEntity extends BaseEntity implements User {
+  @IsString()
   @Field(() => String)
   email: string;
 
+  @IsString()
   @Field(() => String, { nullable: true })
   name: string;
+
+  @IsUrl()
+  @Field(() => String, { nullable: true })
+  picture: string;
+
+  @IsString()
+  @Field(() => String, { nullable: true })
+  googleId: string;
 
   @HideField()
   @Field(() => String)
   @Exclude()
+  @IsString()
   password: string;
 
   @Field(() => [Role], { description: 'User Role' })
+  @IsArray()
   roles: string[] = [Role.User];
 
   constructor(partial: Partial<UserEntity>) {

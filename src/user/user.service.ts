@@ -18,14 +18,20 @@ export class UserService {
    */
   create({
     email,
+    name,
     encryptedPassword,
+    googleId,
+    roles,
+    picture,
   }: ICreateUserInput): Promise<User | undefined> {
     return this.prismaService.user.create({
       data: {
         email: email,
-        name: email,
+        name: name || email,
         password: encryptedPassword,
-        roles: [Role.User, Role.Buyer],
+        googleId: googleId,
+        roles: roles,
+        picture: picture,
       },
     });
   }
@@ -48,7 +54,7 @@ export class UserService {
    * @param email email
    * @returns user or null
    */
-  async findOneByEmail(email: string): Promise<UserEntity | undefined> {
+  async findOneByEmail(email: string) {
     return await this.prismaService.user.findUnique({
       where: { email: email },
     });
@@ -76,5 +82,18 @@ export class UserService {
       },
     });
     return user;
+  }
+
+  /**
+   * 通过googleId查询是否有注册账号
+   * @param googleId
+   * @returns
+   */
+  findByGoogleId(googleId: string) {
+    return this.prismaService.user.findUnique({
+      where: {
+        googleId: googleId,
+      },
+    });
   }
 }

@@ -11,6 +11,8 @@ export interface ProcessEnv {
   // redis
   REDIS_HOST: string;
   REDIS_PORT: number;
+  REDIS_USERNAME?: string;
+  REDIS_PASSWORD?: string;
   //
   GOOGLE_CLIENT_ID: string;
   GOOGLE_CLIENT_SECRET: string;
@@ -30,6 +32,8 @@ export const processEnv: ProcessEnv = {
   // redis
   REDIS_HOST: process.env.REDIS_HOST as string,
   REDIS_PORT: process.env.REDIS_PORT as unknown as number,
+  REDIS_USERNAME: process.env.REDIS_USERNAME,
+  REDIS_PASSWORD: process.env.REDIS_PASSWORD,
   // google
   GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
   GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,

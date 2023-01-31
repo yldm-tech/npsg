@@ -54,12 +54,12 @@ export class AuthController {
   @Get('google/login')
   @UseGuards(AuthGuard('google'))
   async googleAuth(@Req() req) {
-    console.log(req);
+    console.log('just use the endpoint');
   }
 
   @Get('/google/callback')
   @UseGuards(AuthGuard('google'))
-  googleAuthRedirect(@Req() req) {
+  async googleAuthRedirect(@Req() req) {
     return this.authService.googleLogin(req.user);
   }
 }

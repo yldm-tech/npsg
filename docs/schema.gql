@@ -78,8 +78,10 @@ input UpdatePasswordInput {
 
 type user {
   email: String!
+  googleId: String
   name: String
   password: String!
+  picture: String
 
   """User Role"""
   roles: [Role!]!
@@ -87,8 +89,10 @@ type user {
 
 input userInput {
   email: String!
+  googleId: String
   name: String
   password: String!
+  picture: String
 
   """User Role"""
   roles: [Role!]! = [User]
