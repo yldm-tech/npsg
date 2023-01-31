@@ -1,0 +1,1 @@
+import{_ as s,c as n,o as a,b as e}from"./app.59a3fc6e.js";const _=JSON.parse('{"title":"功能列表","description":"","frontmatter":{},"headers":[],"relativePath":"feature/index.md","lastUpdated":1675177418000}'),p={name:"feature/index.md"},l=e("",21),o=[l];function t(c,i,r,d,y,h){return a(),n("div",null,o)}const u=s(p,[["render",t]]);export{_ as __pageData,u as default};
