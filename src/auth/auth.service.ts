@@ -2,6 +2,7 @@ import { LoginResponse } from './dto/login-response.dto';
 import {
   BadRequestException,
   Injectable,
+  NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
@@ -10,11 +11,10 @@ import * as bcrypt from 'bcrypt';
 import { UserService } from 'src/user/user.service';
 import { Role } from '../user/user';
 import { LoginInput } from './dto/login-request.dto';
-import { SignUpInput } from './dto/signup-request.dto';
+import { RegisterInput } from './dto/signup-request.dto';
 import UpdatePasswordInput from './dto/update-password.request';
 import { IJwtPayload } from './interface/jwt-payload.interface';
 import IUserContext from './interface/user-context.interface';
-import { ILoginResponse } from './interface/login-response.interface';
 import { jwtConstants } from 'src/user/constants';
 import { GoogleUser } from './dto/google-user.dto';
 
@@ -26,7 +26,7 @@ export class AuthService {
     private readonly configService: ConfigService,
   ) {}
 
-  async signup(signupInput: SignUpInput) {
+  async register(signupInput: RegisterInput) {
     const { email, password } = signupInput;
     const existed = await this.userService.findOneByEmail(email);
     if (existed) {
@@ -39,7 +39,8 @@ export class AuthService {
     });
   }
 
-  async login(loginInput: LoginInput): Promise<ILoginResponse> {
+  async login(loginInput: LoginInput): Promise<LoginResponse> {
+    console.log(loginInput);
     const { email, password } = loginInput;
     const user = await this.validateUser(email, password);
 
@@ -66,6 +67,9 @@ export class AuthService {
 
   async validateUser(username: string, pass: string) {
     const user = await this.userService.findOneByEmail(username);
+    if (!user) {
+      throw new NotFoundException('user not found,please register first');
+    }
     const isPasswordCorrect = await bcrypt.compare(pass, user.password);
     if (user && isPasswordCorrect) {
       return user;
@@ -75,10 +79,7 @@ export class AuthService {
 
   async updatePassword(uuid: number, updatePasswordInput: UpdatePasswordInput) {
     const { newPassword } = updatePasswordInput;
-    const encryptedPassword = await bcrypt.hash(
-      newPassword,
-      this.configService.get('bcrypt').saltOrRounds || 10,
-    );
+    const encryptedPassword = await bcrypt.hash(newPassword, 10);
     return this.userService.updateOne(uuid, {
       newEncryptedPassword: encryptedPassword,
     });

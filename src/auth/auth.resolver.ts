@@ -5,7 +5,7 @@ import { UserEntity } from 'src/user/user';
 import { AuthService } from './auth.service';
 import { LoginResponse } from './dto/login-response.dto';
 import { LoginInput } from './dto/login-request.dto';
-import { SignUpInput } from './dto/signup-request.dto';
+import { RegisterInput } from './dto/signup-request.dto';
 import UpdatePasswordInput from './dto/update-password.request';
 import IUserContext from './interface/user-context.interface';
 import { User } from '@prisma/client';
@@ -16,8 +16,8 @@ export class AuthResolver {
   constructor(private readonly authService: AuthService) {}
 
   @Mutation(() => UserEntity)
-  signup(@Args('signupInput') signupInput: SignUpInput) {
-    return this.authService.signup(signupInput);
+  signup(@Args('signupInput') signupInput: RegisterInput) {
+    return this.authService.register(signupInput);
   }
 
   @Mutation(() => LoginResponse, { name: 'login' })

@@ -3,7 +3,7 @@ import { Strategy, VerifyCallback } from 'passport-google-oauth20';
 
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { processEnv } from 'src/constant/process-env';
+import { processEnv } from 'src/common/constant/process-env';
 import { GoogleUser } from '../dto/google-user.dto';
 
 @Injectable()

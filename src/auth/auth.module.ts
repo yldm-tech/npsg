@@ -9,7 +9,6 @@ import { AuthResolver } from './auth.resolver';
 import { AuthService } from './auth.service';
 import { GoogleStrategy } from './strategy/google.strategy';
 import { JwtStrategy } from './strategy/jwt.strategy';
-import { LocalStrategy } from './strategy/local.strategy';
 
 @Module({
   imports: [
@@ -25,7 +24,6 @@ import { LocalStrategy } from './strategy/local.strategy';
     AuthService,
     AuthResolver,
     PrismaService,
-    LocalStrategy,
     JwtStrategy,
     GoogleStrategy,
   ],

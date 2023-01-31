@@ -1,4 +1,4 @@
-import { SignUpInput } from './dto/signup-request.dto';
+import { RegisterInput } from './dto/signup-request.dto';
 import { UserEntity } from 'src/user/user';
 import {
   Body,
@@ -25,9 +25,9 @@ import { AuthGuard } from '@nestjs/passport';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @Post('/signup')
-  async signup(@Body() signupInput: SignUpInput) {
-    return this.authService.signup(signupInput);
+  @Post('/register')
+  async register(@Body() registerInput: RegisterInput) {
+    return this.authService.register(registerInput);
   }
 
   @Post('/login')
