@@ -56,8 +56,8 @@ function getFeaturesSidebar() {
           link: '/feature/3-cron',
         },
         {
-          text: '多版本API',
-          link: '/feature/4-versioning',
+          text: '文件上传下载',
+          link: '/feature/4-file',
         },
 
         {
