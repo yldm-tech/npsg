@@ -6,6 +6,7 @@ import {
   Controller,
   Get,
   Post,
+  Req,
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
@@ -16,6 +17,7 @@ import { JwtAuthGuard } from './guard/jwt-auth.guard';
 import UpdatePasswordInput from './dto/update-password.request';
 import IUserContext from './interface/user-context.interface';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('auth')
 @ApiTags('auth')
@@ -47,5 +49,17 @@ export class AuthController {
     @Body() updatePasswordInput: UpdatePasswordInput,
   ) {
     return this.authService.updatePassword(user.userId, updatePasswordInput);
+  }
+
+  @Get('google/login')
+  @UseGuards(AuthGuard('google'))
+  async googleAuth(@Req() req) {
+    console.log(req);
+  }
+
+  @Get('/google/callback')
+  @UseGuards(AuthGuard('google'))
+  googleAuthRedirect(@Req() req) {
+    return this.authService.googleLogin(req.user);
   }
 }

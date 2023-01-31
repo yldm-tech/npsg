@@ -294,6 +294,28 @@ paths:
                 type: object
       tags: *ref_3
       security: *ref_4
+  /auth/google/login:
+    get:
+      operationId: AuthController_googleAuth
+      summary: ''
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+      tags: *ref_3
+      security: *ref_4
+  /auth/google/callback:
+    get:
+      operationId: AuthController_googleAuthRedirect
+      summary: ''
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+      tags: *ref_3
+      security: *ref_4
   /mail/sendMail:
     get:
       operationId: MailController_sendMail
