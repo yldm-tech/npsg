@@ -24,12 +24,13 @@ model Post {
 }
 
 model User {
-  id       Int     @id @default(autoincrement())
-  email    String  @unique
-  name     String?
-  password String?
-
+  id        Int       @id @default(autoincrement())
+  email     String    @unique
+  name      String?
+  password  String?
+  googleId  String?   @unique @map("google_id")
   roles     String[]
+  picture   String?
   // relationship
   Post      Post[]
   createdAt DateTime  @default(now()) @map("created_at")

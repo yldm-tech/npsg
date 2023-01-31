@@ -8,7 +8,7 @@ import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { UserService } from 'src/user/user.service';
-import { UserEntity } from '../user/user';
+import { Role } from '../user/user';
 import { LoginInput } from './dto/login-request.dto';
 import { SignUpInput } from './dto/signup-request.dto';
 import UpdatePasswordInput from './dto/update-password.request';
@@ -60,13 +60,11 @@ export class AuthService {
     } as LoginResponse;
   }
 
-  async findUserFromContext(
-    userContext: IUserContext,
-  ): Promise<UserEntity> | undefined {
+  async findUserFromContext(userContext: IUserContext) {
     return this.userService.findOne(userContext.userId);
   }
 
-  async validateUser(username: string, pass: string): Promise<UserEntity> {
+  async validateUser(username: string, pass: string) {
     const user = await this.userService.findOneByEmail(username);
     const isPasswordCorrect = await bcrypt.compare(pass, user.password);
     if (user && isPasswordCorrect) {
@@ -86,14 +84,35 @@ export class AuthService {
     });
   }
 
-  googleLogin(user: GoogleUser) {
+  async googleLogin(googleUser: GoogleUser) {
+    if (!googleUser) {
+      throw new BadRequestException('cannot get google user,please try again');
+    }
+    let user = await this.userService.findByGoogleId(googleUser.id);
     if (!user) {
-      return 'No user from google';
+      user = await this.userService.create({
+        email: googleUser.email,
+        name: googleUser.displayName,
+        picture: googleUser.picture,
+        googleId: googleUser.id,
+        roles: [Role.User],
+      });
     }
 
-    return {
-      message: 'User information from google',
-      user: user,
+    if (!user) {
+      throw new BadRequestException('google login failed,please try again');
+    }
+
+    const payload: IJwtPayload = {
+      email: user.email,
+      sub: parseInt(user.googleId),
+      roles: [Role.User],
     };
+
+    return {
+      accessToken: this.jwtService.sign(payload, {
+        secret: jwtConstants.secret,
+      }),
+    } as LoginResponse;
   }
 }
