@@ -16,6 +16,7 @@ import { IJwtPayload } from './interface/jwt-payload.interface';
 import IUserContext from './interface/user-context.interface';
 import { ILoginResponse } from './interface/login-response.interface';
 import { jwtConstants } from 'src/user/constants';
+import { GoogleUser } from './dto/google-user.dto';
 
 @Injectable()
 export class AuthService {
@@ -83,5 +84,16 @@ export class AuthService {
     return this.userService.updateOne(uuid, {
       newEncryptedPassword: encryptedPassword,
     });
+  }
+
+  googleLogin(user: GoogleUser) {
+    if (!user) {
+      return 'No user from google';
+    }
+
+    return {
+      message: 'User information from google',
+      user: user,
+    };
   }
 }

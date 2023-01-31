@@ -7,6 +7,7 @@ import { PrismaService } from './../prisma/prisma.service';
 import { AuthController } from './auth.controller';
 import { AuthResolver } from './auth.resolver';
 import { AuthService } from './auth.service';
+import { GoogleStrategy } from './strategy/google.strategy';
 import { JwtStrategy } from './strategy/jwt.strategy';
 import { LocalStrategy } from './strategy/local.strategy';
 
@@ -26,6 +27,7 @@ import { LocalStrategy } from './strategy/local.strategy';
     PrismaService,
     LocalStrategy,
     JwtStrategy,
+    GoogleStrategy,
   ],
   exports: [AuthService],
   controllers: [AuthController],
