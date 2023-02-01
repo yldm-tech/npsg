@@ -69,8 +69,8 @@ function getFeaturesSidebar() {
           link: '/feature/6-posts',
         },
         {
-          text: '日志',
-          link: '/feature/7-logger',
+          text: '数据库Prisma',
+          link: '/feature/7-prisma',
         },
         {
           text: '事件推送',

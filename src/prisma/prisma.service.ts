@@ -30,16 +30,6 @@ export class PrismaService
   }
 
   async onModuleInit() {
-    this.configSqlLog();
-  }
-
-  async enableShutdownHooks(app: INestApplication) {
-    this.$on('beforeExit', async () => {
-      await app.close();
-    });
-  }
-
-  private async configSqlLog() {
     this.$on('query', (event) => {
       this.logger.log(
         `Query: ${event.query}`,
@@ -57,5 +47,11 @@ export class PrismaService
       this.logger.warn(` ${event.message}`);
     });
     await this.$connect();
+  }
+
+  async enableShutdownHooks(app: INestApplication) {
+    this.$on('beforeExit', async () => {
+      await app.close();
+    });
   }
 }
