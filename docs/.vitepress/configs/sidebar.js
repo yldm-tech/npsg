@@ -73,48 +73,12 @@ function getFeaturesSidebar() {
           link: '/feature/7-prisma',
         },
         {
-          text: '事件推送',
-          link: '/feature/8-events',
+          text: '消息队列',
+          link: '/feature/8-queue',
         },
         {
-          text: '文件上传',
-          link: '/feature/9-file-upload',
-        },
-        {
-          text: 'Http',
-          link: '/feature/10-http',
-        },
-        {
-          text: 'Session',
-          link: '/feature/11-session',
-        },
-        {
-          text: '服务器推送',
-          link: '/feature/12-sse',
-        },
-        {
-          text: '认证',
-          link: '/feature/13-authentication',
-        },
-        {
-          text: '授权',
-          link: '/feature/14-authorization',
-        },
-        {
-          text: 'CORS',
-          link: '/feature/15-cors',
-        },
-        {
-          text: 'CSRF',
-          link: '/feature/16-csrf',
-        },
-        {
-          text: '速率限制',
-          link: '/feature/17-rate-limiting',
-        },
-        {
-          text: 'WebSocket',
-          link: '/feature/18-websocket',
+          text: '用户管理',
+          link: '/feature/9-user',
         },
       ],
     },

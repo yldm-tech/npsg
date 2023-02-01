@@ -1,17 +1,35 @@
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBody, ApiConsumes, ApiTags } from '@nestjs/swagger';
 import { InjectQueue } from '@nestjs/bull';
-import { Controller, Post } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  UploadedFile,
+  UseInterceptors,
+} from '@nestjs/common';
 import { Queue } from 'bull';
+import { queueNames, jobNames } from './queue.constant';
+import { FileDto } from 'src/file/dto/file-upload.dto';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('queue')
 @ApiTags('queue')
 export class QueueController {
-  constructor(@InjectQueue('queue') private readonly queue: Queue) {}
+  constructor(@InjectQueue(queueNames.queue) private readonly queue: Queue) {}
 
   @Post('transcode')
-  async transcode() {
-    await this.queue.add('transcode', {
-      file: 'audio.mp3',
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({
+    description: 'file',
+    type: FileDto,
+  })
+  @UseInterceptors(FileInterceptor('file'))
+  async transcode(
+    @UploadedFile()
+    file: Express.Multer.File,
+  ) {
+    const result = await this.queue.add(jobNames.transcode, {
+      file: file,
     });
+    return result;
   }
 }

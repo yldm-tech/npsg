@@ -346,6 +346,13 @@ paths:
       summary: ''
       description: ''
       parameters: []
+      requestBody:
+        required: true
+        description: file
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/FileDto'
       responses:
         '201':
           description: ''
@@ -382,7 +389,7 @@ paths:
         content:
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/FileUploadDto'
+              $ref: '#/components/schemas/FileDto'
       responses:
         '200':
           description: ''
@@ -406,7 +413,7 @@ paths:
         content:
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/FilesUploadDto'
+              $ref: '#/components/schemas/FilesDto'
       responses:
         '201':
           description: ''
@@ -662,6 +669,14 @@ components:
     UpdatePasswordInput:
       type: object
       properties: {}
+    FileDto:
+      type: object
+      properties:
+        file:
+          type: string
+          format: binary
+      required:
+        - file
     CreateOrderDto:
       type: object
       properties:
@@ -672,15 +687,7 @@ components:
       required:
         - name
         - description
-    FileUploadDto:
-      type: object
-      properties:
-        file:
-          type: string
-          format: binary
-      required:
-        - file
-    FilesUploadDto:
+    FilesDto:
       type: object
       properties:
         files:

@@ -571,6 +571,17 @@
         "summary": "",
         "description": "",
         "parameters": [],
+        "requestBody": {
+          "required": true,
+          "description": "file",
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/FileDto"
+              }
+            }
+          }
+        },
         "responses": {
           "201": {
             "description": ""
@@ -622,7 +633,7 @@
           "content": {
             "multipart/form-data": {
               "schema": {
-                "$ref": "#/components/schemas/FileUploadDto"
+                "$ref": "#/components/schemas/FileDto"
               }
             }
           }
@@ -659,7 +670,7 @@
           "content": {
             "multipart/form-data": {
               "schema": {
-                "$ref": "#/components/schemas/FilesUploadDto"
+                "$ref": "#/components/schemas/FilesDto"
               }
             }
           }
@@ -1054,6 +1065,18 @@
         "type": "object",
         "properties": {}
       },
+      "FileDto": {
+        "type": "object",
+        "properties": {
+          "file": {
+            "type": "string",
+            "format": "binary"
+          }
+        },
+        "required": [
+          "file"
+        ]
+      },
       "CreateOrderDto": {
         "type": "object",
         "properties": {
@@ -1069,19 +1092,7 @@
           "description"
         ]
       },
-      "FileUploadDto": {
-        "type": "object",
-        "properties": {
-          "file": {
-            "type": "string",
-            "format": "binary"
-          }
-        },
-        "required": [
-          "file"
-        ]
-      },
-      "FilesUploadDto": {
+      "FilesDto": {
         "type": "object",
         "properties": {
           "files": {

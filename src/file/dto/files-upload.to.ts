@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-export class FilesUploadDto {
+export class FilesDto {
   @ApiProperty({ type: 'array', items: { type: 'string', format: 'binary' } })
   files: any[];
 }

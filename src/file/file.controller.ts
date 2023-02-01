@@ -20,8 +20,8 @@ import {
   ApiOkResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { FileUploadDto } from './dto/file-upload.dto';
-import { FilesUploadDto } from './dto/files-upload.to';
+import { FileDto as FileDto } from './dto/file-upload.dto';
+import { FilesDto as FilesDto } from './dto/files-upload.to';
 
 @ApiTags('file')
 @Controller('file')
@@ -33,7 +33,7 @@ export class FileController {
   @ApiConsumes('multipart/form-data')
   @ApiBody({
     description: 'List of files',
-    type: FileUploadDto,
+    type: FileDto,
   })
   @UseInterceptors(FileInterceptor('file'))
   async uploadFile(
@@ -58,7 +58,7 @@ export class FileController {
   @ApiConsumes('multipart/form-data')
   @ApiBody({
     description: 'List of files',
-    type: FilesUploadDto,
+    type: FilesDto,
   })
   @UseInterceptors(FilesInterceptor('files'))
   async uploadFiles(
