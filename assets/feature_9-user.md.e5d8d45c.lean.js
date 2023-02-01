@@ -1,0 +1,1 @@
+import{_ as s,c as n,o as a,b as p}from"./app.dff62eda.js";const A=JSON.parse('{"title":"使用场景","description":"","frontmatter":{},"headers":[],"relativePath":"feature/9-user.md","lastUpdated":1675222446000}'),l={name:"feature/9-user.md"},o=p("",17),e=[o];function c(r,t,y,E,i,d){return a(),n("div",null,e)}const D=s(l,[["render",c]]);export{A as __pageData,D as default};
