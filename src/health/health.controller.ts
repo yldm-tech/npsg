@@ -31,10 +31,9 @@ export class HealthController {
   check() {
     return this.health.check([
       () => this.http.pingCheck('basic check', 'http://localhost:3000'),
-      () =>
-        this.disk.checkStorage('storage', { path: '/', thresholdPercent: 0.2 }),
-      () => this.memory.checkHeap('memory_heap', 150 * 1024 * 1024),
-      () => this.memory.checkRSS('memory_rss', 150 * 1024 * 1024),
+      () => this.disk.checkStorage('storage', { path: '/', threshold: 1 }),
+      () => this.memory.checkHeap('memory_heap', 100 * 1024 * 1024),
+      () => this.memory.checkRSS('memory_rss', 100 * 1024 * 1024),
       () => this.prismaHealthIndicator.isHealthy('prisma'),
       () =>
         this.microservice.pingCheck<RedisOptions>('redis', {

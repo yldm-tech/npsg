@@ -61,12 +61,12 @@ function getFeaturesSidebar() {
         },
 
         {
-          text: '定时任务',
-          link: '/feature/5-task-scheduling',
+          text: '健康检查',
+          link: '/feature/5-health',
         },
         {
-          text: '队列',
-          link: '/feature/6-queues',
+          text: '文章增删改查',
+          link: '/feature/6-posts',
         },
         {
           text: '日志',
