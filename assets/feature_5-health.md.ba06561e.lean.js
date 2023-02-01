@@ -1,0 +1,1 @@
+import{_ as s,c as n,o as a,b as p}from"./app.95294ce5.js";const q=JSON.parse('{"title":"","description":"","frontmatter":{},"headers":[],"relativePath":"feature/5-health.md","lastUpdated":1675218893000}'),l={name:"feature/5-health.md"},o=p("",11),e=[o];function t(c,E,r,y,i,u){return a(),n("div",null,e)}const C=s(l,[["render",t]]);export{q as __pageData,C as default};

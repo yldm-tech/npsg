@@ -1,0 +1,1 @@
+import{_ as s,c as n,o as a,b as p}from"./app.95294ce5.js";const g=JSON.parse('{"title":"说明","description":"","frontmatter":{},"headers":[],"relativePath":"feature/7-prisma.md","lastUpdated":1675219542000}'),l={name:"feature/7-prisma.md"},o=p("",13),e=[o];function c(t,r,E,y,i,F){return a(),n("div",null,e)}const C=s(l,[["render",c]]);export{g as __pageData,C as default};
