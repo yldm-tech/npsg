@@ -61,6 +61,19 @@ export class UserService {
   }
 
   /**
+   * 通过googleId查询是否有注册账号
+   * @param googleId
+   * @returns
+   */
+  findByGoogleId(googleId: string) {
+    return this.prismaService.user.findUnique({
+      where: {
+        googleId: googleId,
+      },
+    });
+  }
+
+  /**
    * 更新用户密码
    * @param uuid 用户id
    * @param updatePasswordInput 用户输入的新密码
@@ -82,18 +95,5 @@ export class UserService {
       },
     });
     return user;
-  }
-
-  /**
-   * 通过googleId查询是否有注册账号
-   * @param googleId
-   * @returns
-   */
-  findByGoogleId(googleId: string) {
-    return this.prismaService.user.findUnique({
-      where: {
-        googleId: googleId,
-      },
-    });
   }
 }

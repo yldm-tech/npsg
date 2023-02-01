@@ -18,7 +18,7 @@ import { AppModule } from './app.module';
 import { PrismaClientExceptionFilter } from './common/filter/prisma-client-exception_filter';
 import { ExcludeNullInterceptor } from './common/interceptor/exclude-null.interceptor';
 import { LoggingInterceptor } from './common/interceptor/logger.interceptor';
-import { sessionKey } from './user/constants';
+import { sessionKey } from './user/user.constant';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -70,7 +70,6 @@ async function bootstrap() {
   app.use(
     csurf({
       cookie: true,
-      httpOnly: true,
       value: readCsrfToken,
     }),
   ); // 必须在cookieParser之后

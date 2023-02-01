@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { EventEmitter2 } from '@nestjs/event-emitter';
-import { eventConstants } from 'src/user/constants';
+import { eventConstants } from 'src/user/user.constant';
 import { Order } from '../order/entities/order.entity';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { OrderCreatedEvent } from './dto/order-created.event';

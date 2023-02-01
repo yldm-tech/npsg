@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { OnEvent } from '@nestjs/event-emitter';
-import { eventConstants } from 'src/user/constants';
+import { eventConstants } from 'src/user/user.constant';
 import { OrderCreatedEvent } from '../dto/order-created.event';
 
 @Injectable()

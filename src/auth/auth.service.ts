@@ -15,7 +15,7 @@ import { RegisterInput } from './dto/signup-request.dto';
 import UpdatePasswordInput from './dto/update-password.request';
 import { IJwtPayload } from './interface/jwt-payload.interface';
 import IUserContext from './interface/user-context.interface';
-import { jwtConstants } from 'src/user/constants';
+import { jwtConstants } from 'src/user/user.constant';
 import { GoogleUser } from './dto/google-user.dto';
 
 @Injectable()
