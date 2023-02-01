@@ -1,0 +1,1 @@
+import{_ as s,c as n,o as a,b as l}from"./app.dff62eda.js";const F=JSON.parse('{"title":"说明","description":"","frontmatter":{},"headers":[],"relativePath":"feature/8-queue.md","lastUpdated":1675221455000}'),p={name:"feature/8-queue.md"},o=l("",12),e=[o];function c(t,r,E,y,i,d){return a(),n("div",null,e)}const g=s(p,[["render",c]]);export{F as __pageData,g as default};
