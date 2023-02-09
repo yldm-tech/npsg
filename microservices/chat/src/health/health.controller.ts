@@ -10,8 +10,8 @@ import {
   MicroserviceHealthIndicator,
   HealthCheck,
 } from '@nestjs/terminus';
-import { processEnv } from 'microservices/common/constant/process-env';
 import { PrismaHealthIndicator } from './prisma.indicator';
+import { processEnv } from '@lantron-ltd/npsg-utils/src/constant/process-env';
 
 @Controller('health')
 @ApiTags('app')

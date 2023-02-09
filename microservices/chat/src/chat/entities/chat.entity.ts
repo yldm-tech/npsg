@@ -1,6 +1,7 @@
 import { InputType } from '@nestjs/graphql';
 import { IsString } from 'class-validator';
-import { BaseEntity } from 'microservices/common/entity/base.entity';
+
+import { BaseEntity } from '@lantron-ltd/npsg-utils';
 
 @InputType()
 export class ChatEntity extends BaseEntity {

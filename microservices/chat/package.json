@@ -3,11 +3,22 @@
   "private": true,
   "version": "0.1.0",
   "dependencies": {
-    "@nestjs/config": "^2.2.0",
     "@lantron-ltd/npsg-utils": "^0.0.10",
-    "nestjs-redis": "^1.2.8"
+    "@nestjs/axios": "^2.0.0",
+    "@nestjs/config": "^2.2.0",
+    "@nestjs/graphql": "^10.2.0",
+    "@nestjs/microservices": "^9.3.7",
+    "@nestjs/swagger": "^6.2.1",
+    "@nestjs/terminus": "^9.2.0",
+    "@nestjs/websockets": "^9.3.7",
+    "@prisma/client": "^4.10.0",
+    "nestjs-redis": "^1.2.8",
+    "prisma": "^4.10.0",
+    "socket.io": "^4.6.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "class-validator": "^0.14.0"
+  },
   "engines": {
     "node": ">=16.x"
   },

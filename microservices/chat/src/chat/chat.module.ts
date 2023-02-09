@@ -1,5 +1,5 @@
 import { ChatService } from './chat.service';
-import { PrismaService } from 'microservices/prisma/prisma.service';
+import { PrismaService } from 'prisma/prisma.service';
 import { Module } from '@nestjs/common';
 import { ChatController } from './chat.controller';
 import { ChatGateway } from './chat.gateway';
