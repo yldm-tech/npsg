@@ -171,7 +171,7 @@ function getComponentsSidebar() {
 function getDeploySidebar() {
   return [
     {
-      text: '部署',
+      text: '开发&部署',
       items: [
         {
           text: '本地开发',

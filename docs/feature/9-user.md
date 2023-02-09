@@ -151,7 +151,7 @@ export default interface ICreateUserInput {
 │   ├── create-user-input.interface.ts
 │   ├── update-password-inpput.interface.ts
 │   └── update-user-input.interface.ts
-├── user.constant.ts
+├── auth.constant.ts
 ├── user.module.ts
 ├── user.service.ts
 └── user.ts

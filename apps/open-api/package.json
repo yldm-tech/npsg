@@ -1,0 +1,19 @@
+{
+  "name": "npsg-open-api",
+  "private": true,
+  "version": "0.1.0",
+  "dependencies": {
+    "@nestjs/config": "^2.2.0",
+    "@lantron-ltd/npsg-utils": "^0.0.9",
+    "nestjs-redis": "^1.2.8"
+  },
+  "devDependencies": {},
+  "engines": {
+    "node": ">=16.x"
+  },
+  "author": {
+    "name": "xiaomo",
+    "email": "xiaomo@xiaomo.info"
+  },
+  "license": "MIT"
+}
