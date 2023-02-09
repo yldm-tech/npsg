@@ -1,4 +1,3 @@
-import { endpoint } from 'aws-sdk/clients/sns';
 import {
   INestApplication,
   Injectable,

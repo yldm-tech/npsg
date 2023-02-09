@@ -4,7 +4,7 @@
   "version": "0.1.0",
   "dependencies": {
     "@nestjs/config": "^2.2.0",
-    "@lantron-ltd/npsg-utils": "^0.0.9",
+    "@lantron-ltd/npsg-utils": "^0.0.10",
     "nestjs-redis": "^1.2.8"
   },
   "devDependencies": {},

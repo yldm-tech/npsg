@@ -4,7 +4,7 @@ import { Strategy, VerifyCallback } from 'passport-google-oauth20';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { GoogleUser } from '../dto/google-user.dto';
-import { processEnv } from '@lantron-ltd/npsg-utils/src/constant/process-env';
+import { processEnv } from '@lantron-ltd/npsg-utils';
 
 @Injectable()
 export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {

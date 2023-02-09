@@ -15,8 +15,8 @@ import UpdatePasswordInput from './dto/update-password.request';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from './auth.service';
-import IUserContext from '@lantron-ltd/npsg-utils/src/interface/user-context.interface';
-import { CurrentUser } from '@lantron-ltd/npsg-utils/src/decorator/current-user.decorator';
+import {IUserContext} from '@lantron-ltd/npsg-utils';
+import { CurrentUser } from '@lantron-ltd/npsg-utils';
 import { UserEntity } from '../user/user';
 
 @Controller('auth')

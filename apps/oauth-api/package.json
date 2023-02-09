@@ -18,7 +18,7 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
-    "@lantron-ltd/npsg-utils": "^0.0.9",
+    "@lantron-ltd/npsg-utils": "^0.0.10",
     "@nestjs/config": "^2.2.0",
     "@nestjs/core": "^9.3.7",
     "@nestjs/graphql": "^10.1.7",
@@ -30,7 +30,9 @@
     "nestjs-redis": "^1.2.8",
     "passport": "^0.6.0",
     "passport-google-oauth20": "^2.0.0",
-    "prisma": "^4.9.0"
+    "passport-jwt": "^4.0.1",
+    "prisma": "^4.9.0",
+    "rxjs": "^7.8.0"
   },
   "devDependencies": {
     "class-transformer": "^0.5.1",

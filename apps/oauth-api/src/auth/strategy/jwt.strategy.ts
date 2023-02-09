@@ -3,7 +3,7 @@ import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { IJwtPayload } from '../interface/jwt-payload.interface';
 import { jwtConstants } from '../auth.constant';
-import IUserContext from '@lantron-ltd/npsg-utils/src/interface/user-context.interface';
+import {IUserContext} from '@lantron-ltd/npsg-utils';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy, 'jwtAuthStrategy') {

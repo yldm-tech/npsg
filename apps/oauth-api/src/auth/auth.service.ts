@@ -15,7 +15,7 @@ import { IJwtPayload } from './interface/jwt-payload.interface';
 import { GoogleUser } from './dto/google-user.dto';
 import { UserService } from '../user/user.service';
 import { jwtConstants } from './auth.constant';
-import {IUserContext} from '@lantron-ltd/npsg-utils';
+import { IUserContext } from '@lantron-ltd/npsg-utils';
 import { Role } from '../user/user';
 
 @Injectable()
