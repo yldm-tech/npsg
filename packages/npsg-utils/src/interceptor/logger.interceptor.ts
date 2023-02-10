@@ -17,7 +17,7 @@ export class LoggingInterceptor implements NestInterceptor {
    * 调试方案：把这个拦截器在main中的app.useGlobalInterceptors()注释掉，然后再调试
    * 可能原因：DTO没有设置验证方案，导致validator不知道如何验证 如：@IsString()
    *
-   *  export class CreateOrderDto {
+   *  export class CreatePaymentDto {
    *    @IsString()
    *    name: string;
    *

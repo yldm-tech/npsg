@@ -5,5 +5,5 @@ export const jwtConstants = {
 export const sessionKey = 'user';
 
 export const eventConstants = {
-  CREATE_ORDER_EVENT: 'order.created',
+  CREATE_ORDER_EVENT: 'payment.created',
 };

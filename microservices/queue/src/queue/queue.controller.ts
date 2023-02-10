@@ -8,8 +8,8 @@ import {
 } from '@nestjs/common';
 import { Queue } from 'bull';
 import { queueNames, jobNames } from './queue.constant';
-import { FileDto } from 'microservices/file/src/dto/file-upload.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { FileDto } from './file-upload.dto';
 
 @Controller('queue')
 @ApiTags('queue')
@@ -25,7 +25,7 @@ export class QueueController {
   @UseInterceptors(FileInterceptor('file'))
   async transcode(
     @UploadedFile()
-    file: Express.Multer.File,
+    file,
   ) {
     const result = await this.queue.add(jobNames.transcode, {
       file: file,

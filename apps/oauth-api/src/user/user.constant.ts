@@ -3,7 +3,3 @@ export const jwtConstants = {
 };
 
 export const sessionKey = 'user';
-
-export const eventConstants = {
-  CREATE_ORDER_EVENT: 'order.created',
-};

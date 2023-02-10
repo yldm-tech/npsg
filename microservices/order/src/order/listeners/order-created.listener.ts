@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { OnEvent } from '@nestjs/event-emitter';
-import { eventConstants } from 'microservices/user/user.constant';
 import { OrderCreatedEvent } from '../dto/order-created.event';
+import { eventConstants } from '../order.constant';
 
 @Injectable()
 export class OrderCreatedListener {

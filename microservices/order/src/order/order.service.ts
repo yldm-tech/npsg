@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { EventEmitter2 } from '@nestjs/event-emitter';
-import { eventConstants } from 'microservices/user/user.constant';
 import { Order } from './entities/order.entity';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { OrderCreatedEvent } from './dto/order-created.event';
+import { eventConstants } from './order.constant';
 
 @Injectable()
 export class OrdersService {
@@ -11,12 +11,12 @@ export class OrdersService {
     {
       id: 1,
       name: 'Order #1',
-      description: 'Description order #1',
+      description: 'Description payment #1',
     },
     {
       id: 2,
       name: 'Order #2',
-      description: 'Description order #2',
+      description: 'Description payment #2',
     },
   ];
 

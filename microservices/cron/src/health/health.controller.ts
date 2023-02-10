@@ -1,17 +1,14 @@
 import { ApiTags } from '@nestjs/swagger';
 import { Controller, Get } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { RedisOptions, Transport } from '@nestjs/microservices';
 import {
+  DiskHealthIndicator,
+  HealthCheck,
   HealthCheckService,
   HttpHealthIndicator,
-  DiskHealthIndicator,
   MemoryHealthIndicator,
-  MicroserviceHealthIndicator,
-  HealthCheck,
+  MicroserviceHealthIndicator
 } from '@nestjs/terminus';
-import { processEnv } from 'microservices/common/constant/process-env';
-import { PrismaHealthIndicator } from './prisma.indicator';
 
 @Controller('health')
 @ApiTags('app')
@@ -22,7 +19,6 @@ export class HealthController {
     private readonly http: HttpHealthIndicator,
     private readonly disk: DiskHealthIndicator,
     private readonly memory: MemoryHealthIndicator,
-    private readonly prismaHealthIndicator: PrismaHealthIndicator,
     private readonly microservice: MicroserviceHealthIndicator,
   ) {}
 
@@ -34,23 +30,6 @@ export class HealthController {
       () => this.disk.checkStorage('storage', { path: '/', threshold: 1 }),
       () => this.memory.checkHeap('memory_heap', 100 * 1024 * 1024),
       () => this.memory.checkRSS('memory_rss', 100 * 1024 * 1024),
-      () => this.prismaHealthIndicator.isHealthy('prisma'),
-      () =>
-        this.microservice.pingCheck<RedisOptions>('redis', {
-          transport: Transport.REDIS,
-          options: {
-            host: this.configService.get('REDIS_HOST') || 'localhost',
-            port: this.configService.get('REDIS_PORT') || 6379,
-            username:
-              this.configService.get('REDIS_USERNAME') ||
-              processEnv.REDIS_USERNAME ||
-              '',
-            password:
-              this.configService.get('REDIS_PASSWORD') ||
-              processEnv.REDIS_PASSWORD ||
-              '',
-          },
-        }),
     ]);
   }
 }

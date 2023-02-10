@@ -3,8 +3,13 @@
   "private": true,
   "version": "0.1.0",
   "dependencies": {
-    "@nestjs/config": "^2.2.0",
     "@lantron-ltd/npsg-utils": "^0.0.10",
+    "@nestjs/axios": "^2.0.0",
+    "@nestjs/common": "^9.3.7",
+    "@nestjs/config": "^2.2.0",
+    "@nestjs/microservices": "^9.3.7",
+    "@nestjs/swagger": "^6.2.1",
+    "@nestjs/terminus": "^9.2.0",
     "nestjs-redis": "^1.2.8"
   },
   "devDependencies": {},

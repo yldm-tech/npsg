@@ -372,11 +372,11 @@ paths:
               $ref: '#/components/schemas/CreateOrderDto'
       responses:
         '200':
-          description: Create order
+          description: Create payment
         '201':
           description: ''
       tags:
-        - order
+        - payment
   /file/upload:
     post:
       operationId: FileController_uploadFile

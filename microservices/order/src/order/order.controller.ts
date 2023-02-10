@@ -8,7 +8,7 @@ import { OrdersService } from './order.service';
 export class OrdersController {
   constructor(private ordersService: OrdersService) {}
 
-  @ApiOkResponse({ description: 'Create order' })
+  @ApiOkResponse({ description: 'Create payment' })
   @Post()
   create(@Body() createOrderDto: CreateOrderDto) {
     return this.ordersService.create(createOrderDto);

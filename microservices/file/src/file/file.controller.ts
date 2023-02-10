@@ -45,7 +45,7 @@ export class FileController {
         ],
       }),
     )
-    file: Express.Multer.File,
+    file,
   ): Promise<any> {
     const url = await this.fileService.upload(file);
     return {
@@ -70,7 +70,7 @@ export class FileController {
         ],
       }),
     )
-    files: Array<Express.Multer.File>,
+    files: Array<File>,
   ) {
     return await this.fileService.uploads(files);
   }

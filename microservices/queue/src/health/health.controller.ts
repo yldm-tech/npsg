@@ -11,7 +11,7 @@ import {
   HealthCheck,
 } from '@nestjs/terminus';
 import { PrismaHealthIndicator } from './prisma.indicator';
-import { processEnv } from "../../../../packages/npsg-utils/src/constant/process-env";
+import { processEnv } from '@lantron-ltd/npsg-utils';
 
 @Controller('health')
 @ApiTags('app')

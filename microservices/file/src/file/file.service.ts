@@ -1,6 +1,7 @@
 import { ConfigService } from '@nestjs/config';
 import { Injectable, Logger } from '@nestjs/common';
 import * as AWS from 'aws-sdk';
+import { processEnv } from '@lantron-ltd/npsg-utils';
 
 @Injectable()
 export class FileService {
@@ -9,25 +10,25 @@ export class FileService {
 
   constructor(private readonly configService: ConfigService) {
     AWS.config.update({
-      accessKeyId:
-        processEnv.AWS_ACCESS_KEY_ID ||
-        configService.get<string>('AWS_ACCESS_KEY_ID'),
-      secretAccessKey:
-        processEnv.AWS_SECRET_ACCESS_KEY ||
-        configService.get<string>('AWS_SECRET_ACCESS_KEY'),
-      region: processEnv.AWS_REGION || configService.get<string>('AWS_REGION'),
+      credentials: {
+        accessKeyId: processEnv.AWS_ACCESS_KEY_ID ||
+          configService.get<string>('AWS_ACCESS_KEY_ID'),
+        secretAccessKey: processEnv.AWS_SECRET_ACCESS_KEY ||
+          configService.get<string>('AWS_SECRET_ACCESS_KEY')
+      },
+      region: processEnv.AWS_REGION || configService.get<string>('AWS_REGION')
     });
     this.s3 = new AWS.S3();
   }
 
-  async upload(file: Express.Multer.File) {
+  async upload(file) {
     const bucketName = this.configService.get<string>('AWS_BUCKET_NAME');
-    const objectKey = `${new Date().getFullYear()}/${file.originalname}`;
+    const objectKey = `${ new Date().getFullYear() }/${ file.originalname }`;
     const params = {
       Bucket: bucketName,
       Key: objectKey,
       Body: file.buffer,
-      ACL: 'public-read',
+      ACL: 'public-read'
     };
 
     // upload
@@ -43,12 +44,12 @@ export class FileService {
    * 批量上传文件
    * @param files
    */
-  async uploads(files: Array<Express.Multer.File>) {
+  async uploads(files: Array<File>) {
     const urls = [];
     for (const file of files) {
       const url = await this.upload(file);
       urls.push({
-        url: url,
+        url: url
       });
     }
     return urls;
@@ -59,7 +60,7 @@ export class FileService {
     const file = await this.s3
       .getObject({
         Bucket: bucketName,
-        Key: key,
+        Key: key
       })
       .promise();
 
@@ -73,7 +74,7 @@ export class FileService {
     const url = this.s3.getSignedUrl('getObject', {
       Bucket: bucketName,
       Key: objectKey,
-      Expires: 60,
+      Expires: 60
     });
     return url;
   }
